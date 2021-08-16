@@ -10,6 +10,7 @@ import {
 import HomePageProjectMaker from "../../features/Home/HomePageProjectMaker";
 import HomePageBizFundraiser from "../../features/Home/HomePageBizFundraiser";
 import type { RootState } from "../../redux/store/store";
+import Navbar from "../../features/Navbar/Navbar";
 
 interface AppProps extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -18,16 +19,36 @@ const App = (props: AppProps) => {
         <div>
             <Link to="/home/bizFundraiser">Home Fund Raiser</Link>
             <Link to="/home/projectmaker">Home Project Maker</Link>
-            <Switch>
-                <Route
-                    path="/home/bizFundraiser"
-                    component={HomePageBizFundraiser}
-                />
-                <Route
-                    path="/home/projectmaker"
-                    component={HomePageProjectMaker}
-                />
-            </Switch>
+
+            <Route
+                path="/(.+)"
+                render={() => (
+                    <div>
+                        <Navbar />
+                        <Route
+                            exact
+                            render={() => (
+                                <div>
+                                    <Switch>
+                                        <Route
+                                            path="/home/bizFundraiser"
+                                            exact
+                                            component={HomePageBizFundraiser}
+                                        />
+                                        <Route
+                                            path="/home/projectmaker"
+                                            exact
+                                            component={HomePageProjectMaker}
+                                        />
+                                        <Route exact path="/projects" />
+                                        <Route exact path="/projects/:id" />
+                                    </Switch>
+                                </div>
+                            )}
+                        />
+                    </div>
+                )}
+            />
         </div>
     );
 };
