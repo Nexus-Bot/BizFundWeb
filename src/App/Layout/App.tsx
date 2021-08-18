@@ -11,6 +11,8 @@ import HomePageProjectMaker from "../../features/Home/HomePageProjectMaker";
 import HomePageBizFundraiser from "../../features/Home/HomePageBizFundraiser";
 import type { RootState } from "../../redux/store/store";
 import Navbar from "../../features/Navbar/Navbar";
+import ProjectsDashboard from "../../features/Projects/ProjectsDashboard/ProjectsDashboard";
+import ProjectDetailed from "../../features/Projects/ProjectDetailed/ProjectDetailed";
 
 interface AppProps extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -19,6 +21,7 @@ const App = (props: AppProps) => {
         <div>
             <Link to="/home/bizFundraiser">Home Fund Raiser</Link>
             <Link to="/home/projectmaker">Home Project Maker</Link>
+            <Link to="/projects">Projects Dashboard</Link>
 
             <Route
                 path="/(.+)"
@@ -40,8 +43,16 @@ const App = (props: AppProps) => {
                                             exact
                                             component={HomePageProjectMaker}
                                         />
-                                        <Route exact path="/projects" />
-                                        <Route exact path="/projects/:id" />
+                                        <Route
+                                            exact
+                                            path="/projects"
+                                            component={ProjectsDashboard}
+                                        />
+                                        <Route
+                                            exact
+                                            path="/projects/:id"
+                                            component={ProjectDetailed}
+                                        />
                                     </Switch>
                                 </div>
                             )}
