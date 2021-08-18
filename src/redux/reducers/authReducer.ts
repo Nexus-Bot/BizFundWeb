@@ -3,14 +3,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
     authenticated: boolean;
-    currentBizFundraiser: BizFundraiser | null;
-    currentProjectMaker: ProjectMaker | null;
+    currentUser: ProjectMaker | BizFundraiser | null;
 }
 
 const initialState: AuthState = {
     authenticated: false,
-    currentProjectMaker: null,
-    currentBizFundraiser: null,
+    currentUser: null,
 };
 
 export const authSlice = createSlice({
@@ -19,18 +17,15 @@ export const authSlice = createSlice({
     reducers: {
         loginBizFundraiser: (state, action: PayloadAction<BizFundraiser>) => {
             state.authenticated = true;
-            state.currentBizFundraiser = action.payload;
-            state.currentProjectMaker = null;
+            state.currentUser = action.payload;
         },
         loginProjectMaker: (state, action: PayloadAction<ProjectMaker>) => {
             state.authenticated = true;
-            state.currentBizFundraiser = null;
-            state.currentProjectMaker = action.payload;
+            state.currentUser = action.payload;
         },
         logoutUser: (state) => {
             state.authenticated = false;
-            state.currentBizFundraiser = null;
-            state.currentProjectMaker = null;
+            state.currentUser = null;
         },
     },
 });

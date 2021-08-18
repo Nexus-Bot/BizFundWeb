@@ -1,7 +1,13 @@
 export interface Milestone {
-    number: number;
-    name: string;
+    id: string;
+    projectId: string;
+    creator: ProjectMaker;
+    milestoneIndex: number;
+    title: string;
     description: string;
+    isCompleted: boolean;
+    isCancelled: boolean;
+    requestIds: number[];
 }
 
 export interface Location {
@@ -17,7 +23,7 @@ export interface Request {
     id: string;
     title: string;
     description: string;
-    milestoneNumber: number;
+    milestoneId: string;
     value: number;
     vendorAddress: string;
     isComplete: boolean;
@@ -38,7 +44,7 @@ export interface Project {
     fees: number;
     imgURL: string;
     folderURL: string;
-    creator: ProjectMaker;
+    creatorMetamuskAddress: string;
     requests: Request[];
     approversCount: number;
     contributorsCount: number;
@@ -46,6 +52,8 @@ export interface Project {
 
 export interface BizFundraiser {
     id: string;
+    isProjectMaker: boolean;
+    isBizFundRaiser: boolean;
     metamuskAddress: string;
     email: string;
     firstName: string;
@@ -56,6 +64,9 @@ export interface BizFundraiser {
 
 export interface ProjectMaker {
     id: string;
+    isProjectMaker: boolean;
+    isBizFundRaiser: boolean;
+    metamuskAddress: string;
     email: string;
     firstName: string;
     lastName: string;

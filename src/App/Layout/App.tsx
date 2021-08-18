@@ -12,7 +12,7 @@ import HomePageBizFundraiser from "../../features/Home/HomePageBizFundraiser";
 import type { RootState } from "../../redux/store/store";
 import Navbar from "../../features/Navbar/Navbar";
 import ProjectsDashboard from "../../features/Projects/ProjectsDashboard/ProjectsDashboard";
-import ProjectDetailed from "../../features/Projects/ProjectDetailed/ProjectDetailed";
+import ProjectDetailedPage from "../../features/Projects/ProjectDetailed/ProjectDetailedPage";
 
 interface AppProps extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -50,8 +50,8 @@ const App = (props: AppProps) => {
                                         />
                                         <Route
                                             exact
-                                            path="/projects/:id"
-                                            component={ProjectDetailed}
+                                            path="/projects/:projectId"
+                                            component={ProjectDetailedPage}
                                         />
                                     </Switch>
                                 </div>

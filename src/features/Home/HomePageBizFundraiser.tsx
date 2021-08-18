@@ -16,7 +16,7 @@ const HomePageBizFundraiser = (props: Props): JSX.Element => {
 
 const mapState2Props = (state: RootState) => {
     return {
-        user: state.auth.currentBizFundraiser,
+        user: state.auth.currentUser,
     };
 };
 

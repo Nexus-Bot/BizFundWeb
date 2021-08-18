@@ -16,7 +16,7 @@ const HomePageProjectMaker = (props: Props): JSX.Element => {
 
 const mapState2Props = (state: RootState) => {
     return {
-        user: state.auth.currentProjectMaker,
+        user: state.auth.currentUser,
     };
 };
 
