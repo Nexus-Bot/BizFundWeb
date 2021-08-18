@@ -32,6 +32,7 @@ const sampleProfile = {
     lastName: "",
     displayName: "",
     photoURL: "",
+    metamuskAddress: "",
 };
 
 interface Props extends PropsFromRedux {}
