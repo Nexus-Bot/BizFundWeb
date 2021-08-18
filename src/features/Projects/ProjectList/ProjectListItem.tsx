@@ -13,14 +13,16 @@ import {
     Theme,
     Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import RoomIcon from "@material-ui/icons/Room";
-import type { Project } from "../../../../types/modelTypes";
+import type { Project, ProjectMaker } from "../../../../types/modelTypes";
 import noImage from "../../../Assets/noImage.svg";
+import useAsyncEffect from "use-async-effect/types";
+import { getProjectMakerDataByMetamuskAddress } from "../../..//App/Util/reusableFunctions/getProjectMakerData";
 
 interface Props {
     project: Project;
@@ -69,6 +71,18 @@ const ProjectListItem = ({ project }: Props) => {
         // });
     };
 
+    const [projectMaker, setProjectMaker] = useState<ProjectMaker | null>(null);
+
+    useAsyncEffect(async (isMounted) => {
+        const user = await getProjectMakerDataByMetamuskAddress(
+            project.creatorMetamuskAddress
+        );
+
+        if (!isMounted()) return;
+
+        if (user) setProjectMaker(user);
+    }, []);
+
     const classes = useStyles();
 
     return (
@@ -94,12 +108,10 @@ const ProjectListItem = ({ project }: Props) => {
                             <Grid item>
                                 <Box display="flex" alignItems="center">
                                     <Box>
-                                        <Link
-                                            to={`/profile/${project.creator.id}`}
-                                        >
+                                        <Link to={`/profile/${projectMaker}`}>
                                             <Avatar
                                                 alt="Remy Sharp"
-                                                src={project.creator.photoURL}
+                                                src={projectMaker?.photoURL}
                                                 className={classes.large}
                                             />
                                         </Link>
@@ -119,14 +131,11 @@ const ProjectListItem = ({ project }: Props) => {
                                             Organized by{" "}
                                             <strong>
                                                 <Link
-                                                    to={`/profile/${project.creator.id}`}
+                                                    to={`/profile/${projectMaker?.id}`}
                                                     className={classes.linksPri}
                                                 >
                                                     {" "}
-                                                    {
-                                                        project.creator
-                                                            .displayName
-                                                    }
+                                                    {projectMaker?.displayName}
                                                 </Link>
                                             </strong>
                                         </Typography>

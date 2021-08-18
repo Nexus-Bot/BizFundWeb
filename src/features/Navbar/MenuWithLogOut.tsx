@@ -25,16 +25,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const sampleProfile = {
-    id: "",
-    email: "",
-    firstName: "",
-    lastName: "",
-    displayName: "",
-    photoURL: "",
-    metamuskAddress: "",
-};
-
 interface Props extends PropsFromRedux {}
 
 const MenuWithLogOut = (props: Props) => {
@@ -63,7 +53,7 @@ const MenuWithLogOut = (props: Props) => {
 
     const open = Boolean(anchorEl);
 
-    const { profile } = props;
+    const { user } = props;
     const classes = useStyles();
 
     return (
@@ -76,11 +66,11 @@ const MenuWithLogOut = (props: Props) => {
                     color="inherit"
                 >
                     <Avatar
-                        alt={profile.displayName ? profile.displayName : ""}
-                        src={profile.photoURL}
+                        alt={user?.displayName ? user.displayName : ""}
+                        src={user?.photoURL}
                         className={classes.small}
                     />
-                    {profile.displayName && BtnText(profile.displayName)}
+                    {user?.displayName && BtnText(user?.displayName)}
                 </IconButton>
             </Grid>
             <Menu
@@ -102,7 +92,7 @@ const MenuWithLogOut = (props: Props) => {
                 <MenuItem
                     onClick={handleClose}
                     component={Link}
-                    to={`/profile/${profile.id}`}
+                    to={`/profile/${user?.id}`}
                 >
                     Profile
                 </MenuItem>
@@ -122,16 +112,9 @@ const MenuWithLogOut = (props: Props) => {
 };
 
 const mapState2Props = (state: RootState) => {
-    const prop: { profile: BizFundraiser | ProjectMaker } = {
-        profile: sampleProfile,
+    return {
+        user: state.auth.currentUser,
     };
-    if (state.auth.currentBizFundraiser) {
-        prop.profile = state.auth.currentBizFundraiser;
-    } else if (state.auth.currentProjectMaker) {
-        prop.profile = state.auth.currentProjectMaker;
-    }
-
-    return prop;
 };
 
 const mapDispatch2Props = {
