@@ -21,8 +21,8 @@ import HttpIcon from "@material-ui/icons/Http";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import type { Project } from "../../../../types/modelTypes";
-import useAsyncEffect from "use-async-effect/types";
-import Mapbox from "../../../features/Maps/MapBox";
+import useAsyncEffect from "use-async-effect";
+import Mapbox from "../../../features/Maps/Mapbox";
 
 interface Props {
     project: Project;

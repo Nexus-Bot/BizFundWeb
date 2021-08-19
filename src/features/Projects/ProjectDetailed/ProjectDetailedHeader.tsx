@@ -6,6 +6,7 @@ import {
     CardContent,
     CardHeader,
     CardMedia,
+    Chip,
     CircularProgress,
     IconButton,
     makeStyles,
@@ -18,6 +19,7 @@ import { deepOrange } from "@material-ui/core/colors";
 import { Link } from "react-router-dom";
 import noImage from "../../../Assets/noImage.svg";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import type { RootState } from "src/redux/store/store";
 import { connect, ConnectedProps } from "react-redux";
 
@@ -54,7 +56,7 @@ const openImageOnFullScreen = (photo: Photo) => {
 interface Props extends PropsFromRedux {
     project: Project;
     isProjectMaker: boolean;
-    isContributor: boolean;
+    contribution: number | null;
     loading: boolean;
     projectMaker: ProjectMaker | null;
 }
@@ -66,7 +68,7 @@ interface Photo {
 
 const ProjectDetailedHeader = ({
     project,
-    isContributor,
+    contribution,
     isProjectMaker,
     loading,
     projectMaker,
@@ -117,25 +119,33 @@ const ProjectDetailedHeader = ({
                 <Box display="flex" justifyContent="space-between" mt="0.5rem">
                     {!isProjectMaker && (
                         <Box>
-                            {isContributor && (
-                                <Button
-                                    variant="contained"
-                                    size="small"
-                                    className={classes.btn}
-                                    onClick={() => {
-                                        // Add more fund function
-                                    }}
-                                >
-                                    {!loading && <span>Pay More</span>}
-                                    {loading && (
-                                        <CircularProgress
-                                            color="inherit"
-                                            size="2rem"
-                                        />
-                                    )}
-                                </Button>
+                            {contribution && (
+                                <Box display="flex" alignItems="center">
+                                    <Chip
+                                        variant="outlined"
+                                        color="primary"
+                                        icon={<AttachMoneyIcon />}
+                                        label={`Current Contribution : ${contribution}`}
+                                    />
+                                    <Button
+                                        variant="contained"
+                                        size="small"
+                                        className={classes.btn}
+                                        onClick={() => {
+                                            // Add more fund function
+                                        }}
+                                    >
+                                        {!loading && <span>Pay More</span>}
+                                        {loading && (
+                                            <CircularProgress
+                                                color="inherit"
+                                                size="2rem"
+                                            />
+                                        )}
+                                    </Button>
+                                </Box>
                             )}
-                            {!isContributor && (
+                            {!contribution && (
                                 <Button
                                     variant="contained"
                                     size="small"

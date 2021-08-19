@@ -21,8 +21,8 @@ import ScheduleIcon from "@material-ui/icons/Schedule";
 import RoomIcon from "@material-ui/icons/Room";
 import type { Project, ProjectMaker } from "../../../../types/modelTypes";
 import noImage from "../../../Assets/noImage.svg";
-import useAsyncEffect from "use-async-effect/types";
-import { getProjectMakerDataByMetamuskAddress } from "../../..//App/Util/reusableFunctions/getProjectMakerData";
+import useAsyncEffect from "use-async-effect";
+import { getProjectMakerDataByMetamaskAddress } from "../../..//App/Util/reusableFunctions/getProjectMakerData";
 
 interface Props {
     project: Project;
@@ -74,8 +74,8 @@ const ProjectListItem = ({ project }: Props) => {
     const [projectMaker, setProjectMaker] = useState<ProjectMaker | null>(null);
 
     useAsyncEffect(async (isMounted) => {
-        const user = await getProjectMakerDataByMetamuskAddress(
-            project.creatorMetamuskAddress
+        const user = await getProjectMakerDataByMetamaskAddress(
+            project.creatorMetamaskAddress
         );
 
         if (!isMounted()) return;

@@ -1,71 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import type { RouteComponentProps } from "react-router";
-import { getProjectMakerDataByMetamuskAddress } from "../../../App/Util/reusableFunctions/getProjectMakerData";
-import useAsyncEffect from "use-async-effect/types";
-import type {
-    BizFundraiser,
-    Project,
-    ProjectMaker,
-} from "../../../../types/modelTypes";
+import { getProjectMakerDataByMetamaskAddress } from "../../../App/Util/reusableFunctions/getProjectMakerData";
+import useAsyncEffect from "use-async-effect";
+import type { Project, ProjectMaker } from "../../../../types/modelTypes";
 import type { RootState } from "../../../redux/store/store";
 import ProjectDetailedChat from "./ProjectDetailedChat";
 import ProjectDetailedHeader from "./ProjectDetailedHeader";
 import ProjectDetailedInfo from "./ProjectDetailedInfo";
 import ProjectDetailedMilestones from "./ProjectDetailedMilestones";
-import { getProjectDataByMetamuskAddress } from "src/App/Util/reusableFunctions/getProjectData";
-
-const checkUserIsContributor = async (
-    project: Project | null,
-    user: BizFundraiser | ProjectMaker | null
-): Promise<boolean> => {
-    if (project === null || user === null) return false;
-    // Call the API
-
-    return true;
-};
+import { getProjectDataByMetamaskAddress } from "../../../App/Util/reusableFunctions/getProjectData";
+import { getUserContributionInProjectByMetamaskaddress } from "../../../App/Util/reusableFunctions/getUserContribution";
 
 interface Props extends PropsFromRedux, RouteComponentProps<any> {}
 
 interface ComponentState {
     project: Project | null;
     projectMaker: ProjectMaker | null;
-    isContributor: boolean;
+    contribution: number | null;
 }
 
 const ProjectDetailedPage = (props: Props) => {
     const [state, setState] = useState<ComponentState>({
         project: null,
         projectMaker: null,
-        isContributor: false,
+        contribution: null,
     });
 
     useAsyncEffect(async (isMounted) => {
         const projectAddress = props.match.params.projectId;
-        const projectData = await getProjectDataByMetamuskAddress(
+        const projectData = await getProjectDataByMetamaskAddress(
             projectAddress
         );
 
-        const projectMaker = await getProjectMakerDataByMetamuskAddress(
-            projectData?.creatorMetamuskAddress
+        const projectMaker = await getProjectMakerDataByMetamaskAddress(
+            projectData?.creatorMetamaskAddress
         );
 
-        const isContributor = await checkUserIsContributor(
-            projectData,
-            props.user
-        );
+        const contribution =
+            await getUserContributionInProjectByMetamaskaddress(
+                projectData?.id,
+                props.user?.metamaskAddress
+            );
 
         if (!isMounted()) return;
 
         setState({
             project: projectData,
             projectMaker: projectMaker,
-            isContributor: isContributor,
+            contribution: contribution,
         });
     }, []);
 
     const isProjectMaker =
-        state.project?.creatorMetamuskAddress === props.user?.metamuskAddress;
+        state.project?.creatorMetamaskAddress === props.user?.metamaskAddress;
 
     return (
         <div>
@@ -74,7 +62,7 @@ const ProjectDetailedPage = (props: Props) => {
                     <ProjectDetailedHeader
                         project={state.project}
                         projectMaker={state.projectMaker}
-                        isContributor={state.isContributor}
+                        contribution={state.contribution}
                         isProjectMaker={isProjectMaker}
                     />
                     <ProjectDetailedInfo project={state.project} />
