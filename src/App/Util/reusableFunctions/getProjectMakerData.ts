@@ -1,6 +1,6 @@
-import type { ProjectMaker } from "types/modelTypes";
+import type { ProjectMaker } from "../../../../types/modelTypes";
 
-export const getProjectMakerDataByMetamuskAddress = async (
+export const getProjectMakerDataByMetamaskAddress = async (
     metamuskAddress: string | undefined
 ): Promise<ProjectMaker | null> => {
     if (metamuskAddress === undefined) return null;
