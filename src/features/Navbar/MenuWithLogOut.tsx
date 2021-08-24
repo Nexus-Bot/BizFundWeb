@@ -13,9 +13,10 @@ import {
 import React, { useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
-import { logoutUser } from "../../redux/reducers/authReducer";
 import type { RootState } from "../../redux/store/store";
 import type { BizFundraiser, ProjectMaker } from "types/modelTypes";
+import { logoutBizFundraiser } from "../../redux/actions/AuthenticationActions/logoutBizFundraiser";
+import { logoutProjectMaker } from "../../redux/actions/AuthenticationActions/logoutProjectMaker";
 
 const useStyles = makeStyles((theme: Theme) => ({
     small: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface Props extends PropsFromRedux {}
 
-const MenuWithLogOut = (props: Props) => {
+const MenuWithLogOut = ({ logOutPM, logOutBF, user }: Props) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -39,8 +40,15 @@ const MenuWithLogOut = (props: Props) => {
     };
 
     const handleLogout = () => {
-        // Call the logout API
-        // Call the redux logout action
+        const BFToken = localStorage.getItem("logInTokenBF");
+        const PMToken = localStorage.getItem("logInTokenPM");
+        if (user?.isBizFundRaiser && BFToken) {
+            logOutBF(BFToken);
+            localStorage.removeItem("logInTokenBF");
+        } else if (user?.isProjectMaker && PMToken) {
+            logOutPM(PMToken);
+            localStorage.removeItem("logInTokenPM");
+        }
     };
 
     const BtnText = (text: string) => {
@@ -52,8 +60,6 @@ const MenuWithLogOut = (props: Props) => {
     };
 
     const open = Boolean(anchorEl);
-
-    const { user } = props;
     const classes = useStyles();
 
     return (
@@ -92,7 +98,7 @@ const MenuWithLogOut = (props: Props) => {
                 <MenuItem
                     onClick={handleClose}
                     component={Link}
-                    to={`/profile/${user?.id}`}
+                    to={`/profile/${user?._id}`}
                 >
                     Profile
                 </MenuItem>
@@ -118,7 +124,8 @@ const mapState2Props = (state: RootState) => {
 };
 
 const mapDispatch2Props = {
-    logOutUser: logoutUser,
+    logOutPM: logoutProjectMaker,
+    logOutBF: logoutBizFundraiser,
 };
 
 const connector = connect(mapState2Props, mapDispatch2Props);

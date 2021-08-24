@@ -13,6 +13,7 @@
         "@material-ui/lab": "^4.0.0-alpha.60",
         "@material-ui/pickers": "^3.3.10",
         "@reduxjs/toolkit": "^1.6.1",
+        "axios": "^0.21.1",
         "date-fns": "^2.23.0",
         "lodash": "^4.17.21",
         "mapbox-gl": "^2.4.1",

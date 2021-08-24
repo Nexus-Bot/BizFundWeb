@@ -16,9 +16,9 @@ import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 import PasswordInput from "../../App/Util/FormInputs/PasswordInput";
 import TextInput from "../../App/Util/FormInputs/TextInput";
-import { loginProjectMaker } from "../../redux/reducers/authReducer";
 import type { ProjectMakerSignInForm } from "types/formTypes";
 import FormErrors from "../../App/Util/resuableComp/FormErrors";
+import { loginProjectMakerAction } from "../../redux/actions/AuthenticationActions/logInProjectMakerAction";
 
 interface Props extends PropsFromRedux {
     handleChange: (event: React.ChangeEvent<{}>, newValue: number) => void;
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const SignInProjectMakerPanel = ({ handleChange }: Props) => {
+const SignInProjectMakerPanel = ({ handleChange, logInUser }: Props) => {
     const classes = useStyles();
 
     const {
@@ -67,7 +67,7 @@ const SignInProjectMakerPanel = ({ handleChange }: Props) => {
     });
 
     const onFormSubmit = (data: ProjectMakerSignInForm) => {
-        console.log(data);
+        logInUser(data);
     };
 
     return (
@@ -145,7 +145,7 @@ const SignInProjectMakerPanel = ({ handleChange }: Props) => {
 };
 
 const mapDispatch2Props = {
-    logInUser: loginProjectMaker,
+    logInUser: loginProjectMakerAction,
 };
 
 const connector = connect(null, mapDispatch2Props);

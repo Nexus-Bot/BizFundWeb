@@ -79,7 +79,7 @@ const ProjectDetailedHeader = ({
         <Card className={classes.root}>
             <CardHeader
                 avatar={
-                    <Link to={`/profile/${projectMaker?.id}`}>
+                    <Link to={`/profile/${projectMaker?._id}`}>
                         <Avatar
                             alt="Host Name"
                             src={projectMaker?.photoURL}
@@ -109,7 +109,7 @@ const ProjectDetailedHeader = ({
                     Organized By{" "}
                     <strong>
                         <Link
-                            to={`/profile/${projectMaker?.id}`}
+                            to={`/profile/${projectMaker?._id}`}
                             className={classes.linksSec}
                         >
                             {projectMaker?.displayName}

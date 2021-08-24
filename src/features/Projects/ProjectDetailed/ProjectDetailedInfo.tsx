@@ -170,27 +170,25 @@ const ProjectDetailedInfo = ({ project }: Props) => {
                             component={"div"}
                         >
                             Event Venue
-                            {project.location.isMap && (
+                            {project.isMap && (
                                 <Typography
                                     variant="body2"
                                     color="textSecondary"
                                 >
-                                    {project.location.placeName}
+                                    {project.placeName}
                                 </Typography>
                             )}
-                            {!project.location.isMap && (
+                            {!project.isMap && (
                                 <Typography
                                     variant="body2"
                                     color="textSecondary"
                                 >
-                                    {project.location.addressLine1}
-                                    <br />
-                                    {project.location.addressLine2}
+                                    {project.postalAddress}
                                 </Typography>
                             )}
                         </Typography>
                     </Box>
-                    {project.location.isMap && (
+                    {project.isMap && (
                         <Box>
                             <Button
                                 variant="outlined"
@@ -211,10 +209,10 @@ const ProjectDetailedInfo = ({ project }: Props) => {
                         elevation={3}
                         style={{ height: "100%", width: "100%" }}
                     >
-                        {project.location.isMap && (
+                        {project.isMap && (
                             <Mapbox
-                                lng={project.location.lng}
-                                lat={project.location.lat}
+                                lng={project.lng}
+                                lat={project.lat}
                                 zoom={12}
                             />
                         )}

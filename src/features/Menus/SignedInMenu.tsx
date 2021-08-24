@@ -8,11 +8,43 @@ import { Switch as SwitchButton } from "@material-ui/core";
 import MenuWithLogOut from "../Navbar/MenuWithLogOut";
 import MainButton from "../Buttons/MainButton";
 import SideDrawer from "./SideDrawer";
+import type { BizFundraiser, ProjectMaker } from "../../../types/modelTypes";
 
-interface Props {}
+interface Props {
+    auth: {
+        authenticated: boolean;
+        currentUser: ProjectMaker | BizFundraiser | null;
+    };
+}
 
-const SignedInMenu = (props: Props) => {
+const SignedInMenu = ({ auth }: Props) => {
     const drawerList = () => {
+        const firstMenuItemsForPM = [
+            {
+                name: "Create Project",
+                link: "/createproject",
+                type: "Link",
+            },
+            {
+                name: "Browse Projects",
+                link: "/projects",
+                type: "Link",
+            },
+            {
+                name: "My Projects",
+                link: "/createproject",
+                type: "Link",
+            },
+        ];
+
+        const firstMenuItemsForBF = [
+            {
+                name: "Browse Projects",
+                link: "/projects",
+                type: "Link",
+            },
+        ];
+
         return (
             <Fragment>
                 {/* Notification */}
@@ -42,26 +74,15 @@ const SignedInMenu = (props: Props) => {
                 {/* First Menu */}
                 <MenuButton
                     iconType={AddRoundedIcon}
-                    items={[
-                        {
-                            name: "Create Project",
-                            link: "/createproject",
-                            type: "Link",
-                        },
-                        {
-                            name: "Browse Projects",
-                            link: "/projects",
-                            type: "Link",
-                        },
-                        {
-                            name: "My Projects",
-                            link: "/createproject",
-                            type: "Link",
-                        },
-                    ]}
-                    menuName="Events"
+                    items={
+                        auth.currentUser?.isBizFundRaiser
+                            ? firstMenuItemsForBF
+                            : firstMenuItemsForPM
+                    }
+                    menuName="Projects"
                 />
 
+                {/* Account Menu */}
                 <MenuButton
                     iconType={SettingsIcon}
                     items={[
@@ -84,7 +105,7 @@ const SignedInMenu = (props: Props) => {
                     menuName="Settings"
                 />
 
-                {/* Events Menu */}
+                {/* Projects Menu */}
                 <MenuWithLogOut />
             </Fragment>
         );
@@ -92,7 +113,15 @@ const SignedInMenu = (props: Props) => {
 
     return (
         <Fragment>
-            <MainButton buttonTitle="Create Project" link="/createproject" />
+            {auth.currentUser?.isBizFundRaiser ? (
+                <MainButton
+                    buttonTitle="Create Project"
+                    link="/createproject"
+                />
+            ) : (
+                <MainButton buttonTitle="Browse Projects" link="/projects" />
+            )}
+
             {/* <FormControlLabel
                 control={
                     <SwitchButton

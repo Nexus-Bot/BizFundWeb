@@ -51,7 +51,7 @@ const ProjectMilestoneRequestsList = ({ requests, user, project }: Props) => {
                             project?.creatorMetamaskAddress && (
                             <Box>
                                 <Link
-                                    to={`/projects/${project.id}/createrequest`}
+                                    to={`/projects/${project?.id}/createrequest`}
                                 >
                                     <Button
                                         variant="contained"
