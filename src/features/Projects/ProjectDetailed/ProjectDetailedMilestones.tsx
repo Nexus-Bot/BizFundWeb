@@ -26,35 +26,24 @@ import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import { Link } from "react-router-dom";
 import indigo from "@material-ui/core/colors/indigo";
+import { getMilestonesForProject } from "../../../App/Util/reusableFunctions/getProjectData";
 
 interface Props {
     project: Project;
     user: BizFundraiser | ProjectMaker | null;
 }
 
-// const testMilestoneData: Milestone[] = [
-//     {
-//         id: "test",
-//         projectId: "test",
-//         creator: ProjectMaker,
-//         milestoneIndex: 1,
-//         title: "test",
-//         description: "test",
-//         isCompleted: false,
-//         isCancelled: false,
-//         requestIds: [],
-//     },
-// ];
-
 const ProjectDetailedMilestones = ({ project, user }: Props) => {
     const [milestones, setMilestones] = useState<Milestone[]>([]);
 
     useAsyncEffect(async (isMounted) => {
         // Fetch milestones
+        const milestonesData = await getMilestonesForProject(project.id);
 
         if (!isMounted()) return;
 
         // Set milestones
+        if (milestonesData) setMilestones(milestonesData);
     });
 
     return (
@@ -82,16 +71,14 @@ const ProjectDetailedMilestones = ({ project, user }: Props) => {
                         user.metamaskAddress ===
                             project.creatorMetamaskAddress && (
                             <Box>
-                                <Link
+                                <Button
+                                    component={Link}
+                                    variant="contained"
+                                    color="secondary"
                                     to={`/projects/${project.id}/createmilestones`}
                                 >
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                    >
-                                        Create Milestone
-                                    </Button>
-                                </Link>
+                                    Create Milestone
+                                </Button>
                             </Box>
                         )}
                 </Box>
@@ -100,50 +87,51 @@ const ProjectDetailedMilestones = ({ project, user }: Props) => {
                 <List>
                     {milestones.map((milestone, index) => {
                         return (
-                            <Link
+                            <ListItem
+                                button
+                                key={index}
+                                component={Link}
                                 to={`/project/${project.id}/milestones/${milestone._id}`}
                             >
-                                <ListItem button key={index}>
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            {milestone.isCompleted && (
-                                                <CheckCircleIcon />
-                                            )}
-                                            {milestone.isCancelled && (
-                                                <CancelIcon />
-                                            )}
-                                            {!milestone.isCancelled &&
-                                                !milestone.isCompleted && (
-                                                    <HourglassEmptyIcon />
-                                                )}
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText
-                                        primary={milestone.title}
-                                        secondary={
-                                            milestone.description.slice(0, 15) +
-                                            "..."
-                                        }
-                                    />
-                                    {user &&
-                                        user.isProjectMaker &&
-                                        user.metamaskAddress ===
-                                            project.creatorMetamaskAddress && (
-                                            <ListItemSecondaryAction>
-                                                <Link
-                                                    to={`/projects/${project.id}/editmilestone/${milestone._id}`}
-                                                >
-                                                    <IconButton
-                                                        edge="end"
-                                                        aria-label="end"
-                                                    >
-                                                        <EditIcon />
-                                                    </IconButton>
-                                                </Link>
-                                            </ListItemSecondaryAction>
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        {milestone.isCompleted && (
+                                            <CheckCircleIcon />
                                         )}
-                                </ListItem>
-                            </Link>
+                                        {milestone.isCancelled && (
+                                            <CancelIcon />
+                                        )}
+                                        {!milestone.isCancelled &&
+                                            !milestone.isCompleted && (
+                                                <HourglassEmptyIcon />
+                                            )}
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={`${
+                                        milestone.milestoneIndex + 1
+                                    }. ${milestone.title}`}
+                                    secondary={
+                                        milestone.description.slice(0, 15) +
+                                        "..."
+                                    }
+                                />
+                                {user &&
+                                    user.isProjectMaker &&
+                                    user.metamaskAddress ===
+                                        project.creatorMetamaskAddress && (
+                                        <ListItemSecondaryAction>
+                                            <IconButton
+                                                component={Link}
+                                                to={`/projects/${project.id}/editmilestone/${milestone._id}`}
+                                                edge="end"
+                                                aria-label="end"
+                                            >
+                                                <EditIcon />
+                                            </IconButton>
+                                        </ListItemSecondaryAction>
+                                    )}
+                            </ListItem>
                         );
                     })}
                 </List>

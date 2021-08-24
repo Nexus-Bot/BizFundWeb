@@ -2,7 +2,7 @@
     "scripts": {
         "start": "snowpack dev --polyfill-node",
         "build": "snowpack build --polyfill-node",
-        "test": "web-test-runner \"src/**/*.test.tsx\"",
+        "test": "web-test-runner \"src/**/*.test.tsx\" --polyfill-node",
         "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,html}\"",
         "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,html}\""
     },
