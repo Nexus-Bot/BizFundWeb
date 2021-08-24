@@ -17,6 +17,7 @@ import { loginUsingTokenProjectMaker } from "../../redux/actions/AuthenticationA
 import { loginUsingTokenBizFundraiser } from "../../redux/actions/AuthenticationActions/logInUsingTokenBizFundraiser";
 import AccountVerificationPage from "../../features/Verification/AccountVerificationPage";
 import ProjectFormComp from "../../features/Projects/ProjectForm/ProjectFormComp";
+import { Container } from "@material-ui/core";
 
 interface AppProps extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -42,7 +43,13 @@ const App = ({ logInBF, logInPM, auth, loading }: AppProps) => {
             <Route
                 path="/(.+)"
                 render={() => ( */}
-            <div>
+            <Container
+                maxWidth="lg"
+                style={{
+                    paddingTop: "5rem",
+                    paddingBottom: "5rem",
+                }}
+            >
                 {!loading &&
                     auth.authenticated &&
                     !auth.currentUser?.isVerified && (
@@ -82,7 +89,7 @@ const App = ({ logInBF, logInPM, auth, loading }: AppProps) => {
                         </div>
                     </div>
                 )}
-            </div>
+            </Container>
             {/* )}
             /> */}
         </div>

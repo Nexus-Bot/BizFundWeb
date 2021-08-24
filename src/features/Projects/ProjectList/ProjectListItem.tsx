@@ -108,7 +108,9 @@ const ProjectListItem = ({ project }: Props) => {
                             <Grid item>
                                 <Box display="flex" alignItems="center">
                                     <Box>
-                                        <Link to={`/profile/${projectMaker}`}>
+                                        <Link
+                                            to={`/profile/${projectMaker?._id}`}
+                                        >
                                             <Avatar
                                                 alt="Remy Sharp"
                                                 src={projectMaker?.photoURL}

@@ -13,8 +13,8 @@ const ProjectList = ({ projects }: Props) => {
         <Grid container spacing={2}>
             {projects.map((project, index) => {
                 return (
-                    <Grid item lg={4} md={6} xs={12}>
-                        <ProjectListItem project={project} key={index} />
+                    <Grid item lg={4} md={6} xs={12} key={index}>
+                        <ProjectListItem project={project} />
                     </Grid>
                 );
             })}

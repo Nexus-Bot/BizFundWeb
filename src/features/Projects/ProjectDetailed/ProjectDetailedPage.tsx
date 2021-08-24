@@ -11,6 +11,7 @@ import ProjectDetailedInfo from "./ProjectDetailedInfo";
 import ProjectDetailedMilestones from "./ProjectDetailedMilestones";
 import { getProjectDataByMetamaskAddress } from "../../../App/Util/reusableFunctions/getProjectData";
 import { getUserContributionInProjectByMetamaskaddress } from "../../../App/Util/reusableFunctions/getUserContribution";
+import ProjectDetailedMoney from "./ProjectDetailedMoney";
 
 interface Props extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -29,6 +30,7 @@ const ProjectDetailedPage = (props: Props) => {
 
     useAsyncEffect(async (isMounted) => {
         const projectAddress = props.match.params.projectId;
+        console.log(projectAddress);
         const projectData = await getProjectDataByMetamaskAddress(
             projectAddress
         );
@@ -65,6 +67,7 @@ const ProjectDetailedPage = (props: Props) => {
                         contribution={state.contribution}
                         isProjectMaker={isProjectMaker}
                     />
+                    <ProjectDetailedMoney project={state.project} />
                     <ProjectDetailedInfo project={state.project} />
                     <ProjectDetailedMilestones
                         user={props.user}

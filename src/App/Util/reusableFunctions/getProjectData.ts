@@ -5,14 +5,36 @@ import type {
     File,
 } from "../../../../types/modelTypes";
 
+const testProject = {
+    id: "test1",
+    title: "test1 project",
+    description: "test1 project description",
+    minContribution: 100,
+    currentBalance: 1000,
+    totalPoolBalance: 3000,
+    fees: 0.05,
+    imgURL: "https://source.unsplash.com/random",
+    folderURL: "test1 folder address",
+    creatorMetamaskAddress: "xyz",
+    numRequests: 3,
+    approversCount: 10,
+    contributorsCount: 10,
+    isMap: false,
+    postalAddress: "Address of the project",
+    lng: "",
+    lat: "",
+    placeName: "",
+    cancelled: false,
+    finished: false,
+};
 export const getProjectDataByMetamaskAddress = async (
-    metamuskAddress: string | undefined
+    metamaskAddress: string | undefined
 ): Promise<Project | null> => {
-    if (metamuskAddress === undefined) return null;
+    if (metamaskAddress === undefined) return null;
 
     // Fetch the projectmaker by metamusk address
 
-    return null;
+    return testProject;
 };
 
 export const getMilestoneDataById = async (

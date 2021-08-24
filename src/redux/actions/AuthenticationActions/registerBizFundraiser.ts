@@ -19,7 +19,10 @@ export const registerBizFundraiser =
             // @ts-ignore
             delete formData.confirmPassword;
 
-            const res = await api.post("/bizfundraisers", { ...formData });
+            const res = await api.post("/bizfundraisers", {
+                ...formData,
+                displayName: formData.firstName,
+            });
 
             const user = await res.data;
 
