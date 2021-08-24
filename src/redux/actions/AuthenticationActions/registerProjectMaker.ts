@@ -19,7 +19,10 @@ export const registerProjectMaker =
             // @ts-ignore
             delete formData.confirmPassword;
 
-            const res = await api.post("/projectmakers", { ...formData });
+            const res = await api.post("/projectmakers", {
+                ...formData,
+                displayName: formData.firstName,
+            });
 
             const user = await res.data;
 
