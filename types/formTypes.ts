@@ -38,3 +38,8 @@ export interface ProjectForm {
     minContribution: number;
     creatorMetamaskAddress?: string;
 }
+
+export interface MilestoneForm {
+    title: string;
+    description: string;
+}

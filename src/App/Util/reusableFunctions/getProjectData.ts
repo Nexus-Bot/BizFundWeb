@@ -5,6 +5,8 @@ import type {
     File,
 } from "../../../../types/modelTypes";
 
+import api from "../API/backend";
+
 const testProject = {
     id: "test1",
     title: "test1 project",
@@ -35,6 +37,18 @@ export const getProjectDataByMetamaskAddress = async (
     // Fetch the projectmaker by metamusk address
 
     return testProject;
+};
+
+export const getMilestonesForProject = async (
+    projectAddress: string | undefined
+): Promise<Milestone[] | null> => {
+    if (!projectAddress) return null;
+
+    const res = await api.get(`/project/milestones/${projectAddress}`);
+
+    if (res.data) return res.data;
+
+    return null;
 };
 
 export const getMilestoneDataById = async (
