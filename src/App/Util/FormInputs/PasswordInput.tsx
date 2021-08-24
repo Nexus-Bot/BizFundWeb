@@ -49,43 +49,41 @@ const PasswordInput = (props: OwnProps) => {
     };
 
     return (
-        <div>
-            <FormControl className={classes.root} variant="outlined" fullWidth>
-                <InputLabel htmlFor="outlined-adornment-password">
-                    {_.upperFirst(props.name)}
-                </InputLabel>
-                <OutlinedInput
-                    error={isTouched && !!invalid}
-                    id={"outlined-adornment-" + field.name}
-                    type={values.showPassword ? "text" : "password"}
-                    endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                            >
-                                {values.showPassword ? (
-                                    <Visibility />
-                                ) : (
-                                    <VisibilityOff />
-                                )}
-                            </IconButton>
-                        </InputAdornment>
-                    }
-                    {...field}
-                    labelWidth={props.name.length * 7}
+        <FormControl className={classes.root} variant="outlined" fullWidth>
+            <InputLabel htmlFor="outlined-adornment-password">
+                {_.upperFirst(props.name)}
+            </InputLabel>
+            <OutlinedInput
+                error={isTouched && !!invalid}
+                id={"outlined-adornment-" + field.name}
+                type={values.showPassword ? "text" : "password"}
+                endAdornment={
+                    <InputAdornment position="end">
+                        <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                        >
+                            {values.showPassword ? (
+                                <Visibility />
+                            ) : (
+                                <VisibilityOff />
+                            )}
+                        </IconButton>
+                    </InputAdornment>
+                }
+                {...field}
+                labelWidth={props.name.length * 7}
+            />
+            {isTouched && invalid && (
+                <FormHelperText
+                    children={props.helperText}
+                    variant="outlined"
+                    error={true}
                 />
-                {isTouched && invalid && (
-                    <FormHelperText
-                        children={props.helperText}
-                        variant="outlined"
-                        error={true}
-                    />
-                )}
-            </FormControl>
-        </div>
+            )}
+        </FormControl>
     );
 };
 

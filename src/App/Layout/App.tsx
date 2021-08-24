@@ -16,6 +16,7 @@ import ProjectDetailedPage from "../../features/Projects/ProjectDetailed/Project
 import { loginUsingTokenProjectMaker } from "../../redux/actions/AuthenticationActions/logInUsingTokenProjectMaker";
 import { loginUsingTokenBizFundraiser } from "../../redux/actions/AuthenticationActions/logInUsingTokenBizFundraiser";
 import AccountVerificationPage from "../../features/Verification/AccountVerificationPage";
+import ProjectFormComp from "../../features/Projects/ProjectForm/ProjectFormComp";
 
 interface AppProps extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -71,6 +72,11 @@ const App = ({ logInBF, logInPM, auth, loading }: AppProps) => {
                                     exact
                                     path="/projects/:projectId"
                                     component={ProjectDetailedPage}
+                                />
+                                <Route
+                                    exact
+                                    path="/createproject"
+                                    component={ProjectFormComp}
                                 />
                             </Switch>
                         </div>

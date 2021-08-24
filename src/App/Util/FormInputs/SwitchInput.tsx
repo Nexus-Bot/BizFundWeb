@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import { TextField } from "@material-ui/core";
+import { FormControlLabel, Switch } from "@material-ui/core";
 import { useController, UseControllerProps } from "react-hook-form";
 import type {
     BizFundraiserSignInForm,
@@ -9,26 +9,26 @@ import type {
 
 type formType = BizFundraiserSignInForm | BizFundraiserSignUpForm | any;
 
-interface OwnProps extends UseControllerProps<formType> {
-    helperText: string;
-}
+interface OwnProps extends UseControllerProps<formType> {}
 
-const TextInput = (props: OwnProps) => {
+const SwitchInput = (props: OwnProps) => {
     const {
         field,
         fieldState: { isTouched, invalid },
     } = useController(props);
 
     return (
-        <TextField
-            {...field}
+        <FormControlLabel
+            control={
+                <Switch
+                    {...field}
+                    color="primary"
+                    checked={field.value === true}
+                />
+            }
             label={_.upperFirst(props.name)}
-            error={isTouched && !!invalid}
-            variant="outlined"
-            fullWidth
-            helperText={invalid ? props.helperText : ""}
         />
     );
 };
 
-export default TextInput;
+export default SwitchInput;

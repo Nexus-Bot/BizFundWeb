@@ -1,0 +1,17 @@
+.root {
+    height: 100%;
+    width: 100%;
+}
+
+.mapboxgl-ctrl-geocoder {
+    min-width: 100%;
+}
+
+.geocoder {
+    margin: 1rem;
+}
+
+.mapContainer {
+    height: 40vh;
+    margin-bottom: 1rem;
+}
