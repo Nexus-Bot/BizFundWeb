@@ -21,6 +21,8 @@ import PasswordInput from "../../App/Util/FormInputs/PasswordInput";
 import TextInput from "../../App/Util/FormInputs/TextInput";
 import InfoIcon from "@material-ui/icons/Info";
 import FormErrors from "../../App/Util/resuableComp/FormErrors";
+import { registerProjectMaker } from "../../redux/actions/AuthenticationActions/registerProjectMaker";
+import { useAppDispatch } from "../../redux/store/hooks";
 
 interface Props extends PropsFromRedux {
     handleChange: (event: React.ChangeEvent<{}>, newValue: number) => void;
@@ -59,7 +61,7 @@ const defaultFormValues: ProjectMakerSignUpForm = {
     confirmPassword: "",
 };
 
-const SignUpProjectMakerPanel = ({ handleChange }: Props) => {
+const SignUpProjectMakerPanel = ({ handleChange, registerUser }: Props) => {
     const classes = useStyles();
 
     const showPasswordInfo = () => {
@@ -109,7 +111,7 @@ const SignUpProjectMakerPanel = ({ handleChange }: Props) => {
     });
 
     const onFormSubmit = (data: ProjectMakerSignUpForm) => {
-        console.log(data);
+        registerUser(data);
     };
 
     return (
@@ -263,6 +265,7 @@ const passwordValidator = (value: string) => {
 
 const mapDispatch2Props = {
     logInUser: loginProjectMaker,
+    registerUser: registerProjectMaker,
 };
 
 const connector = connect(null, mapDispatch2Props);

@@ -48,9 +48,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const Navbar = (props: Props) => {
+const Navbar = ({ auth }: Props) => {
     const classes = useStyles();
-    const showSignedInMenu = props.authenticated;
     return (
         <div className={classes.root} id="back-to-top-anchor">
             <AppBar style={{ background: "#2E3B55" }}>
@@ -74,10 +73,11 @@ const Navbar = (props: Props) => {
                         </Link>
                     </Typography>
 
-                    {showSignedInMenu ? (
+                    {auth.authenticated ? (
                         <SignedInMenu
-                        // classes={classes}
-                        // toggleDarkMode={toggleDarkMode}
+                            auth={auth}
+                            // classes={classes}
+                            // toggleDarkMode={toggleDarkMode}
                         />
                     ) : (
                         <SignedOutMenu
@@ -93,7 +93,7 @@ const Navbar = (props: Props) => {
 };
 
 const mapState2Props = (state: RootState) => {
-    return { authenticated: state.auth.authenticated };
+    return { auth: state.auth };
 };
 
 const connector = connect(mapState2Props);

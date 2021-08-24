@@ -101,7 +101,7 @@ const ProjectDetailedMilestones = ({ project, user }: Props) => {
                     {milestones.map((milestone, index) => {
                         return (
                             <Link
-                                to={`/project/${project.id}/milestones/${milestone.id}`}
+                                to={`/project/${project.id}/milestones/${milestone._id}`}
                             >
                                 <ListItem button key={index}>
                                     <ListItemAvatar>
@@ -131,7 +131,7 @@ const ProjectDetailedMilestones = ({ project, user }: Props) => {
                                             project.creatorMetamaskAddress && (
                                             <ListItemSecondaryAction>
                                                 <Link
-                                                    to={`/projects/${project.id}/editmilestone/${milestone.id}`}
+                                                    to={`/projects/${project.id}/editmilestone/${milestone._id}`}
                                                 >
                                                     <IconButton
                                                         edge="end"

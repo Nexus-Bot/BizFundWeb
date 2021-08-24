@@ -67,7 +67,7 @@ const RequestVoting = ({ request, project, user }: Props) => {
         const isAlreadyVoter = await checkUserIsVoterForRequest(
             project?.id,
             user?.metamaskAddress,
-            request?.index
+            request?.id
         );
 
         if (!isMounted()) return;

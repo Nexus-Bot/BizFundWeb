@@ -5,28 +5,22 @@ export interface File {
 }
 
 export interface Milestone {
-    id: string;
+    _id: string;
     projectId: string;
     milestoneIndex: number;
+    owner: string;
     title: string;
     description: string;
     isCompleted: boolean;
     isCancelled: boolean;
     requestIds: number[];
-}
-
-export interface Location {
-    isMap: boolean;
-    addressLine1: string;
-    addressLine2: string;
-    placeName: string;
-    lng: string;
-    lat: string;
+    createdAt: string;
+    updatedAt: string;
+    "__v": number;
 }
 
 export interface Request {
-    id: string;
-    index: number;
+    id: number;
     title: string;
     description: string;
     milestoneId: string;
@@ -38,13 +32,18 @@ export interface Request {
     denialsCount: number;
     imgURL: string;
     filesURL: string;
+    cancelled: boolean;
 }
 
 export interface Project {
     id: string;
     title: string;
     description: string;
-    location: Location;
+    isMap: boolean;
+    postalAddress: string;
+    placeName: string;
+    lng: string;
+    lat: string;
     minContribution: number;
     currentBalance: number;
     totalPoolBalance: number;
@@ -52,32 +51,42 @@ export interface Project {
     imgURL: string;
     folderURL: string;
     creatorMetamaskAddress: string;
-    requests: number;
+    numRequests: number;
     approversCount: number;
     contributorsCount: number;
+    cancelled: boolean;
+    finished: boolean;
 }
 
 export interface BizFundraiser {
-    id: string;
+    _id: string;
     isProjectMaker: boolean;
     isBizFundRaiser: boolean;
-    metamaskAddress: string;
+    isVerified: boolean;
+    metamaskAddress?: string;
     email: string;
     firstName: string;
     lastName: string;
-    displayName: string;
-    photoURL: string;
+    displayName?: string;
+    photoURL?: string;
+    createdAt: string;
+    updatedAt: string;
+    "__v": number;
 }
 
 export interface ProjectMaker {
-    id: string;
+    _id: string;
     isProjectMaker: boolean;
     isBizFundRaiser: boolean;
-    metamaskAddress: string;
+    isVerified: boolean;
+    metamaskAddress?: string;
     email: string;
     firstName: string;
     lastName: string;
-    displayName: string;
-    photoURL: string;
+    displayName?: string;
+    photoURL?: string;
     Projects: Project[];
+    createdAt: string;
+    updatedAt: string;
+    "__v": number;
 }

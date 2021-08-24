@@ -16,9 +16,9 @@ import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 import PasswordInput from "../../App/Util/FormInputs/PasswordInput";
 import TextInput from "../../App/Util/FormInputs/TextInput";
-import { loginBizFundraiser } from "../../redux/reducers/authReducer";
 import type { BizFundraiserSignInForm } from "types/formTypes";
 import FormErrors from "../../App/Util/resuableComp/FormErrors";
+import { loginBizFundraiserAction } from "../../redux/actions/AuthenticationActions/logInBizFundraiserAction";
 
 interface Props extends PropsFromRedux {
     handleChange: (event: React.ChangeEvent<{}>, newValue: number) => void;
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const SignInBizFundraiserPanel = ({ handleChange }: Props) => {
+const SignInBizFundraiserPanel = ({ handleChange, logInUser }: Props) => {
     const classes = useStyles();
 
     const {
@@ -67,7 +67,7 @@ const SignInBizFundraiserPanel = ({ handleChange }: Props) => {
     });
 
     const onFormSubmit = (data: BizFundraiserSignInForm) => {
-        console.log(data);
+        logInUser(data);
     };
 
     return (
@@ -145,7 +145,7 @@ const SignInBizFundraiserPanel = ({ handleChange }: Props) => {
 };
 
 const mapDispatch2Props = {
-    logInUser: loginBizFundraiser,
+    logInUser: loginBizFundraiserAction,
 };
 
 const connector = connect(null, mapDispatch2Props);

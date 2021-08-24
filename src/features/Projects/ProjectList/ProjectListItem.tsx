@@ -131,7 +131,7 @@ const ProjectListItem = ({ project }: Props) => {
                                             Organized by{" "}
                                             <strong>
                                                 <Link
-                                                    to={`/profile/${projectMaker?.id}`}
+                                                    to={`/profile/${projectMaker?._id}`}
                                                     className={classes.linksPri}
                                                 >
                                                     {" "}
@@ -167,17 +167,17 @@ const ProjectListItem = ({ project }: Props) => {
                                     my="0.5rem"
                                 >
                                     <RoomIcon fontSize="small" />
-                                    {!project.location.isMap && (
+                                    {!project.isMap && (
                                         <Box mx="0.5rem">
                                             <Typography color="textSecondary">
-                                                {project.location.addressLine1}
+                                                {project.postalAddress}
                                             </Typography>
                                         </Box>
                                     )}
-                                    {project.location.isMap && (
+                                    {project.isMap && (
                                         <Box mx="0.5rem">
                                             <Typography color="textSecondary">
-                                                {project.location.placeName}
+                                                {project.placeName}
                                             </Typography>
                                         </Box>
                                     )}

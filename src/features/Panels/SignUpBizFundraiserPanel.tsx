@@ -21,6 +21,7 @@ import PasswordInput from "../../App/Util/FormInputs/PasswordInput";
 import TextInput from "../../App/Util/FormInputs/TextInput";
 import InfoIcon from "@material-ui/icons/Info";
 import FormErrors from "../../App/Util/resuableComp/FormErrors";
+import { registerBizFundraiser } from "../../redux/actions/AuthenticationActions/registerBizFundraiser";
 
 interface Props extends PropsFromRedux {
     handleChange: (event: React.ChangeEvent<{}>, newValue: number) => void;
@@ -59,7 +60,7 @@ const defaultFormValues: BizFundraiserSignUpForm = {
     confirmPassword: "",
 };
 
-const SignUpBizFundraiserPanel = ({ handleChange }: Props) => {
+const SignUpBizFundraiserPanel = ({ handleChange, registerUser }: Props) => {
     const classes = useStyles();
 
     const showPasswordInfo = () => {
@@ -109,7 +110,7 @@ const SignUpBizFundraiserPanel = ({ handleChange }: Props) => {
     });
 
     const onFormSubmit = (data: BizFundraiserSignUpForm) => {
-        console.log(data);
+        registerUser(data);
     };
 
     return (
@@ -263,6 +264,7 @@ const passwordValidator = (value: string) => {
 
 const mapDispatch2Props = {
     logInUser: loginBizFundraiser,
+    registerUser: registerBizFundraiser,
 };
 
 const connector = connect(null, mapDispatch2Props);
