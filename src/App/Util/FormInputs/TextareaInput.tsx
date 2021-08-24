@@ -11,9 +11,10 @@ type formType = BizFundraiserSignInForm | BizFundraiserSignUpForm | any;
 
 interface OwnProps extends UseControllerProps<formType> {
     helperText: string;
+    rows: number;
 }
 
-const TextInput = (props: OwnProps) => {
+const TextareaInput = (props: OwnProps) => {
     const {
         field,
         fieldState: { isTouched, invalid },
@@ -22,13 +23,16 @@ const TextInput = (props: OwnProps) => {
     return (
         <TextField
             {...field}
-            label={_.upperFirst(props.name)}
             error={isTouched && !!invalid}
             variant="outlined"
+            size="small"
+            multiline
+            label={_.upperFirst(props.name)}
+            rows={props.rows}
             fullWidth
             helperText={invalid ? props.helperText : ""}
         />
     );
 };
 
-export default TextInput;
+export default TextareaInput;

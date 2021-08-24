@@ -1,13 +1,14 @@
 {
     "scripts": {
-        "start": "snowpack dev",
-        "build": "snowpack build",
+        "start": "snowpack dev --polyfill-node",
+        "build": "snowpack build --polyfill-node",
         "test": "web-test-runner \"src/**/*.test.tsx\"",
         "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,html}\"",
         "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,html}\""
     },
     "dependencies": {
         "@hookform/error-message": "^2.0.0",
+        "@mapbox/mapbox-gl-geocoder": "^4.7.3",
         "@material-ui/core": "^4.12.3",
         "@material-ui/icons": "^4.11.2",
         "@material-ui/lab": "^4.0.0-alpha.60",
@@ -37,6 +38,7 @@
         "@testing-library/react": "^11.2.6",
         "@types/chai": "^4.2.17",
         "@types/lodash": "^4.14.172",
+        "@types/mapbox__mapbox-gl-geocoder": "^4.7.1",
         "@types/mapbox-gl": "^2.4.0",
         "@types/mocha": "^8.2.2",
         "@types/node": "^16.4.13",

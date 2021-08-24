@@ -13,7 +13,7 @@ interface OwnProps extends UseControllerProps<formType> {
     helperText: string;
 }
 
-const TextInput = (props: OwnProps) => {
+const NumberInput = (props: OwnProps) => {
     const {
         field,
         fieldState: { isTouched, invalid },
@@ -23,6 +23,7 @@ const TextInput = (props: OwnProps) => {
         <TextField
             {...field}
             label={_.upperFirst(props.name)}
+            type="number"
             error={isTouched && !!invalid}
             variant="outlined"
             fullWidth
@@ -31,4 +32,4 @@ const TextInput = (props: OwnProps) => {
     );
 };
 
-export default TextInput;
+export default NumberInput;

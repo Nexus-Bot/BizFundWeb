@@ -23,3 +23,18 @@ export interface ProjectMakerSignUpForm {
     password: string;
     confirmPassword: string;
 }
+
+interface Location {
+    center: any;
+    placeName: string;
+}
+
+export interface ProjectForm {
+    title: string;
+    description: string;
+    isMap: boolean;
+    postalAddress?: string;
+    location: Location;
+    minContribution: number;
+    creatorMetamaskAddress?: string;
+}
