@@ -13,12 +13,13 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import TextareaInput from "../../../App/Util/FormInputs/TextareaInput";
 import TextInput from "../../../App/Util/FormInputs/TextInput";
-import type { MilestoneForm } from "types/formTypes";
+import type { RequestForm } from "types/formTypes";
 import FormErrors from "../../../App/Util/resuableComp/FormErrors";
 import history from "../../../history";
 import type { RouteComponentProps } from "react-router";
-import { getMilestonesForProject } from "../../../App/Util/reusableFunctions/getProjectData";
-import { createMilestoneForProject } from "../../../App/Util/reusableFunctions/createProjectData";
+import { createRequestInBlockchain } from "../../../App/Util/reusableFunctions/createProjectData";
+import NumberInput from "../../../App/Util/FormInputs/NumberInput";
+import { addCreatedRequestIdToMilestone } from "../../../App/Util/reusableFunctions/updateProjectData";
 
 const useStyles = makeStyles((theme: Theme) => ({
     "@global": {
@@ -45,32 +46,35 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface Props extends RouteComponentProps<any> {}
 
-const MilestoneFormComp = (props: Props) => {
+const RequestFormComp = (props: Props) => {
     const {
         handleSubmit,
         control,
         formState: { isValid, isSubmitting, touchedFields, errors },
-    } = useForm<MilestoneForm>({
+    } = useForm<RequestForm>({
         mode: "onChange",
     });
 
-    const onFormSubmit = async (data: MilestoneForm) => {
+    const onFormSubmit = async (data: RequestForm) => {
         const dataTosend: any = { ...data };
 
-        const projectAddress = props.match.params.projectId;
+        const milestoneId = props.match.params.milestoneId;
 
-        dataTosend.projectId = projectAddress;
+        dataTosend.milestoneId = milestoneId;
 
-        const milestones = await getMilestonesForProject(projectAddress);
+        // Add the folder and img urls of request storage
+        dataTosend.imgURL = "";
+        dataTosend.filesURL = "";
 
-        if (!milestones) console.log("Please retry!!!");
+        const requestData = await createRequestInBlockchain(dataTosend);
+
+        if (!requestData) console.log("Please retry!!!");
         else {
-            dataTosend.milestoneIndex = milestones.length;
-
             const BFToken = localStorage.getItem("logInTokenBF");
             const PMToken = localStorage.getItem("logInTokenPM");
-            await createMilestoneForProject(
-                dataTosend,
+            await addCreatedRequestIdToMilestone(
+                requestData.id,
+                milestoneId,
                 BFToken ? BFToken : PMToken
             );
             history.goBack();
@@ -85,7 +89,7 @@ const MilestoneFormComp = (props: Props) => {
                     <Box textAlign="center" mb="2rem">
                         <Typography component="h1" variant="h4">
                             <i>
-                                <u>MILESTONE FORM</u>
+                                <u>REQUEST FORM</u>
                             </i>
                         </Typography>
                     </Box>
@@ -133,6 +137,26 @@ const MilestoneFormComp = (props: Props) => {
                                         }}
                                         helperText="Please enter the description for the project"
                                     />
+
+                                    <NumberInput
+                                        name="value"
+                                        control={control}
+                                        rules={{
+                                            required:
+                                                "Please enter the amount required for the request",
+                                        }}
+                                        helperText="Please enter the amount required for the request"
+                                    />
+
+                                    <TextInput
+                                        name="vendorMetamaskAddress"
+                                        control={control}
+                                        rules={{
+                                            required:
+                                                "Please enter vendors wallet address (MetaMask)",
+                                        }}
+                                        helperText="Please enter vendors wallet address (MetaMask)"
+                                    />
                                 </Grid>
                             </Grid>
                             <Divider className={classes.marg} />
@@ -179,4 +203,4 @@ const MilestoneFormComp = (props: Props) => {
     );
 };
 
-export default MilestoneFormComp;
+export default RequestFormComp;

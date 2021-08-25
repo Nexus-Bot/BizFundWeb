@@ -27,7 +27,6 @@ export interface Request {
     value: number;
     vendorMetamaskAddress: string;
     isComplete: boolean;
-    isCancelled: boolean;
     approvalsCount: number;
     denialsCount: number;
     imgURL: string;

@@ -44,7 +44,7 @@ const RequestDetails = ({ request }: Props) => {
                     color="textPrimary"
                     component={"div"}
                 >
-                    Description of the event
+                    Description of the request
                     <Typography variant="body2" color="textSecondary">
                         {request?.description}
                     </Typography>
