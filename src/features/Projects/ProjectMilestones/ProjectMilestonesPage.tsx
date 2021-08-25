@@ -11,6 +11,7 @@ import useAsyncEffect from "use-async-effect";
 import type { Milestone, Project, Request } from "../../../../types/modelTypes";
 import ProjectMilestoneHeader from "./ProjectMilestoneHeader";
 import ProjectMilestoneRequestsList from "./ProjectMilestoneRequestsList";
+import { Box } from "@material-ui/core";
 
 interface Props extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -51,7 +52,7 @@ const ProjectMilestonesPage = (props: Props) => {
     }, []);
 
     return (
-        <div>
+        <Box py="3rem">
             <ProjectMilestoneHeader
                 milestone={state.milestone}
                 project={state.project}
@@ -62,7 +63,7 @@ const ProjectMilestonesPage = (props: Props) => {
                 user={props.user}
                 project={state.project}
             />
-        </div>
+        </Box>
     );
 };
 

@@ -1,5 +1,6 @@
 import {
     Box,
+    Chip,
     Divider,
     IconButton,
     List,
@@ -15,6 +16,7 @@ import useAsyncEffect from "use-async-effect";
 import { getFilesFromDB } from "../../../App/Util/reusableFunctions/getProjectData";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import GetAppIcon from "@material-ui/icons/GetApp";
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 
 interface Props {
     request: Request | null;
@@ -37,13 +39,9 @@ const RequestDetails = ({ request }: Props) => {
         <List>
             <ListItem>
                 <ListItemIcon>
-                    <InfoOutlinedIcon color="disabled" />
+                    <InfoOutlinedIcon color="disabled" fontSize="large" />
                 </ListItemIcon>
-                <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    component={"div"}
-                >
+                <Typography variant="h6" color="textPrimary" component={"div"}>
                     Description of the request
                     <Typography variant="body2" color="textSecondary">
                         {request?.description}
@@ -53,16 +51,34 @@ const RequestDetails = ({ request }: Props) => {
             <Divider />
             <ListItem>
                 <ListItemIcon>
-                    <AttachMoneyIcon color="disabled" />
+                    <AttachMoneyIcon color="disabled" fontSize="large" />
                 </ListItemIcon>
-                <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    component={"div"}
-                >
-                    Amoount required for the request
+                <Typography variant="h6" color="textPrimary" component={"div"}>
+                    Amount required for the request
+                    <Box py="0.5rem">
+                        <Chip
+                            label={
+                                <Typography variant="h6" color="textSecondary">
+                                    {request?.value} $
+                                </Typography>
+                            }
+                            variant="outlined"
+                            color="secondary"
+                            icon={<MonetizationOnIcon />}
+                        />
+                    </Box>
+                </Typography>
+            </ListItem>
+
+            <Divider />
+            <ListItem>
+                <ListItemIcon>
+                    <AttachMoneyIcon color="disabled" fontSize="large" />
+                </ListItemIcon>
+                <Typography variant="h6" color="textPrimary" component={"div"}>
+                    Vendor Information
                     <Typography variant="body2" color="textSecondary">
-                        {request?.value}
+                        Wallet Address : {request?.vendorMetamaskAddress}
                     </Typography>
                 </Typography>
             </ListItem>

@@ -9,7 +9,7 @@ import {
     Divider,
     Button,
 } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import TextInput from "../../../App/Util/FormInputs/TextInput";
 import type { ProjectForm } from "../../../../types/formTypes";
@@ -25,6 +25,7 @@ import {
     addProjectInProjectMakersAccount,
     createProjectInBlockchain,
 } from "../../../App/Util/reusableFunctions/createProjectData";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme: Theme) => ({
     "@global": {
@@ -56,11 +57,13 @@ const ProjectFormComp = (props: Props) => {
         handleSubmit,
         control,
         formState: { isValid, isSubmitting, touchedFields, errors },
-        getValues,
         setValue,
+        watch,
     } = useForm<ProjectForm>({
         mode: "onChange",
     });
+
+    const watchisMap = watch("isMap", false);
 
     const onFormSubmit = async (data: ProjectForm) => {
         const dataTosend: any = { ...data };
@@ -197,7 +200,7 @@ const ProjectFormComp = (props: Props) => {
                         </Box>
 
                         {/* Location using mapbox and geocoder */}
-                        {getValues().isMap && (
+                        {watchisMap && (
                             <Box>
                                 <Grid container spacing={2}>
                                     <Grid item sm={2}>
@@ -238,7 +241,7 @@ const ProjectFormComp = (props: Props) => {
                         )}
 
                         {/* location using custom text fields */}
-                        {!getValues().isMap && (
+                        {!watchisMap && (
                             <Box>
                                 <Grid container spacing={2}>
                                     <Grid item sm={2}>

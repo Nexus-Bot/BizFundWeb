@@ -48,7 +48,7 @@ const ProjectMilestoneRequestsList = ({
                 >
                     <Box>
                         <FormatListNumberedIcon fontSize="large" />
-                        <Typography component="h1" variant="h3">
+                        <Typography component="h1" variant="h5">
                             Requests
                         </Typography>
                     </Box>
@@ -73,7 +73,10 @@ const ProjectMilestoneRequestsList = ({
                 <List>
                     {requests?.map((request, index) => {
                         return (
-                            <ListItem key={index}>
+                            <ListItem
+                                key={index}
+                                style={{ backgroundColor: "#333" }}
+                            >
                                 <ProjectMilestoneRequestListItem
                                     request={request}
                                     project={project}

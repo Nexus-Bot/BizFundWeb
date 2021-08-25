@@ -235,7 +235,7 @@ const SignUpProjectMakerPanel = ({ handleChange, registerUser }: Props) => {
                                     handleChange(e, 1);
                                 }}
                             >
-                                <Typography variant="body2" color="primary">
+                                <Typography variant="body2" color="textPrimary">
                                     Already have an account? Sign In
                                 </Typography>
                             </ButtonBase>

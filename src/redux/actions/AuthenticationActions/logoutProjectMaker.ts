@@ -22,7 +22,7 @@ export const logoutProjectMaker = (token: string) => async (dispatch: any) => {
         dispatch(logoutUser());
 
         dispatch(asyncActionFinished());
-        history.push("/home/projectmaker");
+        history.push("/");
     } catch (error) {
         dispatch(asyncActionError());
     }

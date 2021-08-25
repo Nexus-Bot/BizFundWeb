@@ -96,14 +96,20 @@ const ProjectDetailedMilestones = ({ project, user }: Props) => {
                                 <ListItemAvatar>
                                     <Avatar>
                                         {milestone.isCompleted && (
-                                            <CheckCircleIcon />
+                                            <CheckCircleIcon
+                                                style={{ color: "#329932" }}
+                                            />
                                         )}
                                         {milestone.isCancelled && (
-                                            <CancelIcon />
+                                            <CancelIcon
+                                                style={{ color: "#FF3232" }}
+                                            />
                                         )}
                                         {!milestone.isCancelled &&
                                             !milestone.isCompleted && (
-                                                <HourglassEmptyIcon />
+                                                <HourglassEmptyIcon
+                                                    style={{ color: "#FFDA3E" }}
+                                                />
                                             )}
                                     </Avatar>
                                 </ListItemAvatar>
