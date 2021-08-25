@@ -113,7 +113,7 @@ const SignedInMenu = ({ auth }: Props) => {
 
     return (
         <Fragment>
-            {auth.currentUser?.isBizFundRaiser ? (
+            {auth.currentUser?.isProjectMaker ? (
                 <MainButton
                     buttonTitle="Create Project"
                     link="/createproject"

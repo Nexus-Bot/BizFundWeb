@@ -12,7 +12,7 @@ export const loginUsingTokenBizFundraiser =
             dispatch(asycnActionStarted());
 
             const res = await api.post(
-                "/bizdundraisers/login/token",
+                "/bizfundraisers/login/token",
                 {},
                 {
                     headers: { "Authorization": `Bearer ${token}` },
