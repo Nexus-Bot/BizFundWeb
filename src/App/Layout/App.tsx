@@ -19,6 +19,8 @@ import AccountVerificationPage from "../../features/Verification/AccountVerifica
 import ProjectFormComp from "../../features/Projects/ProjectForm/ProjectFormComp";
 import { Container } from "@material-ui/core";
 import MilestoneFormComp from "../../features/Projects/ProjectForm/MilestoneFormComp";
+import ProjectMilestonesPage from "../../features/Projects/ProjectMilestones/ProjectMilestonesPage";
+import RequestFormComp from "../../features/Projects/ProjectForm/RequestFormComp";
 
 interface AppProps extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -90,6 +92,16 @@ const App = ({ logInBF, logInPM, auth, loading }: AppProps) => {
                                     exact
                                     path="/projects/:projectId/createmilestones"
                                     component={MilestoneFormComp}
+                                />
+                                <Route
+                                    exact
+                                    path="/project/:projectId/milestones/:milestoneId"
+                                    component={ProjectMilestonesPage}
+                                />
+                                <Route
+                                    exact
+                                    path="/projects/:projectId/:milestoneId/createrequest"
+                                    component={RequestFormComp}
                                 />
                             </Switch>
                         </div>

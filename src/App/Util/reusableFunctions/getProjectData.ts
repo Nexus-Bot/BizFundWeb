@@ -29,12 +29,28 @@ const testProject = {
     cancelled: false,
     finished: false,
 };
+
+const testRequest = {
+    id: 0,
+    title: "Test Request",
+    description: "Test Request Description",
+    milestoneId: "6125709accabdb6404690488",
+    value: 2000,
+    vendorMetamaskAddress: "xyz2",
+    isComplete: false,
+    approvalsCount: 5,
+    denialsCount: 3,
+    imgURL: "https://source.unsplash.com/random",
+    filesURL: "test requst folder address",
+    cancelled: false,
+};
+
 export const getProjectDataByMetamaskAddress = async (
     metamaskAddress: string | undefined
 ): Promise<Project | null> => {
     if (metamaskAddress === undefined) return null;
 
-    // Fetch the projectmaker by metamusk address
+    // Fetch the projectData from blockchain
 
     return testProject;
 };
@@ -57,6 +73,9 @@ export const getMilestoneDataById = async (
     if (!milestoneId) return null;
 
     // Fetch the milestone from mongoDB Database
+    const res = await api.get(`/milestones/${milestoneId}`);
+
+    if (res.data) return res.data;
 
     return null;
 };
@@ -65,19 +84,18 @@ export const getRequestDataByRequestIndex = async (
     projectAddress: string | undefined,
     requestIndex: number | undefined
 ): Promise<Request | null> => {
-    if (!projectAddress || !requestIndex) return null;
+    if (!projectAddress || requestIndex === undefined) return null;
 
     // Fetch the request from blockchain
 
-    return null;
+    return testRequest;
 };
 
 export const getRequestsForMilestone = async (
     projectAddress: string | undefined,
     requestIndexes: number[] | undefined
 ): Promise<Request[] | null> => {
-    if (!projectAddress || !requestIndexes || requestIndexes.length === 0)
-        return null;
+    if (!projectAddress || !requestIndexes) return null;
 
     let requests: Request[] = [];
 

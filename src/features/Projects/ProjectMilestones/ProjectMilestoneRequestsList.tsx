@@ -10,6 +10,7 @@ import React from "react";
 import indigo from "@material-ui/core/colors/indigo";
 import type {
     BizFundraiser,
+    Milestone,
     Project,
     ProjectMaker,
     Request,
@@ -22,9 +23,15 @@ interface Props {
     requests: Request[] | null;
     user: BizFundraiser | ProjectMaker | null;
     project: Project | null;
+    milestone: Milestone | null;
 }
 
-const ProjectMilestoneRequestsList = ({ requests, user, project }: Props) => {
+const ProjectMilestoneRequestsList = ({
+    requests,
+    user,
+    project,
+    milestone,
+}: Props) => {
     return (
         <Paper variant="outlined" elevation={3}>
             {/* Heading */}
@@ -50,16 +57,14 @@ const ProjectMilestoneRequestsList = ({ requests, user, project }: Props) => {
                         user.metamaskAddress ===
                             project?.creatorMetamaskAddress && (
                             <Box>
-                                <Link
-                                    to={`/projects/${project?.id}/createrequest`}
+                                <Button
+                                    component={Link}
+                                    variant="contained"
+                                    color="secondary"
+                                    to={`/projects/${project?.id}/${milestone?._id}/createrequest`}
                                 >
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                    >
-                                        Create Request
-                                    </Button>
-                                </Link>
+                                    Create Request
+                                </Button>
                             </Box>
                         )}
                 </Box>

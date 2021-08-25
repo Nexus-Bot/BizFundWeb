@@ -17,7 +17,7 @@ interface Props {
 
 const ProjectMilestoneRequestListItem = ({ request, user, project }: Props) => {
     return (
-        <Box my="1rem">
+        <Box my="1rem" width="100%">
             <Paper>
                 <Typography component="h1" variant="h5">
                     {request?.title}

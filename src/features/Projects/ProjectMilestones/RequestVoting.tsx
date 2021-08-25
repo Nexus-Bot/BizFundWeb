@@ -5,7 +5,7 @@ import type {
     ProjectMaker,
     Request,
 } from "../../../../types/modelTypes";
-import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { PieChart, Pie, Tooltip, Cell } from "recharts";
 import { Box, Button } from "@material-ui/core";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
@@ -105,34 +105,40 @@ const RequestVoting = ({ request, project, user }: Props) => {
             name: "DownVotes",
             value: request?.denialsCount,
         },
+        {
+            name: "Not Voted",
+            value:
+                (project ? project.approversCount : 0) -
+                ((request ? request.approvalsCount : 0) +
+                    (request ? request.denialsCount : 0)),
+        },
     ];
     const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
     return (
         <Box p={1}>
             <Box m={1}>
-                <ResponsiveContainer width="100%" height="100%">
-                    <PieChart width={400} height={400}>
-                        <Pie
-                            dataKey="value"
-                            isAnimationActive={false}
-                            data={chartData}
-                            cx="50%"
-                            cy="50%"
-                            outerRadius={80}
-                            fill="#8884d8"
-                            label={renderCustomizedLabel}
-                        >
-                            {chartData.map((entry, index) => (
-                                <Cell
-                                    key={`cell-${index}`}
-                                    fill={COLORS[index % COLORS.length]}
-                                />
-                            ))}
-                        </Pie>
-                        <Tooltip />
-                    </PieChart>
-                </ResponsiveContainer>
+                <PieChart width={200} height={200}>
+                    <Pie
+                        dataKey="value"
+                        isAnimationActive={false}
+                        labelLine={false}
+                        data={chartData}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={80}
+                        fill="#8884d8"
+                        label={renderCustomizedLabel}
+                    >
+                        {chartData.map((entry, index) => (
+                            <Cell
+                                key={`cell-${index}`}
+                                fill={COLORS[index % COLORS.length]}
+                            />
+                        ))}
+                    </Pie>
+                    <Tooltip />
+                </PieChart>
             </Box>
             {state.isEligibleVoter && (
                 <Box

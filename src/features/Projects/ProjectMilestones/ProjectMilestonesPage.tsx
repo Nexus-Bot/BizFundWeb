@@ -57,6 +57,7 @@ const ProjectMilestonesPage = (props: Props) => {
                 project={state.project}
             />
             <ProjectMilestoneRequestsList
+                milestone={state.milestone}
                 requests={state.requests}
                 user={props.user}
                 project={state.project}

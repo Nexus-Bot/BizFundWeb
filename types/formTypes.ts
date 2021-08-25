@@ -43,3 +43,10 @@ export interface MilestoneForm {
     title: string;
     description: string;
 }
+
+export interface RequestForm {
+    title: string;
+    description: string;
+    vendorMetamaskAddress: string;
+    value: number;
+}

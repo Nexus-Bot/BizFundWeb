@@ -21,6 +21,7 @@ export const loginProjectMakerAction =
             const user = await res.data;
 
             localStorage.setItem("logInTokenPM", user.token);
+            localStorage.removeItem("logInTokenBF");
             dispatch(loginProjectMaker(user.projectMaker));
             history.push("/projects");
 

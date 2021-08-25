@@ -1,4 +1,9 @@
-import type { Milestone, Project } from "../../../../types/modelTypes";
+import type {
+    Milestone,
+    Project,
+    ProjectMaker,
+    Request,
+} from "../../../../types/modelTypes";
 import api from "../API/backend";
 
 export const createProjectInBlockchain = async (
@@ -6,6 +11,36 @@ export const createProjectInBlockchain = async (
 ): Promise<Project | null> => {
     if (!projectData) return null;
     // call the web3.js api to create project
+
+    return null;
+};
+
+export const addProjectInProjectMakersAccount = async (
+    projectAddress: string | null,
+    token: string | null
+): Promise<ProjectMaker | null> => {
+    if (!projectAddress || !token) return null;
+
+    const res = await api.patch(
+        "/project/projectmaker/createproject",
+        {
+            projectAddress,
+        },
+        {
+            headers: { "Authorization": `Bearer ${token}` },
+        }
+    );
+
+    if (res.data) return res.data;
+
+    return null;
+};
+
+export const createRequestInBlockchain = async (
+    requestData: any | Request
+): Promise<Request | null> => {
+    if (!requestData) return null;
+    // call the web3.js api to create request
 
     return null;
 };
@@ -23,6 +58,8 @@ export const createMilestoneForProject = async (
             headers: { "Authorization": `Bearer ${token}` },
         }
     );
+
+    if (res.data) return res.data;
 
     return null;
 };

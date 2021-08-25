@@ -19,6 +19,12 @@ import SwitchInput from "../../../App/Util/FormInputs/SwitchInput";
 import FormErrors from "../../../App/Util/resuableComp/FormErrors";
 import GeoDecoder from "../../Maps/GeoDecoder";
 import NumberInput from "../../../App/Util/FormInputs/NumberInput";
+import type { RootState } from "../../../redux/store/store";
+import { connect, ConnectedProps } from "react-redux";
+import {
+    addProjectInProjectMakersAccount,
+    createProjectInBlockchain,
+} from "../../../App/Util/reusableFunctions/createProjectData";
 
 const useStyles = makeStyles((theme: Theme) => ({
     "@global": {
@@ -43,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-interface Props {}
+interface Props extends PropsFromRedux {}
 
 const ProjectFormComp = (props: Props) => {
     const {
@@ -56,7 +62,7 @@ const ProjectFormComp = (props: Props) => {
         mode: "onChange",
     });
 
-    const onFormSubmit = (data: ProjectForm) => {
+    const onFormSubmit = async (data: ProjectForm) => {
         const dataTosend: any = { ...data };
 
         // @ts-ignore
@@ -71,8 +77,25 @@ const ProjectFormComp = (props: Props) => {
             dataTosend.postalAddress = data.postalAddress;
         }
 
+        dataTosend.creatorMetamaskAddress = props.user?.metamaskAddress;
+
+        // Add the folder and img urls of project storage
+        dataTosend.imgURL = "";
+        dataTosend.folderURL = "";
+
         // Call the create project api
-        console.log(dataTosend);
+        const project = await createProjectInBlockchain(dataTosend);
+        if (!project) console.log("Please retry!!!");
+        else {
+            const BFToken = localStorage.getItem("logInTokenBF");
+            const PMToken = localStorage.getItem("logInTokenPM");
+            const projectMaker = await addProjectInProjectMakersAccount(
+                project.id,
+                BFToken ? BFToken : PMToken
+            );
+            if (!projectMaker) console.log("Please retry!!!");
+            else history.push(`/projects/${project?.id}`);
+        }
     };
 
     const classes = useStyles();
@@ -296,4 +319,14 @@ const ProjectFormComp = (props: Props) => {
     );
 };
 
-export default ProjectFormComp;
+const mapState2Props = (state: RootState) => {
+    return {
+        user: state.auth.currentUser,
+    };
+};
+
+const connector = connect(mapState2Props);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(ProjectFormComp);
