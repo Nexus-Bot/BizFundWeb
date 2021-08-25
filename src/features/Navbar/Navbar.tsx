@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import type { RootState } from "../../redux/store/store";
 import SignedInMenu from "../Menus/SignedInMenu";
 import SignedOutMenu from "../Menus/SignedOutMenu";
-import mainLogo from "../../Assets/Logo.svg";
+import mainLogo from "../../Assets/Logo.png";
 
 interface Props extends PropsFromRedux {}
 
@@ -52,10 +52,10 @@ const Navbar = ({ auth }: Props) => {
     const classes = useStyles();
     return (
         <div className={classes.root} id="back-to-top-anchor">
-            <AppBar style={{ background: "#2E3B55" }}>
+            <AppBar style={{ background: "#0c0c0c", padding: "0.5rem" }}>
                 <Toolbar>
                     {/* Logo */}
-                    <Link to="/projects">
+                    <Link to="/">
                         <img
                             src={mainLogo}
                             alt="Logo"
@@ -63,12 +63,11 @@ const Navbar = ({ auth }: Props) => {
                         />
                     </Link>
                     <Typography
-                        // type="title"
                         variant="h6"
                         color="inherit"
                         className={(classes.flex, classes.title)}
                     >
-                        <Link to="/projects" className={classes.typo}>
+                        <Link to="/" className={classes.typo}>
                             BizFund
                         </Link>
                     </Typography>
@@ -80,11 +79,7 @@ const Navbar = ({ auth }: Props) => {
                             // toggleDarkMode={toggleDarkMode}
                         />
                     ) : (
-                        <SignedOutMenu
-                        // onClick={() =>
-                        //     this.setState({ authenticated: true })
-                        // }
-                        />
+                        <SignedOutMenu />
                     )}
                 </Toolbar>
             </AppBar>

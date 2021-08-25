@@ -77,6 +77,11 @@ const RequestVoting = ({ request, project, user }: Props) => {
             return;
         }
 
+        if (user.isProjectMaker) {
+            setState({ isEligibleVoter: false });
+            return;
+        }
+
         if (isAlreadyVoter) {
             setState({ isEligibleVoter: false });
             return;

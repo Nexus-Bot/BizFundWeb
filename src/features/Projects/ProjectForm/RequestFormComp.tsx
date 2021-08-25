@@ -13,7 +13,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import TextareaInput from "../../../App/Util/FormInputs/TextareaInput";
 import TextInput from "../../../App/Util/FormInputs/TextInput";
-import type { RequestForm } from "types/formTypes";
+import type { RequestForm } from "../../../../types/formTypes";
 import FormErrors from "../../../App/Util/resuableComp/FormErrors";
 import history from "../../../history";
 import type { RouteComponentProps } from "react-router";
