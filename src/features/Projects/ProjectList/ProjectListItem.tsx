@@ -123,7 +123,7 @@ const ProjectListItem = ({ project }: Props) => {
                                             variant="body1"
                                             color="textPrimary"
                                         >
-                                            {project.title}
+                                            <strong>{project.title}</strong>
                                         </Typography>
 
                                         <Typography
@@ -206,6 +206,8 @@ const ProjectListItem = ({ project }: Props) => {
                 </IconButton>
                 <Button
                     size="small"
+                    variant="contained"
+                    color="secondary"
                     component={Link}
                     to={`/projects/${project.id}`}
                 >

@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import type { RootState } from "src/redux/store/store";
@@ -10,16 +10,9 @@ interface Props extends PropsFromRedux {}
 
 const ProjectsDashboard = ({ projects }: Props) => {
     return (
-        <div>
+        <Box py="3rem">
             <Grid container spacing={2}>
                 <Grid item lg={7} md={8} xs={12}>
-                    {/* <EventList
-                        events={loadedEvents}
-                        getNextEvents={this.getNextEvents}
-                        moreEvents={moreEvents}
-                        loading={loading}
-                    /> */}
-
                     {/* {loading &&
                         [...new Array(1)].map((obj, index) => {
                             return <EventListItemSkeleton key={index} />;
@@ -40,7 +33,7 @@ const ProjectsDashboard = ({ projects }: Props) => {
                 </Grid>
             </Grid>
             <ProjectList projects={projects} />
-        </div>
+        </Box>
     );
 };
 

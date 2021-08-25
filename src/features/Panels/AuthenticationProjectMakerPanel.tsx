@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     root: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
+        border: "10px solid #F3F3F3",
+        borderRadius: "10px",
     },
 }));
 

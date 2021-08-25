@@ -17,7 +17,7 @@ import { loginUsingTokenProjectMaker } from "../../redux/actions/AuthenticationA
 import { loginUsingTokenBizFundraiser } from "../../redux/actions/AuthenticationActions/logInUsingTokenBizFundraiser";
 import AccountVerificationPage from "../../features/Verification/AccountVerificationPage";
 import ProjectFormComp from "../../features/Projects/ProjectForm/ProjectFormComp";
-import { Container } from "@material-ui/core";
+import { Container, createTheme, ThemeProvider } from "@material-ui/core";
 import MilestoneFormComp from "../../features/Projects/ProjectForm/MilestoneFormComp";
 import ProjectMilestonesPage from "../../features/Projects/ProjectMilestones/ProjectMilestonesPage";
 import RequestFormComp from "../../features/Projects/ProjectForm/RequestFormComp";
@@ -27,6 +27,17 @@ import GettingStartedPage from "../../features/Home/GettingStartedPage";
 interface AppProps extends PropsFromRedux, RouteComponentProps<any> {}
 
 const App = ({ logInBF, logInPM, auth, loading }: AppProps) => {
+    const theme = {
+        palette: {
+            type: "dark",
+        },
+        backgr: {
+            backgroundColor: "#222",
+        },
+    };
+
+    // @ts-ignore
+    const themeConfig = createTheme(theme);
     useEffect(() => {
         const BFToken = localStorage.getItem("logInTokenBF");
         const PMToken = localStorage.getItem("logInTokenPM");
@@ -38,78 +49,78 @@ const App = ({ logInBF, logInPM, auth, loading }: AppProps) => {
     }, []);
 
     return (
-        <div style={{ backgroundColor: "#0f0f0f" }}>
-            {/* 
-            <Route
-                path="/(.+)"
-                render={() => ( */}
-            <Route path="/" exact component={LandingPage} />
-            <Route path="/getstarted" exact component={GettingStartedPage} />
-            <Container
-                maxWidth="lg"
-                style={{
-                    paddingTop: "5rem",
-                    paddingBottom: "5rem",
-                }}
-            >
-                {!loading &&
-                    auth.authenticated &&
-                    !auth.currentUser?.isVerified && (
-                        <AccountVerificationPage />
-                    )}
-                {(!auth.authenticated || auth.currentUser?.isVerified) && (
-                    <div>
-                        <Navbar />
+        <ThemeProvider theme={themeConfig}>
+            <div style={{ backgroundColor: "#222", minHeight: "100vh" }}>
+                <Route path="/" exact component={LandingPage} />
+                <Route
+                    path="/getstarted"
+                    exact
+                    component={GettingStartedPage}
+                />
+                <Container
+                    maxWidth="lg"
+                    style={{
+                        paddingTop: "5rem",
+                        paddingBottom: "5rem",
+                    }}
+                >
+                    {!loading &&
+                        auth.authenticated &&
+                        !auth.currentUser?.isVerified && (
+                            <AccountVerificationPage />
+                        )}
+                    {(!auth.authenticated || auth.currentUser?.isVerified) && (
                         <div>
-                            <Switch>
-                                <Route
-                                    path="/home/bizfundraiser"
-                                    exact
-                                    component={HomePageBizFundraiser}
-                                />
-                                <Route
-                                    path="/home/projectmaker"
-                                    exact
-                                    component={HomePageProjectMaker}
-                                />
-                                <Route
-                                    exact
-                                    path="/projects"
-                                    component={ProjectsDashboard}
-                                />
-                                <Route
-                                    exact
-                                    path="/projects/:projectId"
-                                    component={ProjectDetailedPage}
-                                />
-                                <Route
-                                    exact
-                                    path="/createproject"
-                                    component={ProjectFormComp}
-                                />
-                                <Route
-                                    exact
-                                    path="/projects/:projectId/createmilestones"
-                                    component={MilestoneFormComp}
-                                />
-                                <Route
-                                    exact
-                                    path="/project/:projectId/milestones/:milestoneId"
-                                    component={ProjectMilestonesPage}
-                                />
-                                <Route
-                                    exact
-                                    path="/projects/:projectId/:milestoneId/createrequest"
-                                    component={RequestFormComp}
-                                />
-                            </Switch>
+                            <Navbar />
+                            <div>
+                                <Switch>
+                                    <Route
+                                        path="/home/bizfundraiser"
+                                        exact
+                                        component={HomePageBizFundraiser}
+                                    />
+                                    <Route
+                                        path="/home/projectmaker"
+                                        exact
+                                        component={HomePageProjectMaker}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/projects"
+                                        component={ProjectsDashboard}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/projects/:projectId"
+                                        component={ProjectDetailedPage}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/createproject"
+                                        component={ProjectFormComp}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/projects/:projectId/createmilestones"
+                                        component={MilestoneFormComp}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/project/:projectId/milestones/:milestoneId"
+                                        component={ProjectMilestonesPage}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/projects/:projectId/:milestoneId/createrequest"
+                                        component={RequestFormComp}
+                                    />
+                                </Switch>
+                            </div>
                         </div>
-                    </div>
-                )}
-            </Container>
-            {/* )}
-            /> */}
-        </div>
+                    )}
+                </Container>
+            </div>
+        </ThemeProvider>
     );
 };
 
