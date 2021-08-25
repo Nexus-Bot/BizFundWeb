@@ -112,10 +112,7 @@ const GettingStartedPage = (props: Props) => {
                                             variant="h4"
                                             style={{ color: "#FFF" }}
                                         >
-                                            <strong>
-                                                {" "}
-                                                For Project Builders
-                                            </strong>
+                                            <strong> For Project Makers</strong>
                                         </Typography>
 
                                         <Typography
