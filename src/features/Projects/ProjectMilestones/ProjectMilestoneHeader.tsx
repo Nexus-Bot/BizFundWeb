@@ -31,23 +31,36 @@ const ProjectMilestoneHeader = ({ project, milestone }: Props) => {
             <Paper elevation={3}>
                 <Box display="flex" p="1rem" alignItems="center">
                     <Avatar className={classes.avatar}>
-                        {milestone?.isCompleted && <CheckCircleIcon />}
-                        {milestone?.isCancelled && <CancelIcon />}
+                        {milestone?.isCompleted && (
+                            <CheckCircleIcon
+                                style={{ color: "#329932" }}
+                                fontSize="large"
+                            />
+                        )}
+                        {milestone?.isCancelled && (
+                            <CancelIcon
+                                style={{ color: "#FF3232" }}
+                                fontSize="large"
+                            />
+                        )}
                         {!milestone?.isCancelled && !milestone?.isCompleted && (
-                            <HourglassEmptyIcon />
+                            <HourglassEmptyIcon
+                                style={{ color: "#FFDA3E" }}
+                                fontSize="large"
+                            />
                         )}
                     </Avatar>
-                    <Box>
+                    <Box mx="1rem">
                         <Box mb="0.5rem">
-                            <Typography component="h1" variant="h5">
-                                {milestone?.title}
+                            <Typography variant="h3">
+                                <strong>{milestone?.title}</strong>
                             </Typography>
                         </Box>
-                        <Typography variant="body1" color="textSecondary">
-                            {milestone?.description}
+                        <Typography variant="h6" color="textPrimary">
+                            Project : {project?.title}
                         </Typography>
                         <Typography variant="body1" color="textSecondary">
-                            Project : {project?.title}
+                            {milestone?.description}
                         </Typography>
                     </Box>
                 </Box>

@@ -18,27 +18,29 @@ interface Props {
 const ProjectMilestoneRequestListItem = ({ request, user, project }: Props) => {
     return (
         <Box my="1rem" width="100%">
-            <Paper>
-                <Typography component="h1" variant="h5">
-                    {request?.title}
-                </Typography>
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                >
-                    <Grid item>
-                        <RequestDetails request={request} />
+            <Paper elevation={3}>
+                <Box p="2rem">
+                    <Box pt="2rem" textAlign="center">
+                        <Typography variant="h4">{request?.title}</Typography>
+                    </Box>
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                    >
+                        <Grid item>
+                            <RequestDetails request={request} />
+                        </Grid>
+                        <Grid item>
+                            <RequestVoting
+                                request={request}
+                                project={project}
+                                user={user}
+                            />
+                        </Grid>
                     </Grid>
-                    <Grid item>
-                        <RequestVoting
-                            request={request}
-                            project={project}
-                            user={user}
-                        />
-                    </Grid>
-                </Grid>
+                </Box>
             </Paper>
         </Box>
     );

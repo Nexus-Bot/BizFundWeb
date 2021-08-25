@@ -53,7 +53,7 @@ const SignedOutMenu = (props: Props) => {
     };
     return (
         <Fragment>
-            <MainButton buttonTitle="Browse Projects" link="/projects" />
+            <MainButton buttonTitle="Get Started" link="/getstarted" />
             {/* <FormControlLabel
                 control={
                     <SwitchButton

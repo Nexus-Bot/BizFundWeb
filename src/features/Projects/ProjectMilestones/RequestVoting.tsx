@@ -103,11 +103,11 @@ const RequestVoting = ({ request, project, user }: Props) => {
 
     const chartData = [
         {
-            name: "UpVotes",
+            name: "Up Votes",
             value: request?.approvalsCount,
         },
         {
-            name: "DownVotes",
+            name: "Down Votes",
             value: request?.denialsCount,
         },
         {
@@ -118,7 +118,7 @@ const RequestVoting = ({ request, project, user }: Props) => {
                     (request ? request.denialsCount : 0)),
         },
     ];
-    const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+    const COLORS = ["#329932", "#FF3232", "#333"];
 
     return (
         <Box p={1}>
@@ -151,20 +151,30 @@ const RequestVoting = ({ request, project, user }: Props) => {
                     alignItems="center"
                     justifyContent="space-around"
                 >
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<ThumbUpIcon />}
-                    >
-                        UpVote
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<ThumbDownIcon />}
-                    >
-                        DownVote
-                    </Button>
+                    <Box mx="0.25rem">
+                        <Button
+                            variant="contained"
+                            style={{
+                                backgroundColor: "#329932",
+                                color: "#FFF",
+                            }}
+                            startIcon={<ThumbUpIcon />}
+                        >
+                            UpVote
+                        </Button>
+                    </Box>
+                    <Box mx="0.25rem">
+                        <Button
+                            variant="contained"
+                            style={{
+                                backgroundColor: "#FF3232",
+                                color: "#FFF",
+                            }}
+                            startIcon={<ThumbDownIcon />}
+                        >
+                            DownVote
+                        </Button>
+                    </Box>
                 </Box>
             )}
         </Box>

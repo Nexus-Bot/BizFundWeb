@@ -12,6 +12,7 @@ import ProjectDetailedMilestones from "./ProjectDetailedMilestones";
 import { getProjectDataByMetamaskAddress } from "../../../App/Util/reusableFunctions/getProjectData";
 import { getUserContributionInProjectByMetamaskaddress } from "../../../App/Util/reusableFunctions/getUserContribution";
 import ProjectDetailedMoney from "./ProjectDetailedMoney";
+import { Box, Grid } from "@material-ui/core";
 
 interface Props extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -30,7 +31,6 @@ const ProjectDetailedPage = (props: Props) => {
 
     useAsyncEffect(async (isMounted) => {
         const projectAddress = props.match.params.projectId;
-        console.log(projectAddress);
         const projectData = await getProjectDataByMetamaskAddress(
             projectAddress
         );
@@ -58,25 +58,31 @@ const ProjectDetailedPage = (props: Props) => {
         state.project?.creatorMetamaskAddress === props.user?.metamaskAddress;
 
     return (
-        <div>
+        <Box py="3rem">
             {state.project && (
-                <div>
-                    <ProjectDetailedHeader
-                        project={state.project}
-                        projectMaker={state.projectMaker}
-                        contribution={state.contribution}
-                        isProjectMaker={isProjectMaker}
-                    />
-                    <ProjectDetailedMoney project={state.project} />
-                    <ProjectDetailedInfo project={state.project} />
-                    <ProjectDetailedMilestones
-                        user={props.user}
-                        project={state.project}
-                    />
-                    <ProjectDetailedChat />
-                </div>
+                <Grid container spacing={3}>
+                    <Grid item md={8} xs={12}>
+                        <ProjectDetailedHeader
+                            project={state.project}
+                            projectMaker={state.projectMaker}
+                            contribution={state.contribution}
+                            isProjectMaker={isProjectMaker}
+                        />
+                    </Grid>
+                    <Grid item md xs={12}>
+                        <ProjectDetailedMoney project={state.project} />
+                    </Grid>
+                    <Grid item md={8} xs={12}>
+                        <ProjectDetailedInfo project={state.project} />
+                        <ProjectDetailedMilestones
+                            user={props.user}
+                            project={state.project}
+                        />
+                        <ProjectDetailedChat />
+                    </Grid>
+                </Grid>
             )}
-        </div>
+        </Box>
     );
 };
 

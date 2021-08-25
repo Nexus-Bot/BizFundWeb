@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     root: {
         marginTop: "1rem",
         marginBottom: "1rem",
-        //backgroundColor: "#F5F5F5",
     },
     media: {
         height: 0,
@@ -87,7 +86,11 @@ const ProjectDetailedHeader = ({
                         ></Avatar>
                     </Link>
                 }
-                title={project.title}
+                title={
+                    <Typography variant="h4">
+                        <strong>{project.title}</strong>
+                    </Typography>
+                }
                 // subheader={`${
                 //     event.date &&
                 //     format(event.date.toDate(), "EEEE do, LLL, yyyy")

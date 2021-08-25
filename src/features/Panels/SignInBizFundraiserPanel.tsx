@@ -123,7 +123,15 @@ const SignInBizFundraiserPanel = ({ handleChange, logInUser }: Props) => {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link to="/resetPassword">Forgot password?</Link>
+                            <Typography
+                                variant="body2"
+                                color="textPrimary"
+                                component={Link}
+                                to="/resetPassword"
+                                style={{ textDecoration: "none" }}
+                            >
+                                Forgot password?
+                            </Typography>
                         </Grid>
                         <Grid item>
                             <ButtonBase
@@ -132,7 +140,7 @@ const SignInBizFundraiserPanel = ({ handleChange, logInUser }: Props) => {
                                     handleChange(e, 0);
                                 }}
                             >
-                                <Typography variant="body2" color="primary">
+                                <Typography variant="body2" color="textPrimary">
                                     Don't have an account? Sign Up
                                 </Typography>
                             </ButtonBase>

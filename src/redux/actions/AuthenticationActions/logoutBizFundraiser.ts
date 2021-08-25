@@ -22,7 +22,7 @@ export const logoutBizFundraiser = (token: string) => async (dispatch: any) => {
         dispatch(logoutUser());
 
         dispatch(asyncActionFinished());
-        history.push("/home/bizfundraiser");
+        history.push("/");
     } catch (error) {
         console.log(error);
         dispatch(asyncActionError());
