@@ -22,6 +22,7 @@ import MilestoneFormComp from "../../features/Projects/ProjectForm/MilestoneForm
 import ProjectMilestonesPage from "../../features/Projects/ProjectMilestones/ProjectMilestonesPage";
 import RequestFormComp from "../../features/Projects/ProjectForm/RequestFormComp";
 import LandingPage from "../../features/Home/LandingPage";
+import GettingStartedPage from "../../features/Home/GettingStartedPage";
 
 interface AppProps extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -37,17 +38,13 @@ const App = ({ logInBF, logInPM, auth, loading }: AppProps) => {
     }, []);
 
     return (
-        <div>
-            <div style={{ position: "fixed", top: "200px", right: "200px" }}>
-                <Link to="/home/bizFundraiser">Home Fund Raiser</Link>
-                <Link to="/home/projectmaker">Home Project Maker</Link>
-                <Link to="/projects">Projects Dashboard</Link>
-            </div>
+        <div style={{ backgroundColor: "#0f0f0f" }}>
             {/* 
             <Route
                 path="/(.+)"
                 render={() => ( */}
             <Route path="/" exact component={LandingPage} />
+            <Route path="/getstarted" exact component={GettingStartedPage} />
             <Container
                 maxWidth="lg"
                 style={{
