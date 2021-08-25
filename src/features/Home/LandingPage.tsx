@@ -38,7 +38,9 @@ const LandingPage = (props: Props) => {
                     component={Link}
                     to={"/getstarted"}
                 >
-                    <Typography variant="h5">Get Started</Typography>
+                    <Typography variant="h5">
+                        <strong>Get Started</strong>
+                    </Typography>
                 </Button>
             </Box>
         </div>
