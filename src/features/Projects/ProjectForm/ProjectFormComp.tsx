@@ -25,7 +25,6 @@ import {
     addProjectInProjectMakersAccount,
     createProjectInBlockchain,
 } from "../../../App/Util/reusableFunctions/createProjectData";
-import { useState } from "react";
 
 const useStyles = makeStyles((theme: Theme) => ({
     "@global": {
@@ -72,6 +71,7 @@ const ProjectFormComp = (props: Props) => {
         delete dataTosend.location;
 
         if (data.isMap) {
+            dataTosend.isMap = true;
             dataTosend.lng = data.location.center[0];
             dataTosend.lat = data.location.center[1];
             dataTosend.placeName = data.location.placeName;
@@ -79,8 +79,6 @@ const ProjectFormComp = (props: Props) => {
             dataTosend.isMap = false;
             dataTosend.postalAddress = data.postalAddress;
         }
-
-        dataTosend.creatorMetamaskAddress = props.user?.metamaskAddress;
 
         // Add the folder and img urls of project storage
         dataTosend.imgURL = "";
@@ -104,103 +102,27 @@ const ProjectFormComp = (props: Props) => {
     const classes = useStyles();
     return (
         <>
-            <Container maxWidth="md">
-                <Paper className={classes.mainBg} elevation={3}>
-                    <Box textAlign="center" mb="2rem">
-                        <Typography component="h1" variant="h4">
-                            <i>
-                                <u>PROJECT FORM</u>
-                            </i>
-                        </Typography>
-                    </Box>
-                    <form
-                        onSubmit={handleSubmit(onFormSubmit)}
-                        className={classes.root}
-                    >
-                        <Box>
-                            <Grid container spacing={2}>
-                                <Grid item sm={2}>
-                                    <Box
-                                        display="flex"
-                                        justifyContent="center"
-                                        alignItems="center"
-                                        height="100%"
-                                    >
-                                        <Typography
-                                            component="h1"
-                                            variant="h5"
-                                            color="secondary"
-                                        >
-                                            BASIC DETAILS
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-
-                                <Grid item sm style={{ width: "100%" }}>
-                                    <TextInput
-                                        name="title"
-                                        control={control}
-                                        rules={{
-                                            required:
-                                                "Please enter the title for the project",
-                                        }}
-                                        helperText="Please enter the title for the project"
-                                    />
-
-                                    <TextareaInput
-                                        name="description"
-                                        control={control}
-                                        rows={3}
-                                        rules={{
-                                            required:
-                                                "Please enter the description for the project",
-                                        }}
-                                        helperText="Please enter the description for the project"
-                                    />
-
-                                    <NumberInput
-                                        name="minContribution"
-                                        control={control}
-                                        rules={{
-                                            required:
-                                                "Please enter the minimum contribution of a individual for the project",
-                                        }}
-                                        helperText="Please enter the minimum contribution of a individual for the project"
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Divider className={classes.marg} />
+            {props.user?.metamaskAddress === "" && (
+                <Box textAlign="center" p="3rem">
+                    <Typography color="textPrimary" variant="h3">
+                        Please Connect your MetaMask wallet to proceed
+                    </Typography>
+                </Box>
+            )}
+            {props.user?.metamaskAddress !== "" && (
+                <Container maxWidth="md">
+                    <Paper className={classes.mainBg} elevation={3}>
+                        <Box textAlign="center" mb="2rem">
+                            <Typography component="h1" variant="h4">
+                                <i>
+                                    <u>PROJECT FORM</u>
+                                </i>
+                            </Typography>
                         </Box>
-                        <Box>
-                            <Grid container spacing={2}>
-                                <Grid item sm={2}>
-                                    <Box
-                                        display="flex"
-                                        justifyContent="center"
-                                        alignItems="center"
-                                        height="100%"
-                                    >
-                                        <Typography
-                                            component="h1"
-                                            variant="h5"
-                                            color="secondary"
-                                        >
-                                            Options
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-                                <Grid item sm={10}>
-                                    <SwitchInput
-                                        name="isMap"
-                                        control={control}
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Divider className={classes.marg} />
-                        </Box>
-
-                        {/* Location using mapbox and geocoder */}
-                        {watchisMap && (
+                        <form
+                            onSubmit={handleSubmit(onFormSubmit)}
+                            className={classes.root}
+                        >
                             <Box>
                                 <Grid container spacing={2}>
                                     <Grid item sm={2}>
@@ -215,109 +137,196 @@ const ProjectFormComp = (props: Props) => {
                                                 variant="h5"
                                                 color="secondary"
                                             >
-                                                LOCATION DETAILS
+                                                BASIC DETAILS
                                             </Typography>
                                         </Box>
                                     </Grid>
-                                    <Grid
-                                        item
-                                        sm={10}
-                                        style={{ width: "100%" }}
-                                    >
-                                        <Controller
-                                            name="location"
-                                            control={control}
-                                            render={({ field }) => (
-                                                <GeoDecoder
-                                                    setValue={setValue}
-                                                />
-                                            )}
-                                        />
-                                    </Grid>
-                                </Grid>
 
-                                <Divider className={classes.marg} />
-                            </Box>
-                        )}
-
-                        {/* location using custom text fields */}
-                        {!watchisMap && (
-                            <Box>
-                                <Grid container spacing={2}>
-                                    <Grid item sm={2}>
-                                        <Box
-                                            display="flex"
-                                            justifyContent="center"
-                                            alignItems="center"
-                                            height="100%"
-                                        >
-                                            <Typography
-                                                component="h1"
-                                                variant="h5"
-                                                color="secondary"
-                                            >
-                                                LOCATION DETAILS
-                                            </Typography>
-                                        </Box>
-                                    </Grid>
-                                    <Grid
-                                        item
-                                        sm={10}
-                                        style={{ width: "100%" }}
-                                    >
+                                    <Grid item sm style={{ width: "100%" }}>
                                         <TextInput
-                                            name="postalAddress"
+                                            name="title"
                                             control={control}
                                             rules={{
                                                 required:
-                                                    "Give any relevant address where the project will be implemented",
+                                                    "Please enter the title for the project",
                                             }}
-                                            helperText="Give any relevant address where the project will be implemented"
+                                            helperText="Please enter the title for the project"
+                                        />
+
+                                        <TextareaInput
+                                            name="description"
+                                            control={control}
+                                            rows={3}
+                                            rules={{
+                                                required:
+                                                    "Please enter the description for the project",
+                                            }}
+                                            helperText="Please enter the description for the project"
+                                        />
+
+                                        <NumberInput
+                                            name="minContribution"
+                                            control={control}
+                                            rules={{
+                                                required:
+                                                    "Please enter the minimum contribution of a individual for the project",
+                                            }}
+                                            helperText="Please enter the minimum contribution of a individual for the project"
                                         />
                                     </Grid>
                                 </Grid>
-
                                 <Divider className={classes.marg} />
                             </Box>
-                        )}
+                            <Box>
+                                <Grid container spacing={2}>
+                                    <Grid item sm={2}>
+                                        <Box
+                                            display="flex"
+                                            justifyContent="center"
+                                            alignItems="center"
+                                            height="100%"
+                                        >
+                                            <Typography
+                                                component="h1"
+                                                variant="h5"
+                                                color="secondary"
+                                            >
+                                                Options
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                    <Grid item sm={10}>
+                                        <SwitchInput
+                                            name="isMap"
+                                            control={control}
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Divider className={classes.marg} />
+                            </Box>
 
-                        {Object.entries(errors).length > 0 && (
-                            <FormErrors errors={errors}></FormErrors>
-                        )}
-                        <Box
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="center"
-                            m="1rem"
-                        >
-                            <Box mx="0.5rem">
-                                <Button
-                                    variant="contained"
-                                    type="submit"
-                                    color="primary"
-                                    disabled={
-                                        !isValid ||
-                                        isSubmitting ||
-                                        !touchedFields
-                                    }
-                                >
-                                    Submit
-                                </Button>
+                            {/* Location using mapbox and geocoder */}
+                            {watchisMap && (
+                                <Box>
+                                    <Grid container spacing={2}>
+                                        <Grid item sm={2}>
+                                            <Box
+                                                display="flex"
+                                                justifyContent="center"
+                                                alignItems="center"
+                                                height="100%"
+                                            >
+                                                <Typography
+                                                    component="h1"
+                                                    variant="h5"
+                                                    color="secondary"
+                                                >
+                                                    LOCATION DETAILS
+                                                </Typography>
+                                            </Box>
+                                        </Grid>
+                                        <Grid
+                                            item
+                                            sm={10}
+                                            style={{ width: "100%" }}
+                                        >
+                                            <Controller
+                                                name="location"
+                                                control={control}
+                                                render={({ field }) => (
+                                                    <GeoDecoder
+                                                        setValue={setValue}
+                                                    />
+                                                )}
+                                            />
+                                        </Grid>
+                                    </Grid>
+
+                                    <Divider className={classes.marg} />
+                                </Box>
+                            )}
+
+                            {/* location using custom text fields */}
+                            {!watchisMap && (
+                                <Box>
+                                    <Grid container spacing={2}>
+                                        <Grid item sm={2}>
+                                            <Box
+                                                display="flex"
+                                                justifyContent="center"
+                                                alignItems="center"
+                                                height="100%"
+                                            >
+                                                <Typography
+                                                    component="h1"
+                                                    variant="h5"
+                                                    color="secondary"
+                                                >
+                                                    LOCATION DETAILS
+                                                </Typography>
+                                            </Box>
+                                        </Grid>
+                                        <Grid
+                                            item
+                                            sm={10}
+                                            style={{ width: "100%" }}
+                                        >
+                                            <TextInput
+                                                name="postalAddress"
+                                                control={control}
+                                                rules={{
+                                                    required:
+                                                        "Give any relevant address where the project will be implemented",
+                                                }}
+                                                helperText="Give any relevant address where the project will be implemented"
+                                            />
+                                        </Grid>
+                                    </Grid>
+
+                                    <Divider className={classes.marg} />
+                                </Box>
+                            )}
+
+                            {Object.entries(errors).length > 0 && (
+                                <FormErrors errors={errors}></FormErrors>
+                            )}
+                            <Box
+                                display="flex"
+                                alignItems="center"
+                                justifyContent="center"
+                                m="1rem"
+                            >
+                                <Box mx="0.5rem">
+                                    <Button
+                                        variant="contained"
+                                        type="submit"
+                                        color="primary"
+                                        disabled={
+                                            !isValid ||
+                                            isSubmitting ||
+                                            !touchedFields
+                                        }
+                                    >
+                                        Submit
+                                    </Button>
+                                </Box>
+                                <Box mx="0.5rem">
+                                    <Button
+                                        variant="contained"
+                                        type="button"
+                                        color="secondary"
+                                        onClick={() =>
+                                            history.push("/projects")
+                                        }
+                                    >
+                                        Cancel
+                                    </Button>
+                                </Box>
                             </Box>
-                            <Box mx="0.5rem">
-                                <Button
-                                    variant="contained"
-                                    type="button"
-                                    color="secondary"
-                                    onClick={() => history.push("/projects")}
-                                >
-                                    Cancel
-                                </Button>
-                            </Box>
-                        </Box>
-                    </form>
-                </Paper>
-            </Container>
+                        </form>
+                    </Paper>
+                </Container>
+            )}
         </>
     );
 };

@@ -37,9 +37,10 @@ export const addProjectInProjectMakersAccount = async (
 };
 
 export const createRequestInBlockchain = async (
+    projectAddress: string | null,
     requestData: any | Request
-): Promise<Request | null> => {
-    if (!requestData) return null;
+): Promise<number | null> => {
+    if (!requestData || !projectAddress) return null;
     // call the web3.js api to create request
 
     return null;

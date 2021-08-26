@@ -66,7 +66,9 @@ const ProjectDetailedMilestones = ({ project, user }: Props) => {
                             Milestones
                         </Typography>
                     </Box>
-                    {user &&
+                    {!project.cancelled &&
+                        !project.finished &&
+                        user &&
                         user.isProjectMaker &&
                         user.metamaskAddress ===
                             project.creatorMetamaskAddress && (
@@ -122,7 +124,9 @@ const ProjectDetailedMilestones = ({ project, user }: Props) => {
                                         "..."
                                     }
                                 />
-                                {user &&
+                                {!project.cancelled &&
+                                    !project.finished &&
+                                    user &&
                                     user.isProjectMaker &&
                                     user.metamaskAddress ===
                                         project.creatorMetamaskAddress && (

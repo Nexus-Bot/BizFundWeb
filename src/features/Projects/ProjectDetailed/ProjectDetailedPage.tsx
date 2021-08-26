@@ -65,12 +65,16 @@ const ProjectDetailedPage = (props: Props) => {
                         <ProjectDetailedHeader
                             project={state.project}
                             projectMaker={state.projectMaker}
-                            contribution={state.contribution}
                             isProjectMaker={isProjectMaker}
                         />
                     </Grid>
                     <Grid item md xs={12}>
-                        <ProjectDetailedMoney project={state.project} />
+                        <ProjectDetailedMoney
+                            project={state.project}
+                            contribution={state.contribution}
+                            isProjectMaker={isProjectMaker}
+                            user={props.user}
+                        />
                     </Grid>
                     <Grid item md={8} xs={12}>
                         <ProjectDetailedInfo project={state.project} />

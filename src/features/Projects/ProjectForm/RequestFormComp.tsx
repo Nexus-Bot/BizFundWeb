@@ -58,6 +58,7 @@ const RequestFormComp = (props: Props) => {
     const onFormSubmit = async (data: RequestForm) => {
         const dataTosend: any = { ...data };
 
+        const projectAddress = props.match.params.projectId;
         const milestoneId = props.match.params.milestoneId;
 
         dataTosend.milestoneId = milestoneId;
@@ -66,14 +67,17 @@ const RequestFormComp = (props: Props) => {
         dataTosend.imgURL = "";
         dataTosend.filesURL = "";
 
-        const requestData = await createRequestInBlockchain(dataTosend);
+        const requestId = await createRequestInBlockchain(
+            projectAddress,
+            dataTosend
+        );
 
-        if (!requestData) console.log("Please retry!!!");
+        if (!requestId) console.log("Please retry!!!");
         else {
             const BFToken = localStorage.getItem("logInTokenBF");
             const PMToken = localStorage.getItem("logInTokenPM");
             await addCreatedRequestIdToMilestone(
-                requestData.id,
+                requestId,
                 milestoneId,
                 BFToken ? BFToken : PMToken
             );

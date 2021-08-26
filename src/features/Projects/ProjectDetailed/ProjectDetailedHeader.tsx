@@ -6,22 +6,22 @@ import {
     CardContent,
     CardHeader,
     CardMedia,
-    Chip,
-    CircularProgress,
     IconButton,
     makeStyles,
     Theme,
     Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import type { Project, ProjectMaker } from "../../../../types/modelTypes";
 import { deepOrange } from "@material-ui/core/colors";
 import { Link } from "react-router-dom";
 import noImage from "../../../Assets/noImage.svg";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
-import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
-import type { RootState } from "src/redux/store/store";
-import { connect, ConnectedProps } from "react-redux";
+import {
+    cancelProject,
+    finishProject,
+} from "../../../App/Util/reusableFunctions/updateProjectData";
+import { CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -52,27 +52,49 @@ const openImageOnFullScreen = (photo: Photo) => {
     // openModal("ImageModal", { photo });
 };
 
-interface Props extends PropsFromRedux {
-    project: Project;
-    isProjectMaker: boolean;
-    contribution: number | null;
-    loading: boolean;
-    projectMaker: ProjectMaker | null;
-}
-
 interface Photo {
     url: string;
     title: string;
 }
 
+interface Props {
+    project: Project;
+    isProjectMaker: boolean;
+    projectMaker: ProjectMaker | null;
+}
+
+interface ComponentState {
+    cancelProjectLoading: boolean;
+    finishProjectLoading: boolean;
+}
+
 const ProjectDetailedHeader = ({
     project,
-    contribution,
     isProjectMaker,
-    loading,
     projectMaker,
 }: Props) => {
+    const [state, setState] = useState<ComponentState>({
+        cancelProjectLoading: false,
+        finishProjectLoading: false,
+    });
     const classes = useStyles();
+
+    const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+    const onClickCancelProject = async () => {
+        setState({ ...state, cancelProjectLoading: true });
+
+        await delay(5000);
+        await cancelProject(project.id, "reason");
+        setState({ ...state, cancelProjectLoading: false });
+    };
+
+    const onClickFinishProject = async () => {
+        setState({ ...state, finishProjectLoading: true });
+
+        await delay(5000);
+        await finishProject(project.id);
+        setState({ ...state, finishProjectLoading: false });
+    };
 
     return (
         <Card className={classes.root}>
@@ -91,10 +113,6 @@ const ProjectDetailedHeader = ({
                         <strong>{project.title}</strong>
                     </Typography>
                 }
-                // subheader={`${
-                //     event.date &&
-                //     format(event.date.toDate(), "EEEE do, LLL, yyyy")
-                // } at ${format(event.date.toDate(), "h:mm a")}`}
             />
             <CardMedia
                 className={classes.media}
@@ -120,74 +138,53 @@ const ProjectDetailedHeader = ({
                     </strong>
                 </Typography>
                 <Box display="flex" justifyContent="space-between" mt="0.5rem">
-                    {!isProjectMaker && (
-                        <Box>
-                            {contribution && (
-                                <Box display="flex" alignItems="center">
-                                    <Chip
-                                        variant="outlined"
-                                        color="primary"
-                                        icon={<AttachMoneyIcon />}
-                                        label={`Current Contribution : ${contribution}`}
-                                    />
-                                    <Button
-                                        variant="contained"
-                                        size="small"
-                                        className={classes.btn}
-                                        onClick={() => {
-                                            // Add more fund function
-                                        }}
-                                    >
-                                        {!loading && <span>Pay More</span>}
-                                        {loading && (
-                                            <CircularProgress
-                                                color="inherit"
-                                                size="2rem"
-                                            />
-                                        )}
-                                    </Button>
-                                </Box>
-                            )}
-                            {!contribution && (
+                    {isProjectMaker && (
+                        <Box display="flex" alignItems="center">
+                            <Box mx="0.5rem">
                                 <Button
                                     variant="contained"
                                     size="small"
-                                    color="primary"
+                                    color="secondary"
                                     className={classes.btn}
-                                    onClick={() => {
-                                        // Pay for the project first time function
-                                    }}
+                                    onClick={onClickCancelProject}
                                 >
-                                    {!loading && <span>Pay for Good</span>}
-                                    {loading && (
+                                    {!state.cancelProjectLoading && (
+                                        <span>Cancel Project</span>
+                                    )}
+                                    {state.cancelProjectLoading && (
                                         <CircularProgress
                                             color="inherit"
                                             size="2rem"
                                         />
                                     )}
                                 </Button>
-                            )}
-                        </Box>
-                    )}
-                    {isProjectMaker && (
-                        <Box display="flex" alignItems="center">
-                            <Button
-                                variant="outlined"
-                                size="small"
-                                color="secondary"
-                                className={classes.btn}
-                                component={Link}
-                                to={`/manage/${project.id}`}
-                            >
-                                Manage
-                            </Button>
+                            </Box>
+                            <Box mx="0.5rem">
+                                <Button
+                                    variant="contained"
+                                    size="small"
+                                    color="secondary"
+                                    className={classes.btn}
+                                    onClick={onClickFinishProject}
+                                >
+                                    {!state.finishProjectLoading && (
+                                        <span>Finish Project</span>
+                                    )}
+                                    {state.finishProjectLoading && (
+                                        <CircularProgress
+                                            color="inherit"
+                                            size="2rem"
+                                        />
+                                    )}
+                                </Button>
+                            </Box>
                         </Box>
                     )}
 
-                    {isProjectMaker && (
+                    {!project.cancelled && !project.finished && isProjectMaker && (
                         <Box display="flex" alignItems="center">
                             <Button
-                                variant="outlined"
+                                variant="contained"
                                 size="small"
                                 color="secondary"
                                 className={classes.btn}
@@ -209,14 +206,4 @@ const ProjectDetailedHeader = ({
     );
 };
 
-const mapState2Props = (state: RootState) => {
-    return {
-        loading: state.async.loading,
-    };
-};
-
-const connector = connect(mapState2Props);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-export default connector(ProjectDetailedHeader);
+export default ProjectDetailedHeader;
