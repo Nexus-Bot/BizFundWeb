@@ -36,7 +36,6 @@ export interface ProjectForm {
     postalAddress?: string;
     location: Location;
     minContribution: number;
-    creatorMetamaskAddress?: string;
 }
 
 export interface MilestoneForm {

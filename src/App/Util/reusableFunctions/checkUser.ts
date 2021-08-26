@@ -3,7 +3,7 @@ export const checkUserIsContributor = async (
     userAddress: string | undefined
 ): Promise<boolean> => {
     if (!projectAddress || !userAddress) return false;
-    // Call the API
+    // Call the web3.js api to check if user is contributor
 
     return true;
 };
@@ -14,7 +14,7 @@ export const checkUserIsVoterForRequest = async (
     requestIndex: number | undefined
 ): Promise<boolean> => {
     if (!projectAddress || !userAddress || !requestIndex) return false;
-    // Call the API
+    // Call the web3.js api to check if user already voted
 
     return true;
 };

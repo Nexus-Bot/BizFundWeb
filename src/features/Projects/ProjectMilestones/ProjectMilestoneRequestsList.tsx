@@ -52,7 +52,9 @@ const ProjectMilestoneRequestsList = ({
                             Requests
                         </Typography>
                     </Box>
-                    {user &&
+                    {!project?.cancelled &&
+                        !project?.finished &&
+                        user &&
                         user.isProjectMaker &&
                         user.metamaskAddress ===
                             project?.creatorMetamaskAddress && (

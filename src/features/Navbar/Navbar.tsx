@@ -13,6 +13,10 @@ import type { RootState } from "../../redux/store/store";
 import SignedInMenu from "../Menus/SignedInMenu";
 import SignedOutMenu from "../Menus/SignedOutMenu";
 import mainLogo from "../../Assets/Logo.png";
+import {
+    updateBizFundraiser,
+    updateProjectMaker,
+} from "../../App/Util/reusableFunctions/updateUserData";
 
 interface Props extends PropsFromRedux {}
 
@@ -66,8 +70,30 @@ const Navbar = ({ auth }: Props) => {
                 const accounts = await ethereum.request({
                     method: "eth_requestAccounts",
                 });
-                console.log(accounts);
-                setButtonTxt(accounts[0]);
+
+                if (!auth.currentUser) {
+                    setButtonTxt(accounts[0]);
+                } else {
+                    if (accounts[0] === auth.currentUser.metamaskAddress)
+                        setButtonTxt(accounts[0]);
+                    else {
+                        const BFToken = localStorage.getItem("logInTokenBF");
+                        const PMToken = localStorage.getItem("logInTokenPM");
+                        if (BFToken) {
+                            const user = await updateBizFundraiser(
+                                { metamaskAddress: accounts[0] },
+                                BFToken
+                            );
+                            window.location.reload();
+                        } else if (PMToken) {
+                            const user = await updateProjectMaker(
+                                { metamaskAddress: accounts[0] },
+                                PMToken
+                            );
+                            window.location.reload();
+                        }
+                    }
+                }
             } catch (err) {
                 console.log(err);
             }
@@ -104,7 +130,7 @@ const Navbar = ({ auth }: Props) => {
                         color="secondary"
                         onClick={connectMetamask}
                     >
-                        {buttonTxt}
+                        <Typography color="textPrimary">{buttonTxt}</Typography>
                     </Button>
 
                     {auth.authenticated ? (
