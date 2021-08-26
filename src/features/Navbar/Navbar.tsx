@@ -1,11 +1,12 @@
 import {
     AppBar,
+    Button,
     makeStyles,
     Theme,
     Toolbar,
     Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 import type { RootState } from "../../redux/store/store";
@@ -49,10 +50,36 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const Navbar = ({ auth }: Props) => {
+    const [buttonTxt, setButtonTxt] = useState("Connect Metamask");
+
+    const connectMetamask = async () => {
+        console.log("Connected");
+        let ethereum = (window as any).ethereum;
+        const isMetaMaskInstalled = () => {
+            //Have to check the ethereum binding on the window object to see if it's installed
+            console.log(Boolean(ethereum && ethereum.isMetaMask));
+            return Boolean(ethereum && ethereum.isMetaMask);
+        };
+
+        if (isMetaMaskInstalled()) {
+            try {
+                const accounts = await ethereum.request({
+                    method: "eth_requestAccounts",
+                });
+                console.log(accounts);
+                setButtonTxt(accounts[0]);
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            setButtonTxt("Install Metamask");
+        }
+    };
+
     const classes = useStyles();
     return (
         <div className={classes.root} id="back-to-top-anchor">
-            <AppBar style={{ background: "#0c0c0c", padding: "0.5rem" }}>
+            <AppBar style={{ background: "#202529", padding: "0.5rem" }}>
                 <Toolbar>
                     {/* Logo */}
                     <Link to="/">
@@ -71,6 +98,14 @@ const Navbar = ({ auth }: Props) => {
                             BizFund
                         </Link>
                     </Typography>
+
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={connectMetamask}
+                    >
+                        {buttonTxt}
+                    </Button>
 
                     {auth.authenticated ? (
                         <SignedInMenu
