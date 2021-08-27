@@ -79,7 +79,7 @@ const GettingStartedPage = (props: Props) => {
                                             variant="h4"
                                             style={{ color: "#FFF" }}
                                         >
-                                            <strong>For Buisnesses</strong>
+                                            <strong>For Businesses</strong>
                                         </Typography>
 
                                         <Typography

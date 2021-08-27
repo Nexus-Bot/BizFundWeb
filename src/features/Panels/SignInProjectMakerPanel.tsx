@@ -10,7 +10,6 @@ import {
     ButtonBase,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";

@@ -9,7 +9,7 @@ import ProjectDetailedChat from "./ProjectDetailedChat";
 import ProjectDetailedHeader from "./ProjectDetailedHeader";
 import ProjectDetailedInfo from "./ProjectDetailedInfo";
 import ProjectDetailedMilestones from "./ProjectDetailedMilestones";
-import { getProjectDataByMetamaskAddress } from "../../../App/Util/reusableFunctions/getProjectData";
+import { getProjectDataByProjectAddress } from "../../../App/Util/reusableFunctions/getProjectData";
 import { getUserContributionInProjectByMetamaskaddress } from "../../../App/Util/reusableFunctions/getUserContribution";
 import ProjectDetailedMoney from "./ProjectDetailedMoney";
 import { Box, Grid } from "@material-ui/core";
@@ -31,7 +31,7 @@ const ProjectDetailedPage = (props: Props) => {
 
     useAsyncEffect(async (isMounted) => {
         const projectAddress = props.match.params.projectId;
-        const projectData = await getProjectDataByMetamaskAddress(
+        const projectData = await getProjectDataByProjectAddress(
             projectAddress
         );
 

@@ -5,6 +5,7 @@ import type {
     File,
 } from "../../../../types/modelTypes";
 
+import projectCreator from "../../../Ethereum/projectCreator";
 import api from "../API/backend";
 
 const testProject = {
@@ -41,11 +42,19 @@ const testRequest = {
     approvalsCount: 5,
     denialsCount: 3,
     imgURL: "https://source.unsplash.com/random",
-    filesURL: "test requst folder address",
+    filesURL: "test request folder address",
     cancelled: false,
 };
 
-export const getProjectDataByMetamaskAddress = async (
+export const getProjectAddresses = async (): Promise<String[] | null> => {
+    const responseArray = await projectCreator.methods
+        .getDeployedProjects()
+        .call();
+
+    return responseArray;
+};
+
+export const getProjectDataByProjectAddress = async (
     metamaskAddress: string | undefined
 ): Promise<Project | null> => {
     if (metamaskAddress === undefined) return null;
