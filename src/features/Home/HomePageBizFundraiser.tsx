@@ -20,7 +20,7 @@ const HomePageBizFundraiser = (props: Props): JSX.Element => {
                 <strong>
                     For{" "}
                     <span style={{ color: "#cc0000" }}>
-                        Buisness Fundraisers
+                        Business Fundraisers
                     </span>
                 </strong>
             </Typography>

@@ -17,6 +17,8 @@ import {
     updateBizFundraiser,
     updateProjectMaker,
 } from "../../App/Util/reusableFunctions/updateUserData";
+import projectCreator from "../../Ethereum/projectCreator";
+import { getProjectAddresses } from "src/App/Util/reusableFunctions/getProjectData";
 
 interface Props extends PropsFromRedux {}
 
@@ -70,6 +72,9 @@ const Navbar = ({ auth }: Props) => {
                 const accounts = await ethereum.request({
                     method: "eth_requestAccounts",
                 });
+
+                const response = await getProjectAddresses();
+                console.log(response);
 
                 if (!auth.currentUser) {
                     setButtonTxt(accounts[0]);

@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from "react-redux";
 import type { RouteComponentProps } from "react-router";
 import {
     getMilestoneDataById,
-    getProjectDataByMetamaskAddress,
+    getProjectDataByProjectAddress,
     getRequestsForMilestone,
 } from "../../../App/Util/reusableFunctions/getProjectData";
 import type { RootState } from "../../../redux/store/store";
@@ -30,7 +30,7 @@ const ProjectMilestonesPage = (props: Props) => {
 
     useAsyncEffect(async (isMounted) => {
         const projectAddress = props.match.params.projectId;
-        const projectData = await getProjectDataByMetamaskAddress(
+        const projectData = await getProjectDataByProjectAddress(
             projectAddress
         );
 
