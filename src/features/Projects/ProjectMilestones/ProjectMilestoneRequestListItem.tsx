@@ -5,6 +5,7 @@ import {
     Grid,
     Button,
     CircularProgress,
+    IconButton,
 } from "@material-ui/core";
 import React from "react";
 import type {
@@ -20,12 +21,14 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import { cancelRequest } from "../../../App/Util/reusableFunctions/updateProjectData";
 import type { RootState } from "src/redux/store/store";
-import { connect, ConnectedProps, useDispatch } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { useAppDispatch } from "../../../redux/store/hooks";
 import {
     asycnActionStarted,
     asyncActionFinished,
 } from "../../../redux/reducers/asyncReducer";
+import { Link } from "react-router-dom";
+import AttachFileIcon from "@material-ui/icons/AttachFile";
 
 interface Props extends PropsFromRedux {
     request: Request | null;
@@ -75,7 +78,7 @@ const ProjectMilestoneRequestListItem = ({
                                 {request?.title}
                             </Typography>
                         </Box>
-                        <Box>
+                        <Box display="flex" alignItems="center">
                             {!project?.cancelled &&
                                 !project?.finished &&
                                 user &&
@@ -102,6 +105,20 @@ const ProjectMilestoneRequestListItem = ({
                                                 />
                                             )}
                                         </Button>
+                                    </Box>
+                                )}
+                            {!project?.cancelled &&
+                                !project?.finished &&
+                                user?.isProjectMaker &&
+                                user?.metamaskAddress ===
+                                    project?.creatorMetamaskAddress && (
+                                    <Box>
+                                        <IconButton
+                                            component={Link}
+                                            to={`/setFiles/${request?.filesURL}`}
+                                        >
+                                            <AttachFileIcon />
+                                        </IconButton>
                                     </Box>
                                 )}
                         </Box>

@@ -10,6 +10,7 @@ import {
     makeStyles,
     Theme,
     Typography,
+    CircularProgress,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import type { Project, ProjectMaker } from "../../../../types/modelTypes";
@@ -21,7 +22,6 @@ import {
     cancelProject,
     finishProject,
 } from "../../../App/Util/reusableFunctions/updateProjectData";
-import { CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -193,7 +193,7 @@ const ProjectDetailedHeader = ({
                             >
                                 Set Photo
                             </Button>
-                            <Link to={`/setFiles/${project.id}`}>
+                            <Link to={`/setFiles/${project.folderURL}`}>
                                 <IconButton>
                                     <AttachFileIcon />
                                 </IconButton>

@@ -9,7 +9,7 @@ import {
     Typography,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import type { File, Request } from "../../../../types/modelTypes";
+import type { Request } from "../../../../types/modelTypes";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import useAsyncEffect from "use-async-effect";
@@ -22,7 +22,7 @@ interface Props {
     request: Request | null;
 }
 
-type Files = File[] | null;
+type Files = any | null;
 
 const RequestDetails = ({ request }: Props) => {
     const [files, setFiles] = useState<Files>(null);
@@ -102,7 +102,7 @@ const RequestDetails = ({ request }: Props) => {
                             >
                                 Downloads
                                 {files &&
-                                    files.map((file, index) => (
+                                    files.map((file: any, index: number) => (
                                         <Box
                                             key={file.id}
                                             display="flex"

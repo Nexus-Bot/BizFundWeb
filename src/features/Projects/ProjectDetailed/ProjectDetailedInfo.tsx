@@ -23,6 +23,7 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import type { Project } from "../../../../types/modelTypes";
 import useAsyncEffect from "use-async-effect";
 import Mapbox from "../../../features/Maps/Mapbox";
+import { getFilesFromDB } from "../../../App/Util/reusableFunctions/getProjectData";
 
 interface Props {
     project: Project;
@@ -43,17 +44,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const getFilesOfProject = async (projectFolerURL: string) => {
-    // Call the API to get files
-};
-
 const ProjectDetailedInfo = ({ project }: Props) => {
     const [openMap, setopenMap] = useState<boolean>(false);
     const [projectFiles, setprojectFiles] = useState<any>([]);
 
     useAsyncEffect(
         async (isMounted) => {
-            const files = await getFilesOfProject(project.folderURL);
+            const files = await getFilesFromDB(project.folderURL);
 
             if (!isMounted()) return;
 
