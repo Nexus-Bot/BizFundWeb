@@ -1,9 +1,3 @@
-export interface File {
-    id: string;
-    name: string;
-    url: string;
-}
-
 export interface Milestone {
     _id: string;
     projectId: string;

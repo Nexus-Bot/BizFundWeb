@@ -23,6 +23,7 @@ import ProjectMilestonesPage from "../../features/Projects/ProjectMilestones/Pro
 import RequestFormComp from "../../features/Projects/ProjectForm/RequestFormComp";
 import LandingPage from "../../features/Home/LandingPage";
 import GettingStartedPage from "../../features/Home/GettingStartedPage";
+import Files from "../../features/Projects/Files/Files";
 
 interface AppProps extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -113,6 +114,11 @@ const App = ({ logInBF, logInPM, auth, loading }: AppProps) => {
                                         exact
                                         path="/projects/:projectId/:milestoneId/createrequest"
                                         component={RequestFormComp}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/setfiles/:storageId"
+                                        component={Files}
                                     />
                                 </Switch>
                             </div>

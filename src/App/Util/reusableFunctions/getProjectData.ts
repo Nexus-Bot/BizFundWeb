@@ -1,12 +1,8 @@
-import type {
-    Project,
-    Milestone,
-    Request,
-    File,
-} from "../../../../types/modelTypes";
-
+import type { Project, Milestone, Request } from "../../../../types/modelTypes";
 import projectCreator from "../../../Ethereum/projectCreator";
 import api from "../API/backend";
+import { fireabaseStorage } from "../API/firebase";
+import { ref, getDownloadURL, listAll } from "firebase/storage";
 
 const testProject = {
     id: "test1",
@@ -17,7 +13,7 @@ const testProject = {
     totalPoolBalance: 3000,
     fees: 0.05,
     imgURL: "https://source.unsplash.com/random",
-    folderURL: "test1 folder address",
+    folderURL: "test1folderaddress",
     creatorMetamaskAddress: "xyz",
     numRequests: 3,
     approversCount: 10,
@@ -124,10 +120,22 @@ export const getRequestsForMilestone = async (
 
 export const getFilesFromDB = async (
     folderURL: string | undefined
-): Promise<File[] | null> => {
+): Promise<{ name: string; url: string }[] | null> => {
     if (!folderURL) return null;
 
-    // Call the API
+    const storageRef = ref(fireabaseStorage, `${folderURL}/Docs`);
+    const files = await listAll(storageRef);
 
-    return null;
+    const data: { name: string; url: string }[] = [];
+    await Promise.all(
+        files.items.map(async (file) => {
+            const fileRef = ref(fireabaseStorage, `${storageRef}/${file.name}`);
+            const downloadURL = await getDownloadURL(fileRef);
+
+            if (downloadURL) {
+                data.push({ name: file.name, url: downloadURL });
+            }
+        })
+    );
+    return data;
 };
