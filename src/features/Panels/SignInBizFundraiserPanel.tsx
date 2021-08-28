@@ -10,15 +10,15 @@ import {
     ButtonBase,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import React from "react";
+// import React from "react";
 import { useForm } from "react-hook-form";
 import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 import PasswordInput from "../../App/Util/FormInputs/PasswordInput";
 import TextInput from "../../App/Util/FormInputs/TextInput";
-import { loginBizFundraiser } from "../../redux/reducers/authReducer";
 import type { BizFundraiserSignInForm } from "types/formTypes";
 import FormErrors from "../../App/Util/resuableComp/FormErrors";
+import { loginBizFundraiserAction } from "../../redux/actions/AuthenticationActions/logInBizFundraiserAction";
 
 interface Props extends PropsFromRedux {
     handleChange: (event: React.ChangeEvent<{}>, newValue: number) => void;
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const SignInBizFundraiserPanel = ({ handleChange }: Props) => {
+const SignInBizFundraiserPanel = ({ handleChange, logInUser }: Props) => {
     const classes = useStyles();
 
     const {
@@ -67,7 +67,7 @@ const SignInBizFundraiserPanel = ({ handleChange }: Props) => {
     });
 
     const onFormSubmit = (data: BizFundraiserSignInForm) => {
-        console.log(data);
+        logInUser(data);
     };
 
     return (
@@ -123,7 +123,15 @@ const SignInBizFundraiserPanel = ({ handleChange }: Props) => {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link to="/resetPassword">Forgot password?</Link>
+                            <Typography
+                                variant="body2"
+                                color="textPrimary"
+                                component={Link}
+                                to="/resetPassword"
+                                style={{ textDecoration: "none" }}
+                            >
+                                Forgot password?
+                            </Typography>
                         </Grid>
                         <Grid item>
                             <ButtonBase
@@ -132,7 +140,7 @@ const SignInBizFundraiserPanel = ({ handleChange }: Props) => {
                                     handleChange(e, 0);
                                 }}
                             >
-                                <Typography variant="body2" color="primary">
+                                <Typography variant="body2" color="textPrimary">
                                     Don't have an account? Sign Up
                                 </Typography>
                             </ButtonBase>
@@ -145,7 +153,7 @@ const SignInBizFundraiserPanel = ({ handleChange }: Props) => {
 };
 
 const mapDispatch2Props = {
-    logInUser: loginBizFundraiser,
+    logInUser: loginBizFundraiserAction,
 };
 
 const connector = connect(null, mapDispatch2Props);

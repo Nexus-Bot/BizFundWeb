@@ -20,16 +20,14 @@ const TextInput = (props: OwnProps) => {
     } = useController(props);
 
     return (
-        <div>
-            <TextField
-                {...field}
-                label={_.upperFirst(props.name)}
-                error={isTouched && !!invalid}
-                variant="outlined"
-                fullWidth
-                helperText={invalid ? props.helperText : ""}
-            />
-        </div>
+        <TextField
+            {...field}
+            label={_.upperFirst(props.name)}
+            error={isTouched && !!invalid}
+            variant="outlined"
+            fullWidth
+            helperText={invalid ? props.helperText : ""}
+        />
     );
 };
 

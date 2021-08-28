@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import {
     Container,
     makeStyles,
@@ -21,6 +21,8 @@ import PasswordInput from "../../App/Util/FormInputs/PasswordInput";
 import TextInput from "../../App/Util/FormInputs/TextInput";
 import InfoIcon from "@material-ui/icons/Info";
 import FormErrors from "../../App/Util/resuableComp/FormErrors";
+import { registerBizFundraiser } from "../../redux/actions/AuthenticationActions/registerBizFundraiser";
+import web3 from "../../Ethereum/web3";
 
 interface Props extends PropsFromRedux {
     handleChange: (event: React.ChangeEvent<{}>, newValue: number) => void;
@@ -57,9 +59,10 @@ const defaultFormValues: BizFundraiserSignUpForm = {
     email: "",
     password: "",
     confirmPassword: "",
+    metamaskAddress: "",
 };
 
-const SignUpBizFundraiserPanel = ({ handleChange }: Props) => {
+const SignUpBizFundraiserPanel = ({ handleChange, registerUser }: Props) => {
     const classes = useStyles();
 
     const showPasswordInfo = () => {
@@ -108,8 +111,31 @@ const SignUpBizFundraiserPanel = ({ handleChange }: Props) => {
         mode: "onChange",
     });
 
-    const onFormSubmit = (data: BizFundraiserSignUpForm) => {
-        console.log(data);
+    const onFormSubmit = async (data: BizFundraiserSignUpForm) => {
+        let ethereum = (window as any).ethereum;
+        const isMetaMaskInstalled = () => {
+            //Have to check the ethereum binding on the window object to see if it's installed
+            console.log(Boolean(ethereum && ethereum.isMetaMask));
+            return Boolean(ethereum && ethereum.isMetaMask);
+        };
+
+        if (isMetaMaskInstalled()) {
+            try {
+                const accounts = await ethereum.request({
+                    method: "eth_requestAccounts",
+                });
+
+                data.metamaskAddress = web3.utils.toChecksumAddress(
+                    accounts[0]
+                );
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            data.metamaskAddress = "";
+        }
+
+        registerUser(data);
     };
 
     return (
@@ -233,7 +259,7 @@ const SignUpBizFundraiserPanel = ({ handleChange }: Props) => {
                                     handleChange(e, 1);
                                 }}
                             >
-                                <Typography variant="body2" color="primary">
+                                <Typography variant="body2" color="textPrimary">
                                     Already have an account? Sign In
                                 </Typography>
                             </ButtonBase>
@@ -263,6 +289,7 @@ const passwordValidator = (value: string) => {
 
 const mapDispatch2Props = {
     logInUser: loginBizFundraiser,
+    registerUser: registerBizFundraiser,
 };
 
 const connector = connect(null, mapDispatch2Props);
