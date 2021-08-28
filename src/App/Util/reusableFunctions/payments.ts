@@ -36,8 +36,15 @@ export const payVendor = async (
 
     // Call the web3.js api to intiate transcation for the vendor payment
     try {
+        let ethereum = (window as any).ethereum;
+        const accounts = await ethereum.request({
+            method: "eth_requestAccounts",
+        });
+
         const projectInstance = ProjectInstance(projectAddress);
-        await projectInstance!.methods.finalizeRequest(requestId).call();
+        await projectInstance!.methods.finalizeRequest(requestId).send({
+            from: accounts[0],
+        });
 
         return true;
     } catch (err) {

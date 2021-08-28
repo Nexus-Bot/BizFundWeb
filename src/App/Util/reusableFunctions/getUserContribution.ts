@@ -1,4 +1,5 @@
 import ProjectInstance from "../../../Ethereum/project";
+import web3 from "../../../Ethereum/web3";
 
 export const getUserContributionInProjectByMetamaskaddress = async (
     projectAddress: string | undefined,
@@ -17,7 +18,7 @@ export const getUserContributionInProjectByMetamaskaddress = async (
             .contributions(userAddress)
             .call();
 
-        return contributionAmount;
+        return web3.utils.fromWei(contributionAmount, "ether");
     } catch (err) {
         return null;
     }
