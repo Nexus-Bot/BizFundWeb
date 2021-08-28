@@ -5,14 +5,41 @@ import type {
     Request,
 } from "../../../../types/modelTypes";
 import api from "../API/backend";
+import projectCreator from "../../../Ethereum/projectCreator";
+import ProjectInstance from "../../../Ethereum/project";
+import web3 from "../../../Ethereum/web3";
 
 export const createProjectInBlockchain = async (
     projectData: any | Project
 ): Promise<Project | null> => {
     if (!projectData) return null;
-    // call the web3.js api to create project
+    try {
+        let ethereum = (window as any).ethereum;
+        const accounts = await ethereum.request({
+            method: "eth_requestAccounts",
+        });
 
-    return null;
+        // call the web3.js api to create project
+        await projectCreator!.methods
+            .deployProject(
+                projectData.title,
+                projectData.description,
+                web3.utils.toWei(projectData.minContribution, "ether"),
+                projectData.imgURL,
+                projectData.folderURL,
+                projectData.isMap,
+                projectData.postalAddress,
+                projectData.lat,
+                projectData.lng,
+                projectData.placeName
+            )
+            .send({
+                from: accounts[0],
+            });
+        return projectData;
+    } catch (err) {
+        return null;
+    }
 };
 
 export const addProjectInProjectMakersAccount = async (
@@ -21,19 +48,23 @@ export const addProjectInProjectMakersAccount = async (
 ): Promise<ProjectMaker | null> => {
     if (!projectAddress || !token) return null;
 
-    const res = await api.patch(
-        "/project/projectmaker/createproject",
-        {
-            projectAddress,
-        },
-        {
-            headers: { "Authorization": `Bearer ${token}` },
-        }
-    );
+    try {
+        const res = await api.patch(
+            "/project/projectmaker/createproject",
+            {
+                projectAddress,
+            },
+            {
+                headers: { "Authorization": `Bearer ${token}` },
+            }
+        );
 
-    if (res.data) return res.data;
+        if (res.data) return res.data;
 
-    return null;
+        return null;
+    } catch (Err) {
+        return null;
+    }
 };
 
 export const createRequestInBlockchain = async (
@@ -42,8 +73,31 @@ export const createRequestInBlockchain = async (
 ): Promise<number | null> => {
     if (!requestData || !projectAddress) return null;
     // call the web3.js api to create request
+    try {
+        let ethereum = (window as any).ethereum;
+        const accounts = await ethereum.request({
+            method: "eth_requestAccounts",
+        });
 
-    return null;
+        const projectInstance = ProjectInstance(projectAddress);
+        const requestIndex = await projectInstance!.methods
+            .createRequests(
+                requestData.title,
+                requestData.description,
+                web3.utils.toWei(requestData.value, "ether"),
+                requestData.milestoneId,
+                requestData.vendorMetamaskAddress,
+                requestData.imgURL,
+                requestData.filesURL
+            )
+            .send({
+                from: accounts[0],
+            });
+
+        return requestIndex;
+    } catch (err) {
+        return null;
+    }
 };
 
 export const createMilestoneForProject = async (
@@ -51,16 +105,20 @@ export const createMilestoneForProject = async (
     token: string | null
 ): Promise<Milestone | null> => {
     if (!milestoneData || !token) return null;
-    // call the api to create milestone
-    const res = await api.post(
-        "/milestones",
-        { ...milestoneData },
-        {
-            headers: { "Authorization": `Bearer ${token}` },
-        }
-    );
+    try {
+        // call the api to create milestone
+        const res = await api.post(
+            "/milestones",
+            { ...milestoneData },
+            {
+                headers: { "Authorization": `Bearer ${token}` },
+            }
+        );
 
-    if (res.data) return res.data;
+        if (res.data) return res.data;
 
-    return null;
+        return null;
+    } catch (err) {
+        return null;
+    }
 };
