@@ -111,6 +111,7 @@ const ProjectDetailedMoney = ({
     };
 
     const classes = useStyles();
+    console.log(contribution);
     return (
         <Paper elevation={3} className={classes.root}>
             <Box display="flex" alignItems="center" flexDirection="column">
@@ -124,7 +125,7 @@ const ProjectDetailedMoney = ({
                 </Box>
                 <Box display="flex" alignItems="center" flexDirection="column">
                     <Box my="0.5rem">
-                        <Typography variant="h4" color="textPrimary">
+                        <Typography variant="h5" color="textPrimary">
                             Total Pool Balance : {project.totalPoolBalance} ETH
                             <Typography variant="h6" color="textSecondary">
                                 Contributed By Total{" "}
@@ -167,7 +168,7 @@ const ProjectDetailedMoney = ({
                     <Divider style={{ width: "100%" }} />
                     {!project.cancelled && !project.finished && (
                         <Box my="1rem">
-                            {!isProjectMaker && (
+                            {!isProjectMaker && !user?.isProjectMaker && (
                                 <Box>
                                     {contribution && (
                                         <Box

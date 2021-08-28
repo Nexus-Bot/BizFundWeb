@@ -13,6 +13,7 @@ import { getProjectDataByProjectAddress } from "../../../App/Util/reusableFuncti
 import { getUserContributionInProjectByMetamaskaddress } from "../../../App/Util/reusableFunctions/getUserContribution";
 import ProjectDetailedMoney from "./ProjectDetailedMoney";
 import { Box, Grid } from "@material-ui/core";
+import MainLoader from "src/App/Util/resuableComp/MainLoader";
 
 interface Props extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -58,48 +59,48 @@ const ProjectDetailedPage = (props: Props) => {
         state.project?.creatorMetamaskAddress?.trim() ===
         props.user?.metamaskAddress?.trim();
 
-    console.log(
-        state.project?.creatorMetamaskAddress,
-        props.user?.metamaskAddress
-    );
-    console.log(isProjectMaker);
-
     return (
-        <Box py="3rem">
-            {state.project && (
-                <Grid container spacing={3}>
-                    <Grid item md={8} xs={12}>
-                        <ProjectDetailedHeader
-                            project={state.project}
-                            projectMaker={state.projectMaker}
-                            isProjectMaker={isProjectMaker}
-                        />
-                    </Grid>
-                    <Grid item md xs={12}>
-                        <ProjectDetailedMoney
-                            project={state.project}
-                            contribution={state.contribution}
-                            isProjectMaker={isProjectMaker}
-                            user={props.user}
-                        />
-                    </Grid>
-                    <Grid item md={8} xs={12}>
-                        <ProjectDetailedInfo project={state.project} />
-                        <ProjectDetailedMilestones
-                            user={props.user}
-                            project={state.project}
-                        />
-                        <ProjectDetailedChat />
-                    </Grid>
-                </Grid>
+        <>
+            {props.loading && <MainLoader />}
+            {!props.loading && (
+                <Box py="3rem">
+                    {state.project && (
+                        <Grid container spacing={3}>
+                            <Grid item md={8} xs={12}>
+                                <ProjectDetailedHeader
+                                    project={state.project}
+                                    projectMaker={state.projectMaker}
+                                    isProjectMaker={isProjectMaker}
+                                />
+                            </Grid>
+                            <Grid item md xs={12}>
+                                <ProjectDetailedMoney
+                                    project={state.project}
+                                    contribution={state.contribution}
+                                    isProjectMaker={isProjectMaker}
+                                    user={props.user}
+                                />
+                            </Grid>
+                            <Grid item md={8} xs={12}>
+                                <ProjectDetailedInfo project={state.project} />
+                                <ProjectDetailedMilestones
+                                    user={props.user}
+                                    project={state.project}
+                                />
+                                <ProjectDetailedChat />
+                            </Grid>
+                        </Grid>
+                    )}
+                </Box>
             )}
-        </Box>
+        </>
     );
 };
 
 const mapState2Props = (state: RootState) => {
     return {
         user: state.auth.currentUser,
+        loading: state.async.loading,
     };
 };
 

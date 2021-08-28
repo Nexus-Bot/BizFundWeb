@@ -74,58 +74,61 @@ const RequestVoting = ({ request, project, user }: Props) => {
         payVendorLoading: false,
     });
 
-    useAsyncEffect(async (isMounted) => {
-        const isAlreadyVoter = await checkUserIsVoterForRequest(
-            project?.id,
-            user?.metamaskAddress,
-            request?.id
-        );
-
-        if (!isMounted()) return;
-
-        if (!user || user.isProjectMaker) {
-            setState({ ...state, isEligibleVoter: false });
-            return;
-        }
-
-        if (isAlreadyVoter) {
-            setState({ ...state, isEligibleVoter: false });
-            return;
-        }
-
-        const contribution =
-            await getUserContributionInProjectByMetamaskaddress(
+    useAsyncEffect(
+        async (isMounted) => {
+            const isAlreadyVoter = await checkUserIsVoterForRequest(
                 project?.id,
-                user?.metamaskAddress
+                user?.metamaskAddress,
+                request?.id
             );
 
-        if (
-            project &&
-            contribution &&
-            Number(contribution) < project.minContribution
-        ) {
-            setState({ ...state, isEligibleVoter: false });
-            return;
-        }
+            if (!isMounted()) return;
 
-        setState({ ...state, isEligibleVoter: true });
-    }, []);
+            if (!user || user.isProjectMaker) {
+                setState({ ...state, isEligibleVoter: true });
+                return;
+            }
+
+            if (isAlreadyVoter) {
+                setState({ ...state, isEligibleVoter: true });
+                return;
+            }
+
+            const contribution =
+                await getUserContributionInProjectByMetamaskaddress(
+                    project?.id,
+                    user?.metamaskAddress
+                );
+
+            if (
+                project &&
+                contribution &&
+                Number(contribution) < project.minContribution
+            ) {
+                setState({ ...state, isEligibleVoter: true });
+                return;
+            }
+
+            setState({ ...state, isEligibleVoter: true });
+        },
+        [user, request, project]
+    );
 
     const chartData = [
         {
             name: "Up Votes",
-            value: request?.approvalsCount,
+            value: Number(request?.approvalsCount),
         },
         {
             name: "Down Votes",
-            value: request?.denialsCount,
+            value: Number(request?.denialsCount),
         },
         {
             name: "Not Voted",
             value:
-                (project ? project.approversCount : 0) -
-                ((request ? request.approvalsCount : 0) +
-                    (request ? request.denialsCount : 0)),
+                Number(project ? project.approversCount : 0) -
+                (Number(request ? request.approvalsCount : 0) +
+                    Number(request ? request.denialsCount : 0)),
         },
     ];
     const COLORS = ["#329932", "#FF3232", "#333"];
@@ -160,6 +163,7 @@ const RequestVoting = ({ request, project, user }: Props) => {
         setState({ ...state, payVendorLoading: false });
     };
 
+    console.log(request);
     return (
         <Box p={1}>
             <Box textAlign="center">
