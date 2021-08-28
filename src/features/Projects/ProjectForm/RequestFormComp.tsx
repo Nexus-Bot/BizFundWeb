@@ -20,6 +20,7 @@ import type { RouteComponentProps } from "react-router";
 import { createRequestInBlockchain } from "../../../App/Util/reusableFunctions/createProjectData";
 import NumberInput from "../../../App/Util/FormInputs/NumberInput";
 import { addCreatedRequestIdToMilestone } from "../../../App/Util/reusableFunctions/updateProjectData";
+import cuid from "cuid";
 
 const useStyles = makeStyles((theme: Theme) => ({
     "@global": {
@@ -64,8 +65,8 @@ const RequestFormComp = (props: Props) => {
         dataTosend.milestoneId = milestoneId;
 
         // Add the folder and img urls of request storage
-        dataTosend.imgURL = "";
-        dataTosend.filesURL = "";
+        dataTosend.imgURL = cuid();
+        dataTosend.filesURL = cuid();
 
         const requestId = await createRequestInBlockchain(
             projectAddress,

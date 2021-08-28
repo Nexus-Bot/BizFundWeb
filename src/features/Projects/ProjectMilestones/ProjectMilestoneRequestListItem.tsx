@@ -7,7 +7,7 @@ import {
     CircularProgress,
     IconButton,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import type {
     BizFundraiser,
     Project,
@@ -20,34 +20,23 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import { cancelRequest } from "../../../App/Util/reusableFunctions/updateProjectData";
-import type { RootState } from "src/redux/store/store";
-import { connect, ConnectedProps } from "react-redux";
-import { useAppDispatch } from "../../../redux/store/hooks";
-import {
-    asycnActionStarted,
-    asyncActionFinished,
-} from "../../../redux/reducers/asyncReducer";
 import { Link } from "react-router-dom";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 
-interface Props extends PropsFromRedux {
+interface Props {
     request: Request | null;
     user: BizFundraiser | ProjectMaker | null;
     project: Project | null;
 }
 
-const ProjectMilestoneRequestListItem = ({
-    request,
-    user,
-    project,
-    loading,
-}: Props) => {
-    const dispatch = useAppDispatch();
+const ProjectMilestoneRequestListItem = ({ request, user, project }: Props) => {
+    const [cancelLoading, setcanceLLoading] = useState<boolean>(false);
     const onClickCancelRequest = async () => {
-        dispatch(asycnActionStarted());
+        setcanceLLoading(true);
 
         await cancelRequest(project?.id, request?.id, "reason");
-        dispatch(asyncActionFinished());
+
+        setcanceLLoading(false);
     };
 
     return (
@@ -95,10 +84,10 @@ const ProjectMilestoneRequestListItem = ({
                                             }}
                                             onClick={onClickCancelRequest}
                                         >
-                                            {!loading && (
+                                            {!cancelLoading && (
                                                 <span>Cancel Request</span>
                                             )}
-                                            {loading && (
+                                            {cancelLoading && (
                                                 <CircularProgress
                                                     color="inherit"
                                                     size="2rem"
@@ -146,14 +135,4 @@ const ProjectMilestoneRequestListItem = ({
     );
 };
 
-const mapState2Props = (state: RootState) => {
-    return {
-        loading: state.async.loading,
-    };
-};
-
-const connector = connect(mapState2Props);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-export default connector(ProjectMilestoneRequestListItem);
+export default ProjectMilestoneRequestListItem;

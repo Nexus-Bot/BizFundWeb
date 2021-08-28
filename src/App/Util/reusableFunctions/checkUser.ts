@@ -23,7 +23,8 @@ export const checkUserIsVoterForRequest = async (
     userAddress: string | undefined,
     requestIndex: number | undefined
 ): Promise<boolean> => {
-    if (!projectAddress || !userAddress || !requestIndex) return false;
+    if (!projectAddress || !userAddress || requestIndex === undefined)
+        return false;
     try {
         // Call the web3.js api to check if user already voted
         const projectInstance = ProjectInstance(projectAddress);

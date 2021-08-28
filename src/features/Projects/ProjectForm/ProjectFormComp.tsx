@@ -25,6 +25,7 @@ import {
     addProjectInProjectMakersAccount,
     createProjectInBlockchain,
 } from "../../../App/Util/reusableFunctions/createProjectData";
+import cuid from "cuid";
 
 const useStyles = makeStyles((theme: Theme) => ({
     "@global": {
@@ -85,8 +86,8 @@ const ProjectFormComp = (props: Props) => {
         }
 
         // Add the folder and img urls of project storage
-        dataTosend.imgURL = "";
-        dataTosend.folderURL = "";
+        dataTosend.imgURL = cuid();
+        dataTosend.folderURL = cuid();
 
         // Call the create project api
         const project = await createProjectInBlockchain(dataTosend);
