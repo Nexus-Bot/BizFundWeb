@@ -59,8 +59,15 @@ export const checkRefund = async (
 
     // Call the web3.js api to check refund of contributor
     try {
+        let ethereum = (window as any).ethereum;
+        const accounts = await ethereum.request({
+            method: "eth_requestAccounts",
+        });
+
         const projectInstance = ProjectInstance(projectAddress);
-        const response = await projectInstance!.methods.checkRefund().call();
+        const response = await projectInstance!.methods
+            .checkRefund(accounts[0])
+            .call();
 
         return web3.utils.fromWei(response, "ether").toString();
         // return response;
