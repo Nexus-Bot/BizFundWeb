@@ -125,7 +125,7 @@ const ProjectDetailedMoney = ({
                 <Box display="flex" alignItems="center" flexDirection="column">
                     <Box my="0.5rem">
                         <Typography variant="h4" color="textPrimary">
-                            Total Pool Balance : {project.totalPoolBalance} $
+                            Total Pool Balance : {project.totalPoolBalance} ETH
                             <Typography variant="h6" color="textSecondary">
                                 Contributed By Total{" "}
                                 <strong>{project.contributorsCount}</strong>{" "}
@@ -137,7 +137,7 @@ const ProjectDetailedMoney = ({
                     <Divider style={{ width: "100%" }} />
                     <Box my="1rem" width="100%">
                         <Typography variant="h6" color="textSecondary">
-                            Current Pool Balance : {project.currentBalance} $
+                            Current Pool Balance : {project.currentBalance} ETH
                         </Typography>
 
                         <Box width="100%">
@@ -156,7 +156,7 @@ const ProjectDetailedMoney = ({
                             label={
                                 <Typography variant="h6" color="textSecondary">
                                     Minimum Contribution :{" "}
-                                    {project.minContribution} $
+                                    {project.minContribution} ETH
                                 </Typography>
                             }
                             variant="outlined"
@@ -183,7 +183,7 @@ const ProjectDetailedMoney = ({
                                                     <Typography
                                                         variant="h6"
                                                         color="textSecondary"
-                                                    >{`My Contribution : ${contribution} $`}</Typography>
+                                                    >{`My Contribution : ${contribution} ETH`}</Typography>
                                                 }
                                             />
                                             <Box my="0.5rem" width="100%">
@@ -245,7 +245,7 @@ const ProjectDetailedMoney = ({
                                                         variant="h6"
                                                         color="textSecondary"
                                                     >
-                                                        My Contribution : 0 $
+                                                        My Contribution : 0 ETH
                                                     </Typography>
                                                 }
                                             />
@@ -323,7 +323,7 @@ const ProjectDetailedMoney = ({
                                                         state.refundAmount
                                                             ? state.refundAmount
                                                             : 0
-                                                    } $`}</Typography>
+                                                    } ETH`}</Typography>
                                                 }
                                             />
                                             <Box my="0.5rem" width="100%">

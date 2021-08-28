@@ -59,7 +59,7 @@ const RequestDetails = ({ request }: Props) => {
                         <Chip
                             label={
                                 <Typography variant="h6" color="textSecondary">
-                                    {request?.value} $
+                                    {request?.value} ETH
                                 </Typography>
                             }
                             variant="outlined"

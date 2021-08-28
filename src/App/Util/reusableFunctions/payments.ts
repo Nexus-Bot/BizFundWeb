@@ -17,10 +17,10 @@ export const contributeInProject = async (
         });
 
         const projectInstance = ProjectInstance(projectAddress);
-        // await projectInstance!.methods.contribute(isSignedIn).send({
-        //     from: accounts[0],
-        //     value: web3.utils.toWei(amountToPay, "ether"),
-        // })
+        await projectInstance!.methods.contribute(isSignedIn).send({
+            from: accounts[0],
+            value: web3.utils.toWei(value.toString(), "ether"),
+        });
 
         return true;
     } catch (err) {
@@ -55,8 +55,8 @@ export const checkRefund = async (
         const projectInstance = ProjectInstance(projectAddress);
         const response = await projectInstance!.methods.checkRefund().call();
 
-        // return web3.utils.toWei(response, "ether").toString();
-        return response;
+        return web3.utils.fromWei(response, "ether").toString();
+        // return response;
     } catch (err) {
         return null;
     }

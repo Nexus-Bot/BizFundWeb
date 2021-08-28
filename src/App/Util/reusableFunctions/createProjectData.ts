@@ -82,7 +82,7 @@ export const createRequestInBlockchain = async (
         });
 
         const projectInstance = ProjectInstance(projectAddress);
-        const requestIndex = await projectInstance!.methods
+        const response = await projectInstance!.methods
             .createRequests(
                 requestData.title,
                 requestData.description,
@@ -95,6 +95,9 @@ export const createRequestInBlockchain = async (
             .send({
                 from: accounts[0],
             });
+
+        const requestIndex =
+            response.events.CreatedRequest.returnValues["requestID"];
 
         return requestIndex;
     } catch (err) {

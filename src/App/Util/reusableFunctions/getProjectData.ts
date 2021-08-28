@@ -83,9 +83,15 @@ export const getProjectDataByProjectAddress = async (
             placeName: basicDetailsRes.placeName,
             lng: basicDetailsRes.lng,
             lat: basicDetailsRes.lat,
-            minContribution: basicDetailsRes.minContribution,
-            currentBalance: liveDetailsRes[0],
-            totalPoolBalance: liveDetailsRes[1],
+            minContribution: parseFloat(
+                web3.utils.fromWei(basicDetailsRes.minContribution, "ether")
+            ),
+            currentBalance: parseFloat(
+                web3.utils.fromWei(liveDetailsRes[0], "ether")
+            ),
+            totalPoolBalance: parseFloat(
+                web3.utils.fromWei(liveDetailsRes[1], "ether")
+            ),
             imgURL: basicDetailsRes.imageUrl,
             folderURL: basicDetailsRes.folderUrl,
             fees: 0,
@@ -179,7 +185,7 @@ export const getRequestDataByRequestIndex = async (
             title: reqData.title,
             description: reqData.desc,
             milestoneId: reqData.milestoneId,
-            value: web3.utils.toWei(reqData.value, "ether").toString(),
+            value: web3.utils.fromWei(reqData.value, "ether").toString(),
             vendorMetamaskAddress: reqData.vendorAddress,
             isComplete: reqData.isComplete,
             approvalsCount: reqData.approvalsCount,
