@@ -26,6 +26,9 @@ import {
     contributeInProject,
     getRefund,
 } from "../../../App/Util/reusableFunctions/payments";
+import { useForm } from "react-hook-form";
+import { ContributionForm } from "../../../../types/formTypes";
+import NumberInput from "../../../App/Util/FormInputs/NumberInput";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -36,14 +39,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface Props {
     project: Project;
-    contribution: number | null;
+    contribution: string | null;
     isProjectMaker: boolean;
     user: BizFundraiser | ProjectMaker | null;
 }
 
 interface ComponentState {
     payLoading: boolean;
-    refundAmount: number | null;
+    refundAmount: string | null;
     checkRefundLoading: boolean;
     getRefundLoading: boolean;
 }
@@ -70,6 +73,14 @@ const ProjectDetailedMoney = ({
     isProjectMaker,
     user,
 }: Props) => {
+    const {
+        handleSubmit,
+        control,
+        formState: { isValid, isSubmitting, touchedFields, errors },
+    } = useForm<ContributionForm>({
+        mode: "onChange",
+    });
+
     const [state, setState] = useState<ComponentState>({
         payLoading: false,
         getRefundLoading: false,
@@ -77,11 +88,11 @@ const ProjectDetailedMoney = ({
         checkRefundLoading: false,
     });
 
-    const onClickPay = async () => {
+    const onClickPay = async (data: ContributionForm) => {
         setState({ ...state, payLoading: true });
 
         const isSignedIn = user?._id ? true : false;
-        await contributeInProject(isSignedIn, project.id);
+        await contributeInProject(isSignedIn, project.id, data.value);
         setState({ ...state, payLoading: false });
     };
 
@@ -176,22 +187,47 @@ const ProjectDetailedMoney = ({
                                                 }
                                             />
                                             <Box my="0.5rem" width="100%">
-                                                <Button
-                                                    variant="contained"
-                                                    size="large"
-                                                    fullWidth
-                                                    onClick={onClickPay}
+                                                <form
+                                                    onSubmit={handleSubmit(
+                                                        onClickPay
+                                                    )}
+                                                    className={classes.root}
                                                 >
-                                                    {!state.payLoading && (
-                                                        <span>Pay More</span>
-                                                    )}
-                                                    {state.payLoading && (
-                                                        <CircularProgress
-                                                            color="inherit"
-                                                            size="2rem"
-                                                        />
-                                                    )}
-                                                </Button>
+                                                    <NumberInput
+                                                        name="value"
+                                                        control={control}
+                                                        rules={{
+                                                            required:
+                                                                "Please enter the amount you want to contribute",
+                                                        }}
+                                                        helperText="Please enter the amount you want to contribute"
+                                                    />
+                                                    <Box py="0.5rem">
+                                                        <Button
+                                                            variant="contained"
+                                                            size="large"
+                                                            fullWidth
+                                                            type="submit"
+                                                            disabled={
+                                                                !isValid ||
+                                                                isSubmitting ||
+                                                                !touchedFields
+                                                            }
+                                                        >
+                                                            {!state.payLoading && (
+                                                                <span>
+                                                                    Pay More
+                                                                </span>
+                                                            )}
+                                                            {state.payLoading && (
+                                                                <CircularProgress
+                                                                    color="inherit"
+                                                                    size="2rem"
+                                                                />
+                                                            )}
+                                                        </Button>
+                                                    </Box>
+                                                </form>
                                             </Box>
                                         </Box>
                                     )}
@@ -214,25 +250,48 @@ const ProjectDetailedMoney = ({
                                                 }
                                             />
                                             <Box my="0.5rem" width="100%">
-                                                <Button
-                                                    variant="contained"
-                                                    fullWidth
-                                                    size="large"
-                                                    color="primary"
-                                                    onClick={onClickPay}
+                                                <form
+                                                    onSubmit={handleSubmit(
+                                                        onClickPay
+                                                    )}
+                                                    className={classes.root}
                                                 >
-                                                    {!state.payLoading && (
-                                                        <span>
-                                                            Pay for Good
-                                                        </span>
-                                                    )}
-                                                    {state.payLoading && (
-                                                        <CircularProgress
-                                                            color="inherit"
-                                                            size="2rem"
-                                                        />
-                                                    )}
-                                                </Button>
+                                                    <NumberInput
+                                                        name="value"
+                                                        control={control}
+                                                        rules={{
+                                                            required:
+                                                                "Please enter the amount you want to contribute",
+                                                        }}
+                                                        helperText="Please enter the amount you want to contribute"
+                                                    />
+                                                    <Box my="0.5rem">
+                                                        <Button
+                                                            variant="contained"
+                                                            fullWidth
+                                                            size="large"
+                                                            color="primary"
+                                                            type="submit"
+                                                            disabled={
+                                                                !isValid ||
+                                                                isSubmitting ||
+                                                                !touchedFields
+                                                            }
+                                                        >
+                                                            {!state.payLoading && (
+                                                                <span>
+                                                                    Pay for Good
+                                                                </span>
+                                                            )}
+                                                            {state.payLoading && (
+                                                                <CircularProgress
+                                                                    color="inherit"
+                                                                    size="2rem"
+                                                                />
+                                                            )}
+                                                        </Button>
+                                                    </Box>
+                                                </form>
                                             </Box>
                                         </Box>
                                     )}

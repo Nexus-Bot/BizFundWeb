@@ -19,6 +19,7 @@ export const createProjectInBlockchain = async (
             method: "eth_requestAccounts",
         });
 
+        console.log(projectData);
         // call the web3.js api to create project
         await projectCreator!.methods
             .deployProject(
@@ -29,8 +30,8 @@ export const createProjectInBlockchain = async (
                 projectData.folderURL,
                 projectData.isMap,
                 projectData.postalAddress,
-                projectData.lat,
-                projectData.lng,
+                projectData.lat.toString(),
+                projectData.lng.toString(),
                 projectData.placeName
             )
             .send({
@@ -38,6 +39,7 @@ export const createProjectInBlockchain = async (
             });
         return projectData;
     } catch (err) {
+        console.log(err);
         return null;
     }
 };
@@ -96,6 +98,7 @@ export const createRequestInBlockchain = async (
 
         return requestIndex;
     } catch (err) {
+        console.log(err);
         return null;
     }
 };

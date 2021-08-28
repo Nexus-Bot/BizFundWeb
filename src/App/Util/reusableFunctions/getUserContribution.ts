@@ -3,7 +3,7 @@ import ProjectInstance from "../../../Ethereum/project";
 export const getUserContributionInProjectByMetamaskaddress = async (
     projectAddress: string | undefined,
     userAddress: string | undefined
-): Promise<number | null> => {
+): Promise<string | null> => {
     if (!projectAddress || !userAddress) return null;
 
     try {

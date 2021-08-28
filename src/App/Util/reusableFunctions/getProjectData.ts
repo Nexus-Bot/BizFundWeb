@@ -45,7 +45,7 @@ const testRequest = {
     cancelled: false,
 };
 
-export const getProjectAddresses = async (): Promise<String[] | null> => {
+export const getProjectAddresses = async (): Promise<string[] | null> => {
     try {
         const responseArray = await projectCreator.methods
             .getDeployedProjects()
@@ -53,6 +53,7 @@ export const getProjectAddresses = async (): Promise<String[] | null> => {
 
         return responseArray;
     } catch (err) {
+        console.log(err);
         return null;
     }
 };
@@ -120,8 +121,9 @@ export const getAllProjectsData = async (): Promise<Project[] | null> => {
             })
         );
 
-        return projectsDataArray!;
+        return projectsDataArray;
     } catch (err) {
+        console.log(err);
         return null;
     }
 };

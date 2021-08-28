@@ -75,9 +75,13 @@ const ProjectFormComp = (props: Props) => {
             dataTosend.lng = data.location.center[0];
             dataTosend.lat = data.location.center[1];
             dataTosend.placeName = data.location.placeName;
+            dataTosend.postalAddress = "";
         } else {
             dataTosend.isMap = false;
             dataTosend.postalAddress = data.postalAddress;
+            dataTosend.lng = "";
+            dataTosend.lat = "";
+            dataTosend.placeName = "";
         }
 
         // Add the folder and img urls of project storage

@@ -1,14 +1,20 @@
 import { Box, Grid } from "@material-ui/core";
 import React from "react";
+import { useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import type { RootState } from "src/redux/store/store";
+import { getAllProjectDataAction } from "../../../redux/actions/AuthenticationActions/getAllProjectDataAction";
+import type { RootState } from "../../../redux/store/store";
 import ProjectList from "../ProjectList/ProjectList";
 import ProjectsFilterForm from "../ProjectsFilters/ProjectsFilterForm";
 import ProjectsSearchbar from "../ProjectsFilters/ProjectsSearchbar";
 
 interface Props extends PropsFromRedux {}
 
-const ProjectsDashboard = ({ projects }: Props) => {
+const ProjectsDashboard = ({ projects, getProjects }: Props) => {
+    useEffect(() => {
+        getProjects();
+    }, []);
+
     return (
         <Box py="3rem">
             <Grid container spacing={2}>
@@ -43,7 +49,11 @@ const mapState2Props = (state: RootState) => {
     };
 };
 
-const connector = connect(mapState2Props);
+const mapDispatch2Props = {
+    getProjects: getAllProjectDataAction,
+};
+
+const connector = connect(mapState2Props, mapDispatch2Props);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

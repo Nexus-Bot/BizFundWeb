@@ -19,7 +19,7 @@ interface Props extends PropsFromRedux, RouteComponentProps<any> {}
 interface ComponentState {
     project: Project | null;
     projectMaker: ProjectMaker | null;
-    contribution: number | null;
+    contribution: string | null;
 }
 
 const ProjectDetailedPage = (props: Props) => {
@@ -55,7 +55,14 @@ const ProjectDetailedPage = (props: Props) => {
     }, []);
 
     const isProjectMaker =
-        state.project?.creatorMetamaskAddress === props.user?.metamaskAddress;
+        state.project?.creatorMetamaskAddress?.trim() ===
+        props.user?.metamaskAddress?.trim();
+
+    console.log(
+        state.project?.creatorMetamaskAddress,
+        props.user?.metamaskAddress
+    );
+    console.log(isProjectMaker);
 
     return (
         <Box py="3rem">

@@ -4,9 +4,10 @@ import web3 from "src/Ethereum/web3";
 
 export const contributeInProject = async (
     isSignedIn: boolean,
-    projectAddress: string | undefined
+    projectAddress: string | undefined,
+    value: number | null
 ): Promise<boolean> => {
-    if (!projectAddress) return false;
+    if (!projectAddress || !value) return false;
 
     // Call the web3.js api to contribute in project
     try {
@@ -46,7 +47,7 @@ export const payVendor = async (
 
 export const checkRefund = async (
     projectAddress: string | undefined
-): Promise<number | null> => {
+): Promise<string | null> => {
     if (!projectAddress) return null;
 
     // Call the web3.js api to check refund of contributor

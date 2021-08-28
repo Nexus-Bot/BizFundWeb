@@ -27,10 +27,11 @@ export const registerProjectMaker =
             const user = await res.data;
 
             localStorage.setItem("logInTokenPM", user.token);
+            localStorage.removeItem("logInTokenBF");
             dispatch(loginProjectMaker(user.projectMakerDoc));
 
             dispatch(asyncActionFinished());
-            history.push("/");
+            history.push("/projects");
         } catch (error) {
             console.log(error);
             dispatch(asyncActionError());

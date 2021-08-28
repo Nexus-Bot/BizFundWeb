@@ -58,6 +58,7 @@ const defaultFormValues: BizFundraiserSignUpForm = {
     email: "",
     password: "",
     confirmPassword: "",
+    metamaskAddress: "",
 };
 
 const SignUpBizFundraiserPanel = ({ handleChange, registerUser }: Props) => {
@@ -109,7 +110,28 @@ const SignUpBizFundraiserPanel = ({ handleChange, registerUser }: Props) => {
         mode: "onChange",
     });
 
-    const onFormSubmit = (data: BizFundraiserSignUpForm) => {
+    const onFormSubmit = async (data: BizFundraiserSignUpForm) => {
+        let ethereum = (window as any).ethereum;
+        const isMetaMaskInstalled = () => {
+            //Have to check the ethereum binding on the window object to see if it's installed
+            console.log(Boolean(ethereum && ethereum.isMetaMask));
+            return Boolean(ethereum && ethereum.isMetaMask);
+        };
+
+        if (isMetaMaskInstalled()) {
+            try {
+                const accounts = await ethereum.request({
+                    method: "eth_requestAccounts",
+                });
+
+                data.metamaskAddress = accounts[0];
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            data.metamaskAddress = "";
+        }
+
         registerUser(data);
     };
 
