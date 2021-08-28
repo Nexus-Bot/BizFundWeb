@@ -17,13 +17,7 @@ import {
     updateBizFundraiser,
     updateProjectMaker,
 } from "../../App/Util/reusableFunctions/updateUserData";
-import projectCreator from "../../Ethereum/projectCreator";
-import {
-    getProjectAddresses,
-    getProjectDataByProjectAddress,
-    getAllProjectsData,
-} from "src/App/Util/reusableFunctions/getProjectData";
-import ProjectInstance from "src/Ethereum/project";
+import web3 from "../../Ethereum/web3";
 
 interface Props extends PropsFromRedux {}
 
@@ -78,23 +72,24 @@ const Navbar = ({ auth }: Props) => {
                     method: "eth_requestAccounts",
                 });
 
+                const caseAddress = web3.utils.toChecksumAddress(accounts[0]);
                 if (!auth.currentUser) {
-                    setButtonTxt(accounts[0]);
+                    setButtonTxt(caseAddress);
                 } else {
-                    if (accounts[0] === auth.currentUser.metamaskAddress)
-                        setButtonTxt(accounts[0]);
+                    if (caseAddress === auth.currentUser.metamaskAddress)
+                        setButtonTxt(caseAddress);
                     else {
                         const BFToken = localStorage.getItem("logInTokenBF");
                         const PMToken = localStorage.getItem("logInTokenPM");
                         if (BFToken) {
                             const user = await updateBizFundraiser(
-                                { metamaskAddress: accounts[0] },
+                                { metamaskAddress: caseAddress },
                                 BFToken
                             );
                             window.location.reload();
                         } else if (PMToken) {
                             const user = await updateProjectMaker(
-                                { metamaskAddress: accounts[0] },
+                                { metamaskAddress: caseAddress },
                                 PMToken
                             );
                             window.location.reload();

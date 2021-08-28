@@ -22,6 +22,7 @@ import TextInput from "../../App/Util/FormInputs/TextInput";
 import InfoIcon from "@material-ui/icons/Info";
 import FormErrors from "../../App/Util/resuableComp/FormErrors";
 import { registerBizFundraiser } from "../../redux/actions/AuthenticationActions/registerBizFundraiser";
+import web3 from "../../Ethereum/web3";
 
 interface Props extends PropsFromRedux {
     handleChange: (event: React.ChangeEvent<{}>, newValue: number) => void;
@@ -124,7 +125,9 @@ const SignUpBizFundraiserPanel = ({ handleChange, registerUser }: Props) => {
                     method: "eth_requestAccounts",
                 });
 
-                data.metamaskAddress = accounts[0];
+                data.metamaskAddress = web3.utils.toChecksumAddress(
+                    accounts[0]
+                );
             } catch (err) {
                 console.log(err);
             }

@@ -37,6 +37,7 @@ const ProjectMilestonesPage = (props: Props) => {
         const milestoneId = props.match.params.milestoneId;
         const milestoneData = await getMilestoneDataById(milestoneId);
 
+        console.log(milestoneData);
         const requestsData = await getRequestsForMilestone(
             projectAddress,
             milestoneData?.requestIds

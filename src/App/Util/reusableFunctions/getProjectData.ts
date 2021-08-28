@@ -191,6 +191,7 @@ export const getRequestDataByRequestIndex = async (
 
         return obj;
     } catch (err) {
+        console.log(err);
         return null;
     }
 };
