@@ -142,7 +142,7 @@ const RequestFormComp = (props: Props) => {
                                         helperText="Please enter the description for the project"
                                     />
 
-                                    <TextInput
+                                    <NumberInput
                                         name="value"
                                         control={control}
                                         rules={{

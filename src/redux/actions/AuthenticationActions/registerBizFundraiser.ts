@@ -27,6 +27,7 @@ export const registerBizFundraiser =
             const user = await res.data;
 
             localStorage.setItem("logInTokenBF", user.token);
+            localStorage.removeItem("logInTokenPM");
             dispatch(loginBizFundraiser(user.bizFundraiserDoc));
 
             dispatch(asyncActionFinished());

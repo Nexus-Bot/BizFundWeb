@@ -99,7 +99,11 @@ const RequestVoting = ({ request, project, user }: Props) => {
                 user?.metamaskAddress
             );
 
-        if (project && contribution && contribution < project.minContribution) {
+        if (
+            project &&
+            contribution &&
+            Number(contribution) < project.minContribution
+        ) {
             setState({ ...state, isEligibleVoter: false });
             return;
         }

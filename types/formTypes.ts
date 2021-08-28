@@ -9,6 +9,7 @@ export interface BizFundraiserSignUpForm {
     email: string;
     password: string;
     confirmPassword: string;
+    metamaskAddress: string;
 }
 
 export interface ProjectMakerSignInForm {
@@ -22,6 +23,7 @@ export interface ProjectMakerSignUpForm {
     email: string;
     password: string;
     confirmPassword: string;
+    metamaskAddress: string;
 }
 
 interface Location {
@@ -47,5 +49,9 @@ export interface RequestForm {
     title: string;
     description: string;
     vendorMetamaskAddress: string;
-    value: string;
+    value: number;
+}
+
+export interface ContributionForm {
+    value: number;
 }
