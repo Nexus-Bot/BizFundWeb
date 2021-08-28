@@ -18,7 +18,7 @@ export interface Request {
     title: string;
     description: string;
     milestoneId: string;
-    value: number;
+    value: string;
     vendorMetamaskAddress: string;
     isComplete: boolean;
     approvalsCount: number;

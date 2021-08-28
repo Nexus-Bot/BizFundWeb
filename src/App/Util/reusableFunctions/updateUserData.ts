@@ -7,17 +7,21 @@ export const updateBizFundraiser = async (
 ): Promise<BizFundraiser | null> => {
     if (!data || !token) return null;
 
-    const res = await api.patch(
-        "/bizfundraisers/me",
-        { ...data },
-        {
-            headers: { "Authorization": `Bearer ${token}` },
-        }
-    );
+    try {
+        const res = await api.patch(
+            "/bizfundraisers/me",
+            { ...data },
+            {
+                headers: { "Authorization": `Bearer ${token}` },
+            }
+        );
 
-    if (res.data) return res.data;
+        if (res.data) return res.data;
 
-    return null;
+        return null;
+    } catch (err) {
+        return null;
+    }
 };
 
 export const updateProjectMaker = async (
@@ -26,15 +30,19 @@ export const updateProjectMaker = async (
 ): Promise<ProjectMaker | null> => {
     if (!data || !token) return null;
 
-    const res = await api.patch(
-        "/projectmakers/me",
-        { ...data },
-        {
-            headers: { "Authorization": `Bearer ${token}` },
-        }
-    );
+    try {
+        const res = await api.patch(
+            "/projectmakers/me",
+            { ...data },
+            {
+                headers: { "Authorization": `Bearer ${token}` },
+            }
+        );
 
-    if (res.data) return res.data;
+        if (res.data) return res.data;
 
-    return null;
+        return null;
+    } catch (err) {
+        return null;
+    }
 };

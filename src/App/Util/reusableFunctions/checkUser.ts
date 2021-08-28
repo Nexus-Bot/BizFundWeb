@@ -1,11 +1,21 @@
+import ProjectInstance from "../../../Ethereum/project";
+
 export const checkUserIsContributor = async (
     projectAddress: string | undefined,
     userAddress: string | undefined
-): Promise<boolean> => {
+): Promise<boolean | null> => {
     if (!projectAddress || !userAddress) return false;
-    // Call the web3.js api to check if user is contributor
 
-    return true;
+    try {
+        // Call the web3.js api to check if user is contributor
+        const projectInstance = ProjectInstance(projectAddress);
+        const isContributor = await projectInstance!.methods
+            .contributors(userAddress)
+            .call();
+        return isContributor;
+    } catch (err) {
+        return false;
+    }
 };
 
 export const checkUserIsVoterForRequest = async (
@@ -14,7 +24,15 @@ export const checkUserIsVoterForRequest = async (
     requestIndex: number | undefined
 ): Promise<boolean> => {
     if (!projectAddress || !userAddress || !requestIndex) return false;
-    // Call the web3.js api to check if user already voted
+    try {
+        // Call the web3.js api to check if user already voted
+        const projectInstance = ProjectInstance(projectAddress);
+        const isVoter = await projectInstance!.methods
+            .isVoted(userAddress, requestIndex)
+            .call();
 
-    return true;
+        return isVoter;
+    } catch (err) {
+        return false;
+    }
 };

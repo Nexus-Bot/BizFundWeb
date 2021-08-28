@@ -132,7 +132,6 @@ const RequestVoting = ({ request, project, user }: Props) => {
         request &&
         user.isProjectMaker &&
         user.metamaskAddress === project.creatorMetamaskAddress &&
-        project.currentBalance > request.value &&
         request.approvalsCount > project.approversCount / 2;
 
     const onClickUpvote = async () => {

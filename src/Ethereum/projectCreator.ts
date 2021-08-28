@@ -3,7 +3,7 @@ import ProjectCreator from "./Contracts/ProjectCreator.json";
 
 const instance = new web3.eth.Contract(
     ProjectCreator.abi as any,
-    "0x94f67D11d47504c8d9883eab4638c16D2B7B3E0e"
+    "0x144A1C676ebcfEEac3CE1501f0131Fb302769971"
 );
 
 export default instance;
