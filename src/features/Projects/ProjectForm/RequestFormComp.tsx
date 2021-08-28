@@ -72,8 +72,9 @@ const RequestFormComp = (props: Props) => {
             dataTosend
         );
 
-        if (!requestId) console.log("Please retry!!!");
+        if (requestId === null) console.log("Please retry!!!");
         else {
+            console.log(requestId);
             const BFToken = localStorage.getItem("logInTokenBF");
             const PMToken = localStorage.getItem("logInTokenPM");
             await addCreatedRequestIdToMilestone(

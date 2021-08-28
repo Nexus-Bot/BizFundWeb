@@ -7,7 +7,7 @@ export const addCreatedRequestIdToMilestone = async (
     milestoneId: string | null,
     token: string | null
 ): Promise<Milestone | null> => {
-    if (requestId !== null || !milestoneId || !token) return null;
+    if (requestId === null || !milestoneId || !token) return null;
     try {
         const res = await api.patch(
             "/project/milestones/createrequest",
