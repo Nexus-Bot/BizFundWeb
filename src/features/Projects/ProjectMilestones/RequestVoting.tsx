@@ -85,12 +85,12 @@ const RequestVoting = ({ request, project, user }: Props) => {
             if (!isMounted()) return;
 
             if (!user || user.isProjectMaker) {
-                setState({ ...state, isEligibleVoter: true });
+                setState({ ...state, isEligibleVoter: false });
                 return;
             }
 
             if (isAlreadyVoter) {
-                setState({ ...state, isEligibleVoter: true });
+                setState({ ...state, isEligibleVoter: false });
                 return;
             }
 
@@ -105,7 +105,7 @@ const RequestVoting = ({ request, project, user }: Props) => {
                 contribution &&
                 Number(contribution) < project.minContribution
             ) {
-                setState({ ...state, isEligibleVoter: true });
+                setState({ ...state, isEligibleVoter: false });
                 return;
             }
 

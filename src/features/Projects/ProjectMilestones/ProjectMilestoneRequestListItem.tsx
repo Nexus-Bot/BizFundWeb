@@ -70,6 +70,8 @@ const ProjectMilestoneRequestListItem = ({ request, user, project }: Props) => {
                         <Box display="flex" alignItems="center">
                             {!project?.cancelled &&
                                 !project?.finished &&
+                                !request?.cancelled &&
+                                !request?.isComplete &&
                                 user &&
                                 user.isProjectMaker &&
                                 user.metamaskAddress ===
