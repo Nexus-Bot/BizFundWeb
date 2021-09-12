@@ -13,6 +13,7 @@ import ProjectMilestoneHeader from "./ProjectMilestoneHeader";
 import ProjectMilestoneRequestsList from "./ProjectMilestoneRequestsList";
 import { Box } from "@material-ui/core";
 import MainLoader from "src/App/Util/resuableComp/MainLoader";
+import ProjectMilestoneChat from "./ProjectMilestoneChat";
 
 interface Props extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -70,6 +71,10 @@ const ProjectMilestonesPage = (props: Props) => {
                         milestone={state.milestone}
                         requests={state.requests}
                         user={props.user}
+                        project={state.project}
+                    />
+                    <ProjectMilestoneChat
+                        milestone={state.milestone}
                         project={state.project}
                     />
                 </Box>
