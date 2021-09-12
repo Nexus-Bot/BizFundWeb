@@ -87,7 +87,7 @@ const ProjectDetailedPage = (props: Props) => {
                                     user={props.user}
                                     project={state.project}
                                 />
-                                <ProjectDetailedChat />
+                                <ProjectDetailedChat project={state.project} />
                             </Grid>
                         </Grid>
                     )}

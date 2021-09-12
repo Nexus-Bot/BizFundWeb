@@ -20,6 +20,9 @@ export const logoutBizFundraiser = (token: string) => async (dispatch: any) => {
         );
 
         dispatch(logoutUser());
+        // @ts-ignore
+        const weavy = new window.Weavy();
+        weavy.authentication.signOut();
 
         dispatch(asyncActionFinished());
         history.push("/");
