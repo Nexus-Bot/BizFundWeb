@@ -3,14 +3,15 @@ import indigo from "@material-ui/core/colors/indigo";
 import CommentIcon from "@material-ui/icons/Comment";
 import React, { useEffect, useState } from "react";
 import Weavy from "src/weavy/Weavy";
-import { Project } from "../../../../types/modelTypes";
+import { Project, Milestone } from "../../../../types/modelTypes";
 import WeavyApp from "../../../weavy/WeavyApp";
 
 interface Props {
-    project: Project;
+    project: Project | null;
+    milestone: Milestone | null;
 }
 
-const ProjectDetailedChat = (props: Props) => {
+const ProjectMilestoneChat = (props: Props) => {
     const [token, settoken] = useState<string | null>(null);
 
     useEffect(() => {
@@ -25,7 +26,7 @@ const ProjectDetailedChat = (props: Props) => {
 
     return (
         <>
-            {token && (
+            {token && props.project && props.milestone && (
                 <Box my="2rem">
                     <Paper variant="outlined">
                         {/* Heading */}
@@ -51,10 +52,19 @@ const ProjectDetailedChat = (props: Props) => {
                             <Weavy jwt={token}>
                                 <div>
                                     <WeavyApp
-                                        spaceKey="oxylus-projects-conversations"
-                                        spaceName="Oxylus Projects Conversations Space"
-                                        appKey={props.project.id + "feeds"}
-                                        appName={props.project.title + " feeds"}
+                                        spaceKey="oxylus-project-milestones-conversations"
+                                        spaceName="Oxylus Project Milestones Conversations Space"
+                                        appKey={
+                                            props.project.id +
+                                            props.milestone._id +
+                                            "feeds"
+                                        }
+                                        appName={
+                                            props.project.title +
+                                            " " +
+                                            props.milestone.title +
+                                            " feeds"
+                                        }
                                         appType="posts"
                                     />
                                 </div>
@@ -67,4 +77,4 @@ const ProjectDetailedChat = (props: Props) => {
     );
 };
 
-export default ProjectDetailedChat;
+export default ProjectMilestoneChat;
