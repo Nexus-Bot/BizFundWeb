@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import {
-    Link,
     Route,
     RouteComponentProps,
     Switch,
@@ -33,7 +32,7 @@ const App = ({ logInBF, logInPM, auth, loading }: AppProps) => {
             type: "dark",
         },
         backgr: {
-            backgroundColor: "#222",
+            backgroundColor: "#080420",
         },
     };
 
@@ -47,11 +46,17 @@ const App = ({ logInBF, logInPM, auth, loading }: AppProps) => {
         } else if (PMToken) {
             logInPM(PMToken);
         }
-    }, []);
+    }, [logInBF, logInPM]);
 
     return (
         <ThemeProvider theme={themeConfig}>
-            <div style={{ backgroundColor: "#222", minHeight: "100vh" }}>
+            <div
+                style={{
+                    background:
+                        "linear-gradient(138deg, rgba(67,2,83,1) 0%, rgba(101,9,121,1) 30%, rgba(155,30,233,1) 70%, rgba(235,37,161,1) 95%)",
+                    minHeight: "100vh",
+                }}
+            >
                 <Route path="/" exact component={LandingPage} />
                 <Route
                     path="/getstarted"

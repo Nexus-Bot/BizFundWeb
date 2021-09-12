@@ -44,7 +44,7 @@ const ProjectDetailedMilestones = ({ project, user }: Props) => {
 
         // Set milestones
         if (milestonesData) setMilestones(milestonesData);
-    });
+    }, []);
 
     return (
         <Paper variant="outlined">
