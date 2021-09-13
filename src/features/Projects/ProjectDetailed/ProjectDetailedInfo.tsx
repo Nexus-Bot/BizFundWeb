@@ -42,6 +42,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: "90%",
         margin: "auto",
     },
+    bg: {
+        backgroundColor: "#333",
+        marginBottom: "2rem",
+    },
 }));
 
 const ProjectDetailedInfo = ({ project }: Props) => {
@@ -65,7 +69,7 @@ const ProjectDetailedInfo = ({ project }: Props) => {
 
     const classes = useStyles();
     return (
-        <List>
+        <List className={classes.bg}>
             <ListItem>
                 <ListItemIcon>
                     <InfoOutlinedIcon color="disabled" />

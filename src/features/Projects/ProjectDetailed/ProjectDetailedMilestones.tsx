@@ -8,8 +8,10 @@ import {
     ListItemAvatar,
     ListItemSecondaryAction,
     ListItemText,
+    makeStyles,
     Paper,
     Typography,
+    Theme,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import type {
@@ -25,13 +27,19 @@ import useAsyncEffect from "use-async-effect";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import { Link } from "react-router-dom";
-import indigo from "@material-ui/core/colors/indigo";
 import { getMilestonesForProject } from "../../../App/Util/reusableFunctions/getProjectData";
 
 interface Props {
     project: Project;
     user: BizFundraiser | ProjectMaker | null;
 }
+
+const useStyles = makeStyles((theme: Theme) => ({
+    titleBG: {
+        background:
+            "repeating-linear-gradient(45deg,#206c34,#206c34 10px,#174724 10px,#174724 20px);",
+    },
+}));
 
 const ProjectDetailedMilestones = ({ project, user }: Props) => {
     const [milestones, setMilestones] = useState<Milestone[]>([]);
@@ -46,12 +54,13 @@ const ProjectDetailedMilestones = ({ project, user }: Props) => {
         if (milestonesData) setMilestones(milestonesData);
     }, []);
 
+    const classes = useStyles();
     return (
         <Paper variant="outlined">
             {/* Heading */}
             <Box
                 textAlign="center"
-                bgcolor={indigo["500"]}
+                className={classes.titleBG}
                 color="#FFF"
                 py="1rem"
             >
@@ -60,11 +69,13 @@ const ProjectDetailedMilestones = ({ project, user }: Props) => {
                     alignItems="center"
                     justifyContent="space-around"
                 >
-                    <Box>
+                    <Box display="flex" alignItems="center">
                         <FormatListNumberedIcon fontSize="large" />
-                        <Typography component="h1" variant="h5">
-                            Milestones
-                        </Typography>
+                        <Box ml="1rem">
+                            <Typography component="h1" variant="h5">
+                                <strong> Milestones</strong>
+                            </Typography>
+                        </Box>
                     </Box>
                     {!project.cancelled &&
                         !project.finished &&

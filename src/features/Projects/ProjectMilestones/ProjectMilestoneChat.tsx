@@ -1,4 +1,11 @@
-import { Box, Paper, Typography, Divider } from "@material-ui/core";
+import {
+    Box,
+    Paper,
+    Typography,
+    Divider,
+    makeStyles,
+    Theme,
+} from "@material-ui/core";
 import indigo from "@material-ui/core/colors/indigo";
 import CommentIcon from "@material-ui/icons/Comment";
 import { Project, Milestone } from "../../../../types/modelTypes";
@@ -8,7 +15,16 @@ interface Props {
     milestone: Milestone | null;
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+    titleBG: {
+        background:
+            "repeating-linear-gradient(45deg,#27558d,#27558d 10px,#1d406a 10px,#1d406a 20px);",
+    },
+}));
+
 const ProjectMilestoneChat = (props: Props) => {
+    const classes = useStyles();
+
     return (
         <>
             {props.project && props.milestone && (
@@ -17,7 +33,7 @@ const ProjectMilestoneChat = (props: Props) => {
                         {/* Heading */}
                         <Box
                             textAlign="center"
-                            bgcolor={indigo["500"]}
+                            className={classes.titleBG}
                             color="#FFF"
                             py="1rem"
                         >
@@ -27,9 +43,11 @@ const ProjectMilestoneChat = (props: Props) => {
                                 justifyContent="center"
                             >
                                 <CommentIcon fontSize="large" />
-                                <Typography component="h1" variant="h5">
-                                    Discussions
-                                </Typography>
+                                <Box ml="1rem">
+                                    <Typography component="h1" variant="h5">
+                                        <strong> Discussions </strong>
+                                    </Typography>
+                                </Box>
                             </Box>
                         </Box>
                         <Divider />

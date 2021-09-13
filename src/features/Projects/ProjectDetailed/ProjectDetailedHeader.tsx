@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     linksSec: {
         textDecoration: "none",
-        color: "#f50057",
+        color: "rgba(59,131,218,1)",
     },
 }));
 
@@ -116,7 +116,11 @@ const ProjectDetailedHeader = ({
             />
             <CardMedia
                 className={classes.media}
-                image={project.imgURL || noImage}
+                image={
+                    project.imgURL !== ""
+                        ? "https://source.unsplash.com/1600x900/?nature"
+                        : project.imgURL
+                }
                 title="Image Title"
                 onClick={() =>
                     openImageOnFullScreen({
