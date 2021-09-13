@@ -1,7 +1,13 @@
-import { Box, Paper, Typography, Divider } from "@material-ui/core";
-import indigo from "@material-ui/core/colors/indigo";
-import CommentIcon from "@material-ui/icons/Comment";
+import {
+    Box,
+    Paper,
+    Typography,
+    Divider,
+    makeStyles,
+    Theme,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
+import CommentIcon from "@material-ui/icons/Comment";
 import Weavy from "src/weavy/Weavy";
 import { Project, Milestone } from "../../../../types/modelTypes";
 import WeavyApp from "../../../weavy/WeavyApp";
@@ -11,9 +17,15 @@ interface Props {
     milestone: Milestone | null;
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+    titleBG: {
+        background:
+            "repeating-linear-gradient(45deg,#27558d,#27558d 10px,#1d406a 10px,#1d406a 20px);",
+    },
+}));
+
 const ProjectMilestoneChat = (props: Props) => {
     const [token, settoken] = useState<string | null>(null);
-
     useEffect(() => {
         const BFToken = localStorage.getItem("logInTokenBF");
         const PMToken = localStorage.getItem("logInTokenPM");
@@ -24,6 +36,7 @@ const ProjectMilestoneChat = (props: Props) => {
         }
     }, [token]);
 
+    const classes = useStyles();
     return (
         <>
             {token && props.project && props.milestone && (
@@ -32,7 +45,7 @@ const ProjectMilestoneChat = (props: Props) => {
                         {/* Heading */}
                         <Box
                             textAlign="center"
-                            bgcolor={indigo["500"]}
+                            className={classes.titleBG}
                             color="#FFF"
                             py="1rem"
                         >
@@ -42,9 +55,11 @@ const ProjectMilestoneChat = (props: Props) => {
                                 justifyContent="center"
                             >
                                 <CommentIcon fontSize="large" />
-                                <Typography component="h1" variant="h5">
-                                    Discussions
-                                </Typography>
+                                <Box ml="1rem">
+                                    <Typography component="h1" variant="h5">
+                                        <strong> Discussions </strong>
+                                    </Typography>
+                                </Box>
                             </Box>
                         </Box>
                         <Divider />

@@ -6,7 +6,9 @@ import {
     List,
     ListItem,
     ListItemIcon,
+    makeStyles,
     Typography,
+    Theme,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import type { Request } from "../../../../types/modelTypes";
@@ -17,12 +19,24 @@ import { getFilesFromDB } from "../../../App/Util/reusableFunctions/getProjectDa
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+import ETHLogo from "../../../Assets/ethereum.png";
 
 interface Props {
     request: Request | null;
 }
 
 type Files = any | null;
+
+const useStyles = makeStyles((theme: Theme) => ({
+    logo: {
+        maxWidth: "3.5rem",
+    },
+    chip: {
+        minHeight: "4rem",
+        background:
+            "linear-gradient(138deg, rgba(10,39,12,1) 0%, rgba(57,210,98,1) 42%, rgba(59,131,218,1) 80%)",
+    },
+}));
 
 const RequestDetails = ({ request }: Props) => {
     const [files, setFiles] = useState<Files>(null);
@@ -35,6 +49,7 @@ const RequestDetails = ({ request }: Props) => {
         setFiles(filesData);
     }, []);
 
+    const classes = useStyles();
     return (
         <List>
             <ListItem>
@@ -58,12 +73,19 @@ const RequestDetails = ({ request }: Props) => {
                     <Box py="0.5rem">
                         <Chip
                             label={
-                                <Typography variant="h6" color="textSecondary">
-                                    {request?.value} ETH
-                                </Typography>
+                                <Box display="flex" alignItems="center">
+                                    <Box>{request?.value} </Box>
+                                    <Box pt="0.5rem">
+                                        <img
+                                            src={ETHLogo}
+                                            alt="Logo"
+                                            className={classes.logo}
+                                        />
+                                    </Box>
+                                </Box>
                             }
                             variant="outlined"
-                            color="secondary"
+                            className={classes.chip}
                             icon={<MonetizationOnIcon />}
                         />
                     </Box>
