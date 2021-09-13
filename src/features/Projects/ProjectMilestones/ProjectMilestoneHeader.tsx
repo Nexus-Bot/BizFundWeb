@@ -45,7 +45,9 @@ const ProjectMilestoneHeader = ({ project, milestone }: Props) => {
                         )}
                         {!milestone?.isCancelled && !milestone?.isCompleted && (
                             <HourglassEmptyIcon
-                                style={{ color: "#FFDA3E" }}
+                                style={{
+                                    color: "#FFDA3E",
+                                }}
                                 fontSize="large"
                             />
                         )}

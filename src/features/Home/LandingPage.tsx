@@ -2,7 +2,7 @@ import { Box, Button, makeStyles, Theme, Typography } from "@material-ui/core";
 import React from "react";
 import ReactGlobe from "react-globe";
 import { Link } from "react-router-dom";
-import HomePageBg from "../../Assets/HomePage/bg.png";
+import HomePageBg from "../../Assets/HomePage/bg.jpg";
 
 interface Props {}
 
@@ -40,7 +40,7 @@ const LandingPage = (props: Props) => {
                     </Box>
                     <Box mt="3rem">
                         <Button
-                            variant="outlined"
+                            variant="contained"
                             color="secondary"
                             className={classes.getBtn}
                             component={Link}

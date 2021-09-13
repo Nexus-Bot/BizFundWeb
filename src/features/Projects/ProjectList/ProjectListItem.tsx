@@ -56,9 +56,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: "4.5rem",
         width: "4.5rem",
     },
-    linksPri: {
+    linksSec: {
         textDecoration: "none",
-        color: "#f50057",
+        color: "rgba(59,131,218,1)",
     },
 }));
 
@@ -85,13 +85,18 @@ const ProjectListItem = ({ project }: Props) => {
 
     const classes = useStyles();
 
+    console.log(project.imgURL);
     return (
         <Card className={classes.root} variant="outlined">
             {/* Project Image */}
             <Grid item md xs={12}>
                 <CardMedia
                     className={classes.media}
-                    image={project.imgURL || noImage}
+                    image={
+                        project.imgURL !== ""
+                            ? "https://source.unsplash.com/1600x900/?nature"
+                            : project.imgURL
+                    }
                     title="image name"
                 ></CardMedia>
             </Grid>
@@ -134,7 +139,7 @@ const ProjectListItem = ({ project }: Props) => {
                                             <strong>
                                                 <Link
                                                     to={`/profile/${projectMaker?._id}`}
-                                                    className={classes.linksPri}
+                                                    className={classes.linksSec}
                                                 >
                                                     {" "}
                                                     {projectMaker?.displayName}

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     appBar: {
         padding: "0.5rem",
         background:
-            "linear-gradient(138deg, rgba(34,10,39,1) 0%, rgba(23,16,72,1) 65%, rgba(60,48,149,1) 93%)",
+            "linear-gradient(138deg, rgba(10,39,12,1) 0%, rgba(57,210,98,1) 42%, rgba(59,131,218,1) 80%)",
     },
     title: {
         flexGrow: 1,
@@ -133,8 +133,8 @@ const Navbar = ({ auth }: Props) => {
                     </Typography>
 
                     <Button
-                        variant="outlined"
-                        color="secondary"
+                        variant="contained"
+                        color="primary"
                         onClick={connectMetamask}
                     >
                         <Typography color="textPrimary">{buttonTxt}</Typography>
