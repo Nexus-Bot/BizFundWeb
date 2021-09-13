@@ -35,6 +35,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         right: "4rem",
     },
     getBtn: { padding: "1rem", color: "#FFF" },
+    mainText: {
+        background:
+            "-webkit-linear-gradient(-45deg, rgba(57,210,98,1) 50%, rgba(59,131,218,1) 50%)",
+        "-webkit-background-clip": "text",
+        "-webkit-text-fill-color": "transparent",
+    },
 }));
 
 interface Props {}
@@ -60,7 +66,7 @@ const GettingStartedPage = (props: Props) => {
                         <Box>
                             <Typography variant="h3" style={{ color: "#FFF" }}>
                                 <strong>
-                                    <span style={{ color: "#cc0000" }}>
+                                    <span className={classes.mainText}>
                                         Together
                                     </span>{" "}
                                     We Can
@@ -77,9 +83,9 @@ const GettingStartedPage = (props: Props) => {
                                     <Box m="1rem">
                                         <Typography
                                             variant="h4"
-                                            style={{ color: "#FFF" }}
+                                            color="primary"
                                         >
-                                            <strong>For Businesses</strong>
+                                            <strong>Business Owners</strong>
                                         </Typography>
 
                                         <Typography
@@ -92,7 +98,7 @@ const GettingStartedPage = (props: Props) => {
                                     </Box>
                                     <Button
                                         variant="outlined"
-                                        color="secondary"
+                                        color="primary"
                                         className={classes.getBtn}
                                         component={Link}
                                         to={"/home/bizfundraiser"}
@@ -110,9 +116,11 @@ const GettingStartedPage = (props: Props) => {
                                     <Box m="1rem">
                                         <Typography
                                             variant="h4"
-                                            style={{ color: "#FFF" }}
+                                            color="secondary"
                                         >
-                                            <strong> For Project Makers</strong>
+                                            <strong>
+                                                Project Organizations
+                                            </strong>
                                         </Typography>
 
                                         <Typography

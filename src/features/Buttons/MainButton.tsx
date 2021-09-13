@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
-        background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+        background:
+            "linear-gradient(-45deg, rgba(57,210,98,1) 50%, rgba(59,131,218,1) 50%)",
         borderRadius: 3,
         border: 0,
         margin: "0 1rem",
