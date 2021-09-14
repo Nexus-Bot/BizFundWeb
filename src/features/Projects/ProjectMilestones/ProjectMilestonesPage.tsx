@@ -11,8 +11,10 @@ import useAsyncEffect from "use-async-effect";
 import type { Milestone, Project, Request } from "../../../../types/modelTypes";
 import ProjectMilestoneHeader from "./ProjectMilestoneHeader";
 import ProjectMilestoneRequestsList from "./ProjectMilestoneRequestsList";
-import { Box } from "@material-ui/core";
+import { Box, Container, makeStyles, Theme } from "@material-ui/core";
 import MainLoader from "src/App/Util/resuableComp/MainLoader";
+import ProjectMilestoneChat from "./ProjectMilestoneChat";
+import BG from "../../../Assets/projectPageBG.jpg";
 
 interface Props extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -22,6 +24,13 @@ interface ComponentState {
     requests: Request[] | null;
     stateLoading: boolean;
 }
+
+const useStyles = makeStyles((theme: Theme) => ({
+    bg: {
+        minHeight: "100vh",
+        background: `url(${BG}) center center /cover`,
+    },
+}));
 
 const ProjectMilestonesPage = (props: Props) => {
     const [state, setState] = useState<ComponentState>({
@@ -57,22 +66,37 @@ const ProjectMilestonesPage = (props: Props) => {
         });
     }, []);
 
+    const classes = useStyles();
     return (
         <>
             {state.stateLoading && <MainLoader />}
             {!state.stateLoading && (
-                <Box py="3rem">
-                    <ProjectMilestoneHeader
-                        milestone={state.milestone}
-                        project={state.project}
-                    />
-                    <ProjectMilestoneRequestsList
-                        milestone={state.milestone}
-                        requests={state.requests}
-                        user={props.user}
-                        project={state.project}
-                    />
-                </Box>
+                <div className={classes.bg}>
+                    <Container
+                        maxWidth="lg"
+                        style={{
+                            paddingTop: "5rem",
+                            paddingBottom: "5rem",
+                        }}
+                    >
+                        <Box py="3rem">
+                            <ProjectMilestoneHeader
+                                milestone={state.milestone}
+                                project={state.project}
+                            />
+                            <ProjectMilestoneRequestsList
+                                milestone={state.milestone}
+                                requests={state.requests}
+                                user={props.user}
+                                project={state.project}
+                            />
+                            <ProjectMilestoneChat
+                                milestone={state.milestone}
+                                project={state.project}
+                            />
+                        </Box>
+                    </Container>
+                </div>
             )}
         </>
     );

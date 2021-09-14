@@ -16,7 +16,9 @@ export const loginProjectMakerAction =
         try {
             dispatch(asycnActionStarted());
 
-            const res = await api.post("/projectmakers/login", { ...formData });
+            const res = await api.post("/projectmakers/login", {
+                ...formData,
+            });
 
             const user = await res.data;
 

@@ -12,8 +12,9 @@ import ProjectDetailedMilestones from "./ProjectDetailedMilestones";
 import { getProjectDataByProjectAddress } from "../../../App/Util/reusableFunctions/getProjectData";
 import { getUserContributionInProjectByMetamaskaddress } from "../../../App/Util/reusableFunctions/getUserContribution";
 import ProjectDetailedMoney from "./ProjectDetailedMoney";
-import { Box, Grid } from "@material-ui/core";
+import { Box, Container, Grid, makeStyles, Theme } from "@material-ui/core";
 import MainLoader from "src/App/Util/resuableComp/MainLoader";
+import BG from "../../../Assets/projectPageBG.jpg";
 
 interface Props extends PropsFromRedux, RouteComponentProps<any> {}
 
@@ -22,6 +23,13 @@ interface ComponentState {
     projectMaker: ProjectMaker | null;
     contribution: string | null;
 }
+
+const useStyles = makeStyles((theme: Theme) => ({
+    bg: {
+        minHeight: "100vh",
+        background: `url(${BG}) center center /cover`,
+    },
+}));
 
 const ProjectDetailedPage = (props: Props) => {
     const [state, setState] = useState<ComponentState>({
@@ -59,39 +67,54 @@ const ProjectDetailedPage = (props: Props) => {
         state.project?.creatorMetamaskAddress?.trim() ===
         props.user?.metamaskAddress?.trim();
 
+    const classes = useStyles();
     return (
         <>
             {props.loading && <MainLoader />}
             {!props.loading && (
-                <Box py="3rem">
-                    {state.project && (
-                        <Grid container spacing={3}>
-                            <Grid item md={8} xs={12}>
-                                <ProjectDetailedHeader
-                                    project={state.project}
-                                    projectMaker={state.projectMaker}
-                                    isProjectMaker={isProjectMaker}
-                                />
-                            </Grid>
-                            <Grid item md xs={12}>
-                                <ProjectDetailedMoney
-                                    project={state.project}
-                                    contribution={state.contribution}
-                                    isProjectMaker={isProjectMaker}
-                                    user={props.user}
-                                />
-                            </Grid>
-                            <Grid item md={8} xs={12}>
-                                <ProjectDetailedInfo project={state.project} />
-                                <ProjectDetailedMilestones
-                                    user={props.user}
-                                    project={state.project}
-                                />
-                                <ProjectDetailedChat />
-                            </Grid>
-                        </Grid>
-                    )}
-                </Box>
+                <div className={classes.bg}>
+                    <Container
+                        maxWidth="lg"
+                        style={{
+                            paddingTop: "5rem",
+                            paddingBottom: "5rem",
+                        }}
+                    >
+                        <Box py="3rem">
+                            {state.project && (
+                                <Grid container spacing={3}>
+                                    <Grid item md={8} xs={12}>
+                                        <ProjectDetailedHeader
+                                            project={state.project}
+                                            projectMaker={state.projectMaker}
+                                            isProjectMaker={isProjectMaker}
+                                        />
+                                    </Grid>
+                                    <Grid item md xs={12}>
+                                        <ProjectDetailedMoney
+                                            project={state.project}
+                                            contribution={state.contribution}
+                                            isProjectMaker={isProjectMaker}
+                                            user={props.user}
+                                        />
+                                    </Grid>
+                                    <Grid item md={8} xs={12}>
+                                        <ProjectDetailedInfo
+                                            project={state.project}
+                                        />
+                                        <ProjectDetailedMilestones
+                                            user={props.user}
+                                            project={state.project}
+                                        />
+                                        <ProjectDetailedChat
+                                            project={state.project}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            )}
+                        </Box>
+                    </Container>
+                </div>
             )}
         </>
     );

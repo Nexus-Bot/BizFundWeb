@@ -18,7 +18,6 @@ import type {
     Project,
     ProjectMaker,
 } from "../../../../types/modelTypes";
-import LocalAtmIcon from "@material-ui/icons/LocalAtm";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import {
@@ -29,11 +28,36 @@ import {
 import { useForm } from "react-hook-form";
 import { ContributionForm } from "../../../../types/formTypes";
 import NumberInput from "../../../App/Util/FormInputs/NumberInput";
+import ETHLogo from "../../../Assets/ethereum.png";
+import FundBG from "../../../Assets/ethBG.jpg";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         marginTop: "1rem",
         marginBottom: "1rem",
+        background: `url(${FundBG}) center center /cover`,
+    },
+    brightOverlay: {
+        backgroundColor: "rgba(254,254,254,0.4)",
+        height: "inherit",
+    },
+    logo: {
+        maxWidth: "3.5rem",
+    },
+    fundText: {
+        paddingTop: "1rem",
+        background:
+            "-webkit-linear-gradient(-45deg, rgba(10,39,12,1) 0%, rgba(11,165,28,1) 40%, rgba(33,33,33,1) 60%)",
+        "-webkit-background-clip": "text",
+        "-webkit-text-fill-color": "transparent",
+    },
+    darkText: {
+        color: "#333",
+    },
+    chip: {
+        minHeight: "4rem",
+        background:
+            "linear-gradient(138deg, rgba(10,39,12,1) 0%, rgba(57,210,98,1) 42%, rgba(59,131,218,1) 80%)",
     },
 }));
 
@@ -114,77 +138,138 @@ const ProjectDetailedMoney = ({
     console.log(contribution);
     return (
         <Paper elevation={3} className={classes.root}>
-            <Box display="flex" alignItems="center" flexDirection="column">
-                <Box display="flex" alignItems="center">
-                    <LocalAtmIcon
-                        style={{ fontSize: "5rem", color: "#329932" }}
-                    />
-                    <Typography variant="h3" style={{ color: "#329932" }}>
-                        <strong> Funds </strong>
+            <div className={classes.brightOverlay}>
+                <Box
+                    display="flex"
+                    alignItems="center"
+                    flexDirection="column"
+                    className={classes.darkText}
+                >
+                    <Typography variant="h3" className={classes.fundText}>
+                        <strong> FUNDS </strong>
                     </Typography>
-                </Box>
-                <Box display="flex" alignItems="center" flexDirection="column">
-                    <Box my="0.5rem">
-                        <Typography variant="h5" color="textPrimary">
-                            Total Pool Balance : {project.totalPoolBalance} ETH
-                            <Typography variant="h6" color="textSecondary">
-                                Contributed By Total{" "}
-                                <strong>{project.contributorsCount}</strong>{" "}
-                                Contributors
+
+                    <Box
+                        display="flex"
+                        alignItems="center"
+                        flexDirection="column"
+                    >
+                        <Box my="0.5rem">
+                            <Typography variant="h5">
+                                <Box display="flex" alignItems="center">
+                                    <Box>
+                                        <strong>
+                                            Total Pool Balance :{" "}
+                                            {project.totalPoolBalance}{" "}
+                                        </strong>
+                                    </Box>
+                                    <Box pt="0.5rem">
+                                        <img
+                                            src={ETHLogo}
+                                            alt="Logo"
+                                            className={classes.logo}
+                                        />
+                                    </Box>
+                                </Box>
+                                <Typography variant="h6">
+                                    Contributed By Total{" "}
+                                    <strong>{project.contributorsCount}</strong>{" "}
+                                    Contributors
+                                </Typography>
                             </Typography>
-                        </Typography>
-                    </Box>
+                        </Box>
 
-                    <Divider style={{ width: "100%" }} />
-                    <Box my="1rem" width="100%">
-                        <Typography variant="h6" color="textSecondary">
-                            Current Pool Balance : {project.currentBalance} ETH
-                        </Typography>
+                        <Divider style={{ width: "100%" }} />
+                        <Box my="1rem" width="100%">
+                            <Typography variant="h6">
+                                <Box display="flex" alignItems="center">
+                                    <Box>
+                                        Current Pool Balance :{" "}
+                                        {project.currentBalance}{" "}
+                                    </Box>
+                                    <Box pt="0.5rem">
+                                        <img
+                                            src={ETHLogo}
+                                            alt="Logo"
+                                            className={classes.logo}
+                                        />
+                                    </Box>
+                                </Box>
+                            </Typography>
 
-                        <Box width="100%">
-                            <BorderLinearProgress
-                                variant="determinate"
-                                value={
-                                    (project.currentBalance * 100) /
-                                    project.totalPoolBalance
+                            <Box width="100%">
+                                <BorderLinearProgress
+                                    variant="determinate"
+                                    value={
+                                        (project.currentBalance * 100) /
+                                        project.totalPoolBalance
+                                    }
+                                />
+                            </Box>
+                        </Box>
+                        <Divider style={{ width: "100%" }} />
+                        <Box my="1rem">
+                            <Chip
+                                label={
+                                    <Typography variant="h6">
+                                        <Box display="flex" alignItems="center">
+                                            <Box>
+                                                Minimum Contribution :{" "}
+                                                {project.minContribution}
+                                            </Box>{" "}
+                                            <Box pt="0.5rem">
+                                                <img
+                                                    src={ETHLogo}
+                                                    alt="Logo"
+                                                    className={classes.logo}
+                                                />
+                                            </Box>
+                                        </Box>
+                                    </Typography>
                                 }
+                                icon={<MonetizationOnIcon />}
+                                className={classes.chip}
                             />
                         </Box>
-                    </Box>
-                    <Divider style={{ width: "100%" }} />
-                    <Box my="1rem">
-                        <Chip
-                            label={
-                                <Typography variant="h6" color="textSecondary">
-                                    Minimum Contribution :{" "}
-                                    {project.minContribution} ETH
-                                </Typography>
-                            }
-                            variant="outlined"
-                            color="secondary"
-                            icon={<MonetizationOnIcon />}
-                        />
-                    </Box>
-                    <Divider style={{ width: "100%" }} />
-                    {!project.cancelled && !project.finished && (
-                        <Box my="1rem">
-                            {!isProjectMaker && !user?.isProjectMaker && (
-                                <Box>
-                                    {contribution && (
+                        <Divider style={{ width: "100%" }} />
+                        {!project.cancelled && !project.finished && (
+                            <Box my="1rem">
+                                {!isProjectMaker && !user?.isProjectMaker && (
+                                    <Box>
                                         <Box
                                             display="flex"
                                             flexDirection="column"
                                             alignItems="center"
                                         >
                                             <Chip
-                                                variant="outlined"
-                                                color="primary"
+                                                className={classes.chip}
                                                 icon={<AttachMoneyIcon />}
                                                 label={
-                                                    <Typography
-                                                        variant="h6"
-                                                        color="textSecondary"
-                                                    >{`My Contribution : ${contribution} ETH`}</Typography>
+                                                    <Typography variant="h6">
+                                                        <Box
+                                                            display="flex"
+                                                            alignItems="center"
+                                                        >
+                                                            <Box>
+                                                                {`My Contribution : ${
+                                                                    contribution
+                                                                        ? contribution
+                                                                        : 0
+                                                                } `}
+                                                            </Box>
+                                                            <Box pt="0.5rem">
+                                                                <img
+                                                                    src={
+                                                                        ETHLogo
+                                                                    }
+                                                                    alt="Logo"
+                                                                    className={
+                                                                        classes.logo
+                                                                    }
+                                                                />
+                                                            </Box>
+                                                        </Box>
+                                                    </Typography>
                                                 }
                                             />
                                             <Box my="0.5rem" width="100%">
@@ -192,7 +277,6 @@ const ProjectDetailedMoney = ({
                                                     onSubmit={handleSubmit(
                                                         onClickPay
                                                     )}
-                                                    className={classes.root}
                                                 >
                                                     <NumberInput
                                                         name="value"
@@ -206,72 +290,9 @@ const ProjectDetailedMoney = ({
                                                     <Box py="0.5rem">
                                                         <Button
                                                             variant="contained"
-                                                            size="large"
-                                                            fullWidth
-                                                            type="submit"
-                                                            disabled={
-                                                                !isValid ||
-                                                                isSubmitting ||
-                                                                !touchedFields
-                                                            }
-                                                        >
-                                                            {!state.payLoading && (
-                                                                <span>
-                                                                    Pay More
-                                                                </span>
-                                                            )}
-                                                            {state.payLoading && (
-                                                                <CircularProgress
-                                                                    color="inherit"
-                                                                    size="2rem"
-                                                                />
-                                                            )}
-                                                        </Button>
-                                                    </Box>
-                                                </form>
-                                            </Box>
-                                        </Box>
-                                    )}
-                                    {!contribution && (
-                                        <Box
-                                            display="flex"
-                                            flexDirection="column"
-                                        >
-                                            <Chip
-                                                variant="outlined"
-                                                color="primary"
-                                                icon={<AttachMoneyIcon />}
-                                                label={
-                                                    <Typography
-                                                        variant="h6"
-                                                        color="textSecondary"
-                                                    >
-                                                        My Contribution : 0 ETH
-                                                    </Typography>
-                                                }
-                                            />
-                                            <Box my="0.5rem" width="100%">
-                                                <form
-                                                    onSubmit={handleSubmit(
-                                                        onClickPay
-                                                    )}
-                                                    className={classes.root}
-                                                >
-                                                    <NumberInput
-                                                        name="value"
-                                                        control={control}
-                                                        rules={{
-                                                            required:
-                                                                "Please enter the amount you want to contribute",
-                                                        }}
-                                                        helperText="Please enter the amount you want to contribute"
-                                                    />
-                                                    <Box my="0.5rem">
-                                                        <Button
-                                                            variant="contained"
-                                                            fullWidth
-                                                            size="large"
                                                             color="primary"
+                                                            size="large"
+                                                            fullWidth
                                                             type="submit"
                                                             disabled={
                                                                 !isValid ||
@@ -281,7 +302,7 @@ const ProjectDetailedMoney = ({
                                                         >
                                                             {!state.payLoading && (
                                                                 <span>
-                                                                    Pay for Good
+                                                                    CONTRIBUTE
                                                                 </span>
                                                             )}
                                                             {state.payLoading && (
@@ -295,16 +316,16 @@ const ProjectDetailedMoney = ({
                                                 </form>
                                             </Box>
                                         </Box>
-                                    )}
-                                </Box>
-                            )}
-                        </Box>
-                    )}
-                    <Box my="0.5rem" width="100%">
-                        <Divider style={{ width: "100%" }} />
-                        {!isProjectMaker && (
-                            <Box>
-                                {contribution && (
+                                    </Box>
+                                )}
+                            </Box>
+                        )}
+                        {!isProjectMaker &&
+                            contribution &&
+                            Number(contribution) > 0 && (
+                                <Box my="0.5rem" width="100%">
+                                    <Divider style={{ width: "100%" }} />
+
                                     <Box>
                                         <Box
                                             display="flex"
@@ -315,16 +336,34 @@ const ProjectDetailedMoney = ({
                                             <Chip
                                                 variant="outlined"
                                                 color="primary"
+                                                style={{ minHeight: "4rem" }}
                                                 icon={<AttachMoneyIcon />}
                                                 label={
-                                                    <Typography
-                                                        variant="h6"
-                                                        color="textSecondary"
-                                                    >{`Refund Available : ${
-                                                        state.refundAmount
-                                                            ? state.refundAmount
-                                                            : 0
-                                                    } ETH`}</Typography>
+                                                    <Typography variant="h6">
+                                                        <Box
+                                                            display="flex"
+                                                            alignItems="center"
+                                                        >
+                                                            <Box>
+                                                                {`Refund Available : ${
+                                                                    state.refundAmount
+                                                                        ? state.refundAmount
+                                                                        : 0
+                                                                } `}
+                                                            </Box>
+                                                            <Box pt="0.5rem">
+                                                                <img
+                                                                    src={
+                                                                        ETHLogo
+                                                                    }
+                                                                    alt="Logo"
+                                                                    className={
+                                                                        classes.logo
+                                                                    }
+                                                                />
+                                                            </Box>
+                                                        </Box>
+                                                    </Typography>
                                                 }
                                             />
                                             <Box my="0.5rem" width="100%">
@@ -372,12 +411,11 @@ const ProjectDetailedMoney = ({
                                             </Box>
                                         )}
                                     </Box>
-                                )}
-                            </Box>
-                        )}
+                                </Box>
+                            )}
                     </Box>
                 </Box>
-            </Box>
+            </div>
         </Paper>
     );
 };

@@ -3,8 +3,10 @@ import {
     Button,
     List,
     ListItem,
+    makeStyles,
     Paper,
     Typography,
+    Theme,
 } from "@material-ui/core";
 import React from "react";
 import indigo from "@material-ui/core/colors/indigo";
@@ -26,18 +28,26 @@ interface Props {
     milestone: Milestone | null;
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+    titleBG: {
+        background:
+            "repeating-linear-gradient(45deg,#206c34,#206c34 10px,#174724 10px,#174724 20px);",
+    },
+}));
+
 const ProjectMilestoneRequestsList = ({
     requests,
     user,
     project,
     milestone,
 }: Props) => {
+    const classes = useStyles();
     return (
         <Paper variant="outlined" elevation={3}>
             {/* Heading */}
             <Box
                 textAlign="center"
-                bgcolor={indigo["500"]}
+                className={classes.titleBG}
                 color="#FFF"
                 py="1rem"
             >
@@ -46,11 +56,13 @@ const ProjectMilestoneRequestsList = ({
                     alignItems="center"
                     justifyContent="space-around"
                 >
-                    <Box>
+                    <Box display="flex" alignItems="center">
                         <FormatListNumberedIcon fontSize="large" />
-                        <Typography component="h1" variant="h5">
-                            Requests
-                        </Typography>
+                        <Box ml="1rem">
+                            <Typography component="h1" variant="h5">
+                                <strong> Requests </strong>
+                            </Typography>
+                        </Box>
                     </Box>
                     {!project?.cancelled &&
                         !project?.finished &&

@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import type { RootState } from "../../redux/store/store";
 import SignedInMenu from "../Menus/SignedInMenu";
 import SignedOutMenu from "../Menus/SignedOutMenu";
-import mainLogo from "../../Assets/Logo.png";
+import mainLogo from "../../Assets/Logo2.png";
 import {
     updateBizFundraiser,
     updateProjectMaker,
@@ -24,6 +24,11 @@ interface Props extends PropsFromRedux {}
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         width: "100%",
+    },
+    appBar: {
+        padding: "0.5rem",
+        background:
+            "linear-gradient(138deg, rgba(10,39,12,1) 0%, rgba(57,210,98,1) 42%, rgba(59,131,218,1) 80%)",
     },
     title: {
         flexGrow: 1,
@@ -37,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: 20,
     },
     logo: {
-        maxWidth: 60,
+        maxWidth: 80,
     },
     margin: {
         marginLeft: 20,
@@ -107,7 +112,7 @@ const Navbar = ({ auth }: Props) => {
     const classes = useStyles();
     return (
         <div className={classes.root} id="back-to-top-anchor">
-            <AppBar style={{ background: "#202529", padding: "0.5rem" }}>
+            <AppBar className={classes.appBar}>
                 <Toolbar>
                     {/* Logo */}
                     <Link to="/">
@@ -123,13 +128,13 @@ const Navbar = ({ auth }: Props) => {
                         className={(classes.flex, classes.title)}
                     >
                         <Link to="/" className={classes.typo}>
-                            BizFund
+                            <strong>OXYLUS</strong>
                         </Link>
                     </Typography>
 
                     <Button
-                        variant="outlined"
-                        color="secondary"
+                        variant="contained"
+                        color="primary"
                         onClick={connectMetamask}
                     >
                         <Typography color="textPrimary">{buttonTxt}</Typography>
