@@ -28,21 +28,21 @@ import {
 import { useForm } from "react-hook-form";
 import { ContributionForm } from "../../../../types/formTypes";
 import NumberInput from "../../../App/Util/FormInputs/NumberInput";
-import ETHLogo from "../../../Assets/ethereum.png";
+import MATICLogo from "../../../Assets/matic.png";
 import FundBG from "../../../Assets/ethBG.jpg";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         marginTop: "1rem",
         marginBottom: "1rem",
-        background: `url(${FundBG}) center center /cover`,
     },
     brightOverlay: {
         backgroundColor: "rgba(254,254,254,0.4)",
         height: "inherit",
     },
     logo: {
-        maxWidth: "3.5rem",
+        maxWidth: "3rem",
+        marginLeft: ".5rem",
     },
     fundText: {
         paddingTop: "1rem",
@@ -165,7 +165,7 @@ const ProjectDetailedMoney = ({
                                     </Box>
                                     <Box pt="0.5rem">
                                         <img
-                                            src={ETHLogo}
+                                            src={MATICLogo}
                                             alt="Logo"
                                             className={classes.logo}
                                         />
@@ -189,7 +189,7 @@ const ProjectDetailedMoney = ({
                                     </Box>
                                     <Box pt="0.5rem">
                                         <img
-                                            src={ETHLogo}
+                                            src={MATICLogo}
                                             alt="Logo"
                                             className={classes.logo}
                                         />
@@ -219,7 +219,7 @@ const ProjectDetailedMoney = ({
                                             </Box>{" "}
                                             <Box pt="0.5rem">
                                                 <img
-                                                    src={ETHLogo}
+                                                    src={MATICLogo}
                                                     alt="Logo"
                                                     className={classes.logo}
                                                 />
@@ -260,7 +260,7 @@ const ProjectDetailedMoney = ({
                                                             <Box pt="0.5rem">
                                                                 <img
                                                                     src={
-                                                                        ETHLogo
+                                                                        MATICLogo
                                                                     }
                                                                     alt="Logo"
                                                                     className={
@@ -354,7 +354,7 @@ const ProjectDetailedMoney = ({
                                                             <Box pt="0.5rem">
                                                                 <img
                                                                     src={
-                                                                        ETHLogo
+                                                                        MATICLogo
                                                                     }
                                                                     alt="Logo"
                                                                     className={

@@ -19,7 +19,7 @@ import { getFilesFromDB } from "../../../App/Util/reusableFunctions/getProjectDa
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-import ETHLogo from "../../../Assets/ethereum.png";
+import MATICLogo from "../../../Assets/matic.png";
 
 interface Props {
     request: Request | null;
@@ -77,7 +77,7 @@ const RequestDetails = ({ request }: Props) => {
                                     <Box>{request?.value} </Box>
                                     <Box pt="0.5rem">
                                         <img
-                                            src={ETHLogo}
+                                            src={MATICLogo}
                                             alt="Logo"
                                             className={classes.logo}
                                         />
