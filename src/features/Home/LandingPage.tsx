@@ -24,6 +24,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const LandingPage = (props: Props) => {
     const classes = useStyles();
+
+    const options = {
+        ambientLightColor: "red",
+        cameraRotateSpeed: 2,
+    };
+
     return (
         <div className={classes.Bg}>
             <Box display="flex" alignItems="center" p="2rem">
@@ -58,6 +64,7 @@ const LandingPage = (props: Props) => {
                         height="80vh"
                         width="50vw"
                         globeBackgroundTexture={null}
+                        options={options}
                     />
                 </Box>
             </Box>

@@ -71,8 +71,27 @@ const Navbar = ({ auth }: Props) => {
             return Boolean(ethereum && ethereum.isMetaMask);
         };
 
+        const params = [
+            {
+                chainId: "0x13881",
+                chainName: "Mumbai Testnet",
+                rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+                nativeCurrency: {
+                    name: "Matic Token",
+                    symbol: "MATIC",
+                    decimals: 18,
+                },
+                blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+            },
+        ];
+
         if (isMetaMaskInstalled()) {
             try {
+                await ethereum.request({
+                    method: "wallet_addEthereumChain",
+                    params,
+                });
+
                 const accounts = await ethereum.request({
                     method: "eth_requestAccounts",
                 });
