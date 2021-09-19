@@ -87,7 +87,7 @@ This platform will help project organisers to get required funds and human resou
 ## Polygon
 
 <p align="center">
-  <img src="./src/Assets/readme/polygon.png">
+  <img src="./src/Assets/readme/Polygon.png">
 </p>
 
 ## Technologies Used
