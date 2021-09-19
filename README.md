@@ -11,7 +11,7 @@
     <li><a href="#working-steps">Working Steps</a></li>
     <li><a href="#use-case-diagram">Use Case Diagram</a></li>
     <li><a href="#user-structure">User Structure</a></li>
-    <li><a href="#data-definations">Data Definations</a></li>
+    <li><a href="#data-definitions">Data Definitions</a></li>
     <li><a href="#data-Structure">Data Structure</a></li>
     <li><a href="#polygon">Polygon</a></li>
     <li><a href="#technologies-used">Technologies used</a></li>
@@ -71,7 +71,7 @@ This platform will help project organisers to get required funds and human resou
   <img src="./src/Assets/readme/User Structure.png">
 </p>
 
-## Data Definations
+## Data Definitions
 
 <p align="center">
   <img src="./src/Assets/readme/Data Definations.png">
@@ -132,11 +132,12 @@ You need to have latest version of node and npm installed in your local machine.
 
 To actually try out our platform, there are certain requirements to set up, which include :
 
--   Install Metamask wallet in your browser.
--   Use a standard Tezos faucet to get Testnet ꜩ (required to pay gas, which is required to register an email) [NOTE that this is only a one time spend for a given email]
-    -   Network : Flourence Testnet
-    -   RPC : https://florencenet.smartpy.io/
-    -   Lambda View : KT1BbTmNHmJp2NnQyw5qsAExEYmYuUpR2HdX
+-   Install Metamask wallet in your browser. [Install from here](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en)
+-   Use a standard Polygon faucet to get Testnet MATIC tokens. [Faucet](https://faucet.polygon.technology/)
+-   Currently Smart Contracts are deployed on Polygon Test Network (Mumbai Testnet).
+    -   Network : Matic Mumbai
+    -   RPC : https://rpc-mumbai.maticvigil.com/
+    -   Block Explorer : https://mumbai.polygonscan.com/
 -   Enjoy!
 
 ## Societal Impacts
