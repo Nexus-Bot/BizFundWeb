@@ -79,9 +79,9 @@ This platform will help project organisers to get required funds and human resou
 
 ## Data Models
 
-<p align="center" float="left">
- <img src="./src/Assets/readme/IPFS Project Data Model.png" width="45%" height="580px">
-  <img src="./src/Assets/readme/IPFS Milestone and Request Data Model.png" width="45%" >
+<p align="center">
+  <img src="./src/Assets/readme/IPFS Project Data Model.png">
+  <img src="./src/Assets/readme/IPFS Milestone and Request Data Model.png" >
 </p>
 
 ## Polygon
